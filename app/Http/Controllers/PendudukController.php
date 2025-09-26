@@ -11,7 +11,12 @@ class PendudukController extends Controller
      */
     public function index()
     {
-        //
+        $penduduk = [
+            ['nama' => 'Budi Santoso', 'nik' => '1234567890123456', 'alamat' => 'Jl. Melati No.10'],
+            ['nama' => 'Ani Lestari', 'nik' => '6543210987654321', 'alamat' => 'Jl. Mawar No.5'],
+            ['nama' => 'Siti Aminah', 'nik' => '7894561230123456', 'alamat' => 'Jl. Kenanga No.7'],
+        ];
+        return view('penduduk.index', compact('penduduk'));
     }
 
     /**
