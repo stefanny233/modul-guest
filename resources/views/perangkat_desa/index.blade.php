@@ -1,49 +1,46 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container mt-4">
-    <h2>Data Perangkat Desa</h2>
-    <a href="{{ route('perangkat_desa.create') }}" class="btn btn-success mb-3">Tambah Data</a>
-
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Perangkat Desa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-4">
+    <h3>Data Perangkat Desa</h3>
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
+    <a href="{{ route('perangkat_desa.create') }}" class="btn btn-primary mb-3">+ Tambah Data</a>
+
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>No</th>
+                <th>#</th>
                 <th>Nama Warga</th>
                 <th>Jabatan</th>
                 <th>Kontak</th>
                 <th>Periode</th>
-                <th>Foto</th>
                 <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($data as $key => $item)
+            @foreach ($data as $p)
                 <tr>
-                    <td>{{ $key + 1 }}</td>
-                    <td>{{ $item->warga->nama ?? '-' }}</td>
-                    <td>{{ $item->jabatan }}</td>
-                    <td>{{ $item->kontak }}</td>
-                    <td>{{ $item->periode_mulai }} - {{ $item->periode_selesai }}</td>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $p->warga->nama ?? '-' }}</td>
+                    <td>{{ $p->jabatan }}</td>
+                    <td>{{ $p->kontak }}</td>
+                    <td>{{ $p->periode_mulai }} - {{ $p->periode_selesai }}</td>
                     <td>
-                        @if($item->foto)
-                            <img src="{{ asset('storage/' . $item->foto) }}" width="60">
-                        @endif
-                    </td>
-                    <td>
-                        <a href="{{ route('perangkat_desa.edit', $item->perangkat_id) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('perangkat_desa.destroy', $item->perangkat_id) }}" method="POST" style="display:inline-block;">
+                        <a href="{{ route('perangkat_desa.edit', $p->perangkat_id) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <form action="{{ route('perangkat_desa.destroy', $p->perangkat_id) }}" method="POST" class="d-inline">
                             @csrf @method('DELETE')
-                            <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin?')">Hapus</button>
+                            <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">Hapus</button>
                         </form>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-</div>
-@endsection
+</body>
+</html>

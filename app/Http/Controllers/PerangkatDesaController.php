@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\PerangkatDesa;
@@ -22,52 +21,46 @@ class PerangkatDesaController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'warga_id' => 'required',
-            'jabatan' => 'required|string|max:100',
-            'periode_mulai' => 'required|date',
-            'periode_selesai' => 'required|date',
-            'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:2048'
+        $validated = $request->validate([
+            'warga_id'        => 'required|exists:warga,warga_id',
+            'jabatan'         => 'required|string|max:100',
+            'kontak'          => 'required|string|max:50',
+            'periode_mulai'   => 'required|date',
+            'periode_selesai' => 'required|date|after:periode_mulai',
         ]);
 
-        $data = $request->all();
-        if ($request->hasFile('foto')) {
-            $data['foto'] = $request->file('foto')->store('perangkat_desa', 'public');
-        }
+        PerangkatDesa::create($validated);
+        return redirect()->route('perangkat_desa.index')->with('success', 'Data berhasil disimpan!');
 
-        PerangkatDesa::create($data);
-
-        return redirect()->route('perangkat_desa.index')->with('success', 'Data berhasil ditambahkan!');
     }
 
     public function edit($id)
     {
-        $perangkat = PerangkatDesa::findOrFail($id);
+        $data  = PerangkatDesa::findOrFail($id);
         $warga = Warga::all();
-        return view('perangkat_desa.edit', compact('perangkat', 'warga'));
+        return view('perangkat_desa.edit', compact('data', 'warga'));
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'warga_id' => 'required',
-            'jabatan' => 'required|string|max:100',
+        $validated = $request->validate([
+            'warga_id'        => 'required|exists:warga,warga_id',
+            'jabatan'         => 'required|string|max:100',
+            'kontak'          => 'required|string|max:50',
+            'periode_mulai'   => 'required|date',
+            'periode_selesai' => 'required|date|after:periode_mulai',
         ]);
 
-        $perangkat = PerangkatDesa::findOrFail($id);
-        $data = $request->all();
+        $data = PerangkatDesa::findOrFail($id);
+        $data->update($validated);
 
-        if ($request->hasFile('foto')) {
-            $data['foto'] = $request->file('foto')->store('perangkat_desa', 'public');
-        }
-
-        $perangkat->update($data);
         return redirect()->route('perangkat_desa.index')->with('success', 'Data berhasil diperbarui!');
     }
 
     public function destroy($id)
     {
-        PerangkatDesa::destroy($id);
-        return redirect()->route('perangkat_desa.index')->with('success', 'Data berhasil dihapus!');
+        PerangkatDesa::findOrFail($id)->delete();
+        return redirect()->route('perangkat_desa.index')
+            ->with('success', 'Data perangkat desa berhasil dihapus!');
     }
 }

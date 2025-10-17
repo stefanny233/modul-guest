@@ -19,11 +19,12 @@ class PerangkatDesa extends Model
         'kontak',
         'periode_mulai',
         'periode_selesai',
-        'foto'
     ];
+
+    public $timestamps = true;
 
     public function warga()
     {
-        return $this->belongsTo(Warga::class, 'warga_id');
+        return $this->belongsTo(Warga::class, 'warga_id', 'warga_id');
     }
 }
