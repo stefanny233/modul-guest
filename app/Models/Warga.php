@@ -16,3 +16,4 @@ class Warga extends Model
 
     public $timestamps = false; // kalau tabel warga gak punya created_at/updated_at
 }
+
