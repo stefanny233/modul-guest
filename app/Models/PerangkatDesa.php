@@ -9,22 +9,29 @@ class PerangkatDesa extends Model
 {
     use HasFactory;
 
+    /**
+     * Nama tabel yang benar (sesuai file aslimu).
+     * Jika nama tabelmu 'perangkat_desas' (jamak), hapus baris ini.
+     */
     protected $table = 'perangkat_desa';
-    protected $primaryKey = 'perangkat_id';
+    protected $primaryKey = 'id';
+    protected $fillable = ['warga_id', 'jabatan', 'kontak', 'periode_mulai', 'periode_selesai'];
 
-    protected $fillable = [
-        'warga_id',
-        'jabatan',
-        'nip',
-        'kontak',
-        'periode_mulai',
-        'periode_selesai',
-    ];
+    /**
+     * Kita nonaktifkan timestamps (sesuai file aslimu)
+     */
+    public $timestamps = false;
 
-    public $timestamps = true;
-
+    /**
+     * Relasi ke Model Warga (BUKAN Penduduk)
+     * * Ini perbaikan utamanya:
+     * 'warga_id' (foreign key di tabel ini)
+     * 'id' (primary key di tabel warga)
+     */
     public function warga()
     {
-        return $this->belongsTo(Warga::class, 'warga_id', 'warga_id');
+        // Pastikan Model kamu namanya 'Warga.php'
+        return $this->belongsTo(Warga::class, 'warga_id', 'id');
     }
 }
+

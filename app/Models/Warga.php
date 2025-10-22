@@ -11,9 +11,6 @@ class Warga extends Model
 
     protected $table = 'warga';
     protected $primaryKey = 'warga_id';
+    protected $fillable = ['nama', 'nik', 'alamat'];
 
-    protected $fillable = ['nama', 'alamat', 'no_hp', 'email'];
-
-    public $timestamps = false; // kalau tabel warga gak punya created_at/updated_at
 }
-
