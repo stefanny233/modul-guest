@@ -11,7 +11,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('guest.dashboard');
+        $totalPerangkat = PerangkatDesa::count();
+        return view('guest.dashboard', compact('totalPerangkat'));
     }
 
     /**

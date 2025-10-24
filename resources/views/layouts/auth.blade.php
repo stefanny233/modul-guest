@@ -128,7 +128,7 @@
       <p>Masuk untuk mengelola data Desa Sejahtera</p>
     </div>
 
-    <form action="#" method="POST">
+    <form action="" method="POST">
       <div class="mb-3">
         <label for="email" class="form-label fw-semibold">Email</label>
         <div class="input-group">
@@ -148,13 +148,8 @@
       <button type="submit" class="btn btn-login mt-3">Masuk</button>
     </form>
 
-    <div class="register-link">
-      <p>Belum punya akun? <a href="#">Register</a></p>
-    </div>
-  </div>
-
   <footer>
-    &copy; 2025 <a href="#">Desa Sejahtera</a>. All Rights Reserved.
+    &copy; 2025 <a href="">Desa Sejahtera</a>. All Rights Reserved.
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

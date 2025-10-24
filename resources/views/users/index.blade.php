@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Charitize - Charity Organization Website Template</title>
+    <title>Desa Sejahtera</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -22,14 +22,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="{{ asset('assets-guest/lib/animate/animate.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets-guest/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+    <link href="{{asset('assets-guest/lib/animate/animate.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets-guest/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="{{ asset('assets-guest/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{asset('assets-guest/css/bootstrap.min.css')}}" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="{{ asset('assets-guest/css/style.css') }}" rel="stylesheet">
+    <link href="{{asset('assets-guest/css/style.css')}}" rel="stylesheet">
 </head>
 
 <body>
@@ -46,7 +46,7 @@
         <div class="row align-items-center h-100">
             <div class="col-lg-4 text-center text-lg-start">
                 <a href="index.html">
-                    <h1 class="display-5 text-primary m-0">Charitize</h1>
+                    <h1 class="display-5 text-primary m-0">Desa Sejahtera</h1>
                 </a>
             </div>
             <div class="col-lg-8 d-none d-lg-block">
@@ -101,10 +101,11 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav me-auto">
+                    <div class="navbar-nav me-auto"><div class="navbar-nav me-auto">
                         <a href="dashboard" class="nav-item nav-link">Home</a>
-                        <a href="penduduk" class="nav-item nav-link">Penduduk Desa</a>
-                        <a href="perangkat_desa" class="nav-item nav-link active">Perangkat Desa</a>
+                        <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
+                        <a href="{{ route('penduduk.index') }}" class="nav-item nav-link">Data Penduduk</a>
+                        <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
                     </div>
                     <div class="d-none d-lg-flex ms-auto">
                         <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
@@ -117,54 +118,104 @@
     </div>
     <!-- Navbar End -->
 
-    <div class="container py-5">
-        <h1 class="mb-4">Edit Perangkat Desa</h1>
 
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container text-center py-4">
+            <h1 class="display-3 animated slideInDown">Manajemen Data User</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb justify-content-center mb-0">
+                    <li class="breadcrumb-item"><a href="#!">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Pages</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Manajemen Data User</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- Event Start -->
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="{{ route('users.create') }}" class="btn btn-success">
+                <i class="fa fa-plus me-2"></i> Tambah User
+            </a>
+        </div>
+
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
-        <form action="{{ route('perangkat_desa.update', $perangkat->id) }}" method="POST"
-            enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-            <div class="mb-3">
-                <label for="warga_id" class="form-label">Nama Warga</label>
-                <select name="warga_id" class="form-control" required>
-                    @foreach ($warga as $w)
-                        <option value="{{ $w->id }}" {{ $perangkat->warga_id == $w->id ? 'selected' : '' }}>
-                            {{ $w->nama }}</option>
-                    @endforeach
-                </select>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <table class="table table-bordered table-striped align-middle text-center">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Tanggal Dibuat</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($users as $index => $user)
+                            <tr>
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->created_at->format('d M Y') }}</td>
+                                <td>
+                                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">
+                                        <i class="fa fa-edit"></i> Edit
+                                    </a>
+                                    <form action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                        class="d-inline" onsubmit="return confirm('Yakin ingin menghapus user ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fa fa-trash"></i> Hapus
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-muted">Belum ada data pengguna.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
-            <div class="mb-3"><label>Jabatan</label><input type="text" name="jabatan" class="form-control"
-                    value="{{ $perangkat->jabatan }}" required></div>
-            <div class="mb-3"><label>NIP</label><input type="text" name="nip" class="form-control"
-                    value="{{ $perangkat->nip }}" required></div>
-            <div class="mb-3"><label>Kontak</label><input type="text" name="kontak" class="form-control"
-                    value="{{ $perangkat->kontak }}" required></div>
-            <div class="mb-3"><label>Periode Mulai</label><input type="date" name="periode_mulai"
-                    class="form-control" value="{{ $perangkat->periode_mulai }}" required></div>
-            <div class="mb-3"><label>Periode Selesai</label><input type="date" name="periode_selesai"
-                    class="form-control" value="{{ $perangkat->periode_selesai }}" required></div>
-            <div class="mb-3">
-                <label>Foto</label>
-                <input type="file" name="foto" class="form-control">
-                @if ($perangkat->foto)
-                    <img src="{{ asset('storage/' . $perangkat->foto) }}" width="80" class="mt-2">
-                @endif
-            </div>
-
-            <button type="submit" class="btn btn-primary">Update</button>
-        </form>
+        </div>
     </div>
-    <!-- Perangkat Desa List End -->
+    <!-- Event End -->
+
+
+    <!-- Banner Start -->
+    <div class="container-fluid banner py-5">
+        <div class="container">
+            <div class="banner-inner bg-light p-5 wow fadeIn" data-wow-delay="0.1s">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 py-5 text-center">
+                        <h1 class="display-6 wow fadeIn" data-wow-delay="0.3s">Our Door Are Always Open to More People
+                            Who Want to Support Each Others!</h1>
+                        <p class="fs-5 mb-4 wow fadeIn" data-wow-delay="0.5s">Through your donations and volunteer
+                            work,
+                            we spread kindness and support to children, families, and communities struggling to find
+                            stability.</p>
+                        <div class="d-flex justify-content-center wow fadeIn" data-wow-delay="0.7s">
+                            <a class="btn btn-primary py-3 px-4 me-3" href="#!">Donate Now</a>
+                            <a class="btn btn-secondary py-3 px-4" href="#!">Join Us Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Banner End -->
+
+
 
     <!-- Footer Start -->
     <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.1s">
@@ -206,28 +257,22 @@
                     <h4 class="text-light mb-4">Gallery</h4>
                     <div class="row g-2">
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-1.jpg') }}"
-                                alt="">
+                            <img class="img-fluid w-100" src="img/gallery-1.jpg" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-2.jpg') }}"
-                                alt="">
+                            <img class="img-fluid w-100" src="img/gallery-2.jpg" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-3.jpg') }}"
-                                alt="">
+                            <img class="img-fluid w-100" src="img/gallery-3.jpg" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-4.jpg') }}"
-                                alt="">
+                            <img class="img-fluid w-100" src="img/gallery-4.jpg" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-5.jpg') }}"
-                                alt="">
+                            <img class="img-fluid w-100" src="img/gallery-5.jpg" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-6.jpg') }}"
-                                alt="">
+                            <img class="img-fluid w-100" src="img/gallery-6.jpg" alt="">
                         </div>
                     </div>
                 </div>
@@ -259,14 +304,14 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('assets-guest/lib/wow/wow.min.js') }}"></script>
-    <script src="{{ asset('assets-guest/lib/easing/easing.min.js') }}"></script>
-    <script src="{{ asset('assets-guest/lib/waypoints/waypoints.min.js') }}"></script>
-    <script src="{{ asset('assets-guest/lib/owlcarousel/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('assets-guest/lib/counterup/counterup.min.js') }}"></script>
+    <script src="{{asset('assets-guest/lib/wow/wow.min.js')}}"></script>
+    <script src="{{asset('assets-guest/lib/easing/easing.min.js')}}"></script>
+    <script src="{{asset('assets-guest/lib/waypoints/waypoints.min.js')}}"></script>
+    <script src="{{asset('assets-guest/lib/owlcarousel/owl.carousel.min.js')}}"></script>
+    <script src="{{asset('assets-guest/lib/counterup/counterup.min.js')}}"></script>
 
     <!-- Template Javascript -->
-    <script src="{{ asset('assets-guest/js/main.js') }}"></script>
+    <script src="{{asset('assets-guest/js/main.js')}}"></script>
 </body>
 
 </html>

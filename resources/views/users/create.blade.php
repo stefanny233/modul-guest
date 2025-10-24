@@ -22,14 +22,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="{{ asset('assets-guest/lib/animate/animate.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets-guest/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+    <link href="{{asset('assets-guest/lib/animate/animate.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets-guest/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="{{ asset('assets-guest/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{asset('assets-guest/css/bootstrap.min.css')}}" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="{{ asset('assets-guest/css/style.css') }}" rel="stylesheet">
+    <link href="{{asset('assets-guest/css/style.css')}}" rel="stylesheet">
 </head>
 
 <body>
@@ -102,9 +102,22 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav me-auto">
-                        <a href="dashboard" class="nav-item nav-link">Home</a>
-                        <a href="penduduk" class="nav-item nav-link">Penduduk Desa</a>
-                        <a href="perangkat_desa" class="nav-item nav-link active">Perangkat Desa</a>
+                        <a href="index.html" class="nav-item nav-link">Home</a>
+                        <a href="about.html" class="nav-item nav-link">About</a>
+                        <a href="service.html" class="nav-item nav-link">Service</a>
+                        <a href="donation.html" class="nav-item nav-link">Donation</a>
+                        <div class="nav-item dropdown">
+                            <a href="#!" class="nav-link dropdown-toggle active"
+                                data-bs-toggle="dropdown">Pages</a>
+                            <div class="dropdown-menu bg-light m-0">
+                                <a href="event.html" class="dropdown-item active">Event</a>
+                                <a href="feature.html" class="dropdown-item">Feature</a>
+                                <a href="team.html" class="dropdown-item">Our Team</a>
+                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                                <a href="404.html" class="dropdown-item">404 Page</a>
+                            </div>
+                        </div>
+                        <a href="contact.html" class="nav-item nav-link">Contact</a>
                     </div>
                     <div class="d-none d-lg-flex ms-auto">
                         <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
@@ -117,54 +130,98 @@
     </div>
     <!-- Navbar End -->
 
-    <div class="container py-5">
-        <h1 class="mb-4">Edit Perangkat Desa</h1>
 
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <form action="{{ route('perangkat_desa.update', $perangkat->id) }}" method="POST"
-            enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-            <div class="mb-3">
-                <label for="warga_id" class="form-label">Nama Warga</label>
-                <select name="warga_id" class="form-control" required>
-                    @foreach ($warga as $w)
-                        <option value="{{ $w->id }}" {{ $perangkat->warga_id == $w->id ? 'selected' : '' }}>
-                            {{ $w->nama }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="mb-3"><label>Jabatan</label><input type="text" name="jabatan" class="form-control"
-                    value="{{ $perangkat->jabatan }}" required></div>
-            <div class="mb-3"><label>NIP</label><input type="text" name="nip" class="form-control"
-                    value="{{ $perangkat->nip }}" required></div>
-            <div class="mb-3"><label>Kontak</label><input type="text" name="kontak" class="form-control"
-                    value="{{ $perangkat->kontak }}" required></div>
-            <div class="mb-3"><label>Periode Mulai</label><input type="date" name="periode_mulai"
-                    class="form-control" value="{{ $perangkat->periode_mulai }}" required></div>
-            <div class="mb-3"><label>Periode Selesai</label><input type="date" name="periode_selesai"
-                    class="form-control" value="{{ $perangkat->periode_selesai }}" required></div>
-            <div class="mb-3">
-                <label>Foto</label>
-                <input type="file" name="foto" class="form-control">
-                @if ($perangkat->foto)
-                    <img src="{{ asset('storage/' . $perangkat->foto) }}" width="80" class="mt-2">
-                @endif
-            </div>
-
-            <button type="submit" class="btn btn-primary">Update</button>
-        </form>
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container text-center py-4">
+            <h1 class="display-3 animated slideInDown">Event</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb justify-content-center mb-0">
+                    <li class="breadcrumb-item"><a href="#!">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Pages</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Event</li>
+                </ol>
+            </nav>
+        </div>
     </div>
-    <!-- Perangkat Desa List End -->
+    <!-- Page Header End -->
+
+    <!-- Event Start -->
+    <div class="container py-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4>Tambah User Baru</h4>
+            </div>
+            <div class="card-body">
+                <form action="{{ route('users.store') }}" method="POST">
+                    @csrf
+
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" name="name" class="form-control" value="{{ old('name') }}"
+                            required>
+                        @error('name')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" value="{{ old('email') }}"
+                            required>
+                        @error('email')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" required>
+                        @error('password')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Confirm Password</label>
+                        <input type="password" name="password_confirmation" class="form-control" required>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-success px-4">Simpan</button>
+                        <a href="{{ route('users.index') }}" class="btn btn-secondary px-4">Batal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Event End -->
+
+
+    <!-- Banner Start -->
+    <div class="container-fluid banner py-5">
+        <div class="container">
+            <div class="banner-inner bg-light p-5 wow fadeIn" data-wow-delay="0.1s">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 py-5 text-center">
+                        <h1 class="display-6 wow fadeIn" data-wow-delay="0.3s">Our Door Are Always Open to More People
+                            Who Want to Support Each Others!</h1>
+                        <p class="fs-5 mb-4 wow fadeIn" data-wow-delay="0.5s">Through your donations and volunteer
+                            work,
+                            we spread kindness and support to children, families, and communities struggling to find
+                            stability.</p>
+                        <div class="d-flex justify-content-center wow fadeIn" data-wow-delay="0.7s">
+                            <a class="btn btn-primary py-3 px-4 me-3" href="#!">Donate Now</a>
+                            <a class="btn btn-secondary py-3 px-4" href="#!">Join Us Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Banner End -->
+
+
 
     <!-- Footer Start -->
     <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.1s">
@@ -206,28 +263,22 @@
                     <h4 class="text-light mb-4">Gallery</h4>
                     <div class="row g-2">
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-1.jpg') }}"
-                                alt="">
+                            <img class="img-fluid w-100" src="img/gallery-1.jpg" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-2.jpg') }}"
-                                alt="">
+                            <img class="img-fluid w-100" src="img/gallery-2.jpg" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-3.jpg') }}"
-                                alt="">
+                            <img class="img-fluid w-100" src="img/gallery-3.jpg" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-4.jpg') }}"
-                                alt="">
+                            <img class="img-fluid w-100" src="img/gallery-4.jpg" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-5.jpg') }}"
-                                alt="">
+                            <img class="img-fluid w-100" src="img/gallery-5.jpg" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-6.jpg') }}"
-                                alt="">
+                            <img class="img-fluid w-100" src="img/gallery-6.jpg" alt="">
                         </div>
                     </div>
                 </div>
@@ -259,14 +310,14 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('assets-guest/lib/wow/wow.min.js') }}"></script>
-    <script src="{{ asset('assets-guest/lib/easing/easing.min.js') }}"></script>
-    <script src="{{ asset('assets-guest/lib/waypoints/waypoints.min.js') }}"></script>
-    <script src="{{ asset('assets-guest/lib/owlcarousel/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('assets-guest/lib/counterup/counterup.min.js') }}"></script>
+    <script src="{{asset('assets-guest/lib/wow/wow.min.js')}}"></script>
+    <script src="{{asset('assets-guest/lib/easing/easing.min.js')}}"></script>
+    <script src="{{asset('assets-guest/lib/waypoints/waypoints.min.js')}}"></script>
+    <script src="{{asset('assets-guest/lib/owlcarousel/owl.carousel.min.js')}}"></script>
+    <script src="{{asset('assets-guest/lib/counterup/counterup.min.js')}}"></script>
 
     <!-- Template Javascript -->
-    <script src="{{ asset('assets-guest/js/main.js') }}"></script>
+    <script src="{{asset('assets-guest/js/main.js')}}"></script>
 </body>
 
 </html>
