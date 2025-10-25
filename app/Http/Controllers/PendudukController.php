@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Penduduk;
 use App\Models\Warga;
 use Illuminate\Http\Request;
 
@@ -9,8 +8,8 @@ class PendudukController extends Controller
 {
     public function index()
     {
-        $penduduk = Warga::all();
-        return view('penduduk.index', compact('penduduk'));
+        $warga = Warga::all();
+        return view('penduduk.index', compact('warga'));
     }
 
     public function create()
@@ -21,41 +20,42 @@ class PendudukController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama'          => 'required',
-            'nik'           => 'required|unique:penduduk|max:16',
-            'alamat'        => 'required',
+            'nama'          => 'required|string|max:255',
+            'nik'           => 'required|numeric|unique:warga',
+            'alamat'        => 'required|string',
             'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required',
-            'pekerjaan'     => 'required',
+            'jenis_kelamin' => 'required|string',
         ]);
 
-        Penduduk::create($request->all());
+        warga::create($request->all());
 
         return redirect()->route('penduduk.index')->with('success', 'Data penduduk berhasil ditambahkan!');
     }
     public function edit($id)
     {
-        $penduduk = Penduduk::findOrFail($id);
-        return view('penduduk.edit', compact('penduduk'));
+        $warga = Warga::findOrFail($id);
+        return view('penduduk.edit', compact('warga'));
     }
 
     public function update(Request $request, $id)
     {
-        $penduduk = Penduduk::findOrFail($id);
-        $penduduk->update([
-            'nama'   => $request->nama,
-            'nik'    => $request->nik,
-            'alamat' => $request->alamat,
+        $warga = Warga::findOrFail($id);
+
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'nik'  => "required|numeric|unique:warga,nik,{$warga->id}",
+            'alamat'        => 'required|string',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required|string',
         ]);
 
-        return redirect()->route('penduduk.index')->with('success', 'Data berhasil diupdate!');
+        $warga->update($request->all());
+        return redirect()->route('penduduk.index')->with('success', 'Data warga berhasil diupdate!');
     }
 
     public function destroy($id)
     {
-        Penduduk::destroy($id);
-        $penduduk->delete();
-
-        return redirect()->route('penduduk.index')->with('success', 'Data penduduk berhasil dihapus!');
+        Warga::destroy($id);
+        return redirect()->route('penduduk.index')->with('success', 'Data warga berhasil dihapus!');
     }
 }

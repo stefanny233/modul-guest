@@ -13,8 +13,10 @@ return new class extends Migration
             $table->string('nama');
             $table->string('nik')->unique();
             $table->string('alamat');
+            $table->string('no_hp')->nullable();
             $table->timestamps();
         });
+
     }
 
     public function down(): void

@@ -1,17 +1,20 @@
 <?php
+
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Warga extends Model
 {
-    protected $table    = 'warga';
-    protected $fillable = ['nama', 'nik', 'alamat'];
+    use HasFactory;
 
-    // Relasi ke PerangkatDesa
-    public function perangkat()
-    {
-        return $this->hasMany(PerangkatDesa::class, 'warga_id');
-    }
-
+    protected $table = 'warga'; // pastikan sesuai nama tabel
+    protected $fillable = [
+        'nama',
+        'nik',
+        'alamat',
+        'tanggal_lahir',
+        'jenis_kelamin',
+    ];
 }
