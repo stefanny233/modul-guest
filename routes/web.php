@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\PendudukController;
+use App\Http\Controllers\WargaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PerangkatDesaController;
 
@@ -32,8 +32,8 @@ Route::get('/dashboard', function () {
 
 
 
-// ROUTE DATA PENDUDUK (Tanpa Middleware Auth)
-Route::resource('penduduk', PendudukController::class);
+// ROUTE DATA warga (Tanpa Middleware Auth)
+Route::resource('warga', WargaController::class);
 Route::resource('perangkat_desa', PerangkatDesaController::class);
 
 

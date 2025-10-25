@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Desa Sejahtera</title>
+    <title>Charitize - Charity Organization Website Template</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -57,8 +57,8 @@
                                 <i class="fa fa-phone-alt text-dark"></i>
                             </div>
                             <div class="ms-2">
-                                <h6 class="text-primary mb-0">Call Us</h6>
-                                <span class="text-white">+012 345 6789</span>
+                                <h6 class="text-primary mb-0">Kontak</h6>
+                                <span class="text-white">+628 122 3562</span>
                             </div>
                         </div>
                     </div>
@@ -68,8 +68,8 @@
                                 <i class="fa fa-envelope-open text-dark"></i>
                             </div>
                             <div class="ms-2">
-                                <h6 class="text-primary mb-0">Mail Us</h6>
-                                <span class="text-white">info@domain.com</span>
+                                <h6 class="text-primary mb-0">Email</h6>
+                                <span class="text-white">DesaSejahtera@domain.com</span>
                             </div>
                         </div>
                     </div>
@@ -79,8 +79,8 @@
                                 <i class="fa fa-map-marker-alt text-dark"></i>
                             </div>
                             <div class="ms-2">
-                                <h6 class="text-primary mb-0">Address</h6>
-                                <span class="text-white">123 Street, NY, USA</span>
+                                <h6 class="text-primary mb-0">Alamat</h6>
+                                <span class="text-white">Dusun II RT 04 RW 02</span>
                             </div>
                         </div>
                     </div>
@@ -103,17 +103,15 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav me-auto">
                         <a href="dashboard" class="nav-item nav-link">Home</a>
-                        <a href="dashbord" class="nav-item nav-link">Home</a>
                         <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
-                        <a href="{{ route('penduduk.index') }}" class="nav-item nav-link">Data Penduduk</a>
+                        <a href="{{ route('warga.index') }}" class="nav-item nav-link">Data Penduduk</a>
                         <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
+                        <div class="d-none d-lg-flex ms-auto">
+                            <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-youtube"></i></a>
+                        </div>
                     </div>
-                    <div class="d-none d-lg-flex ms-auto">
-                        <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
             </nav>
         </div>
     </div>
@@ -123,89 +121,82 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-4">
-            <h1 class="display-3 animated slideInDown">Data Penduduk Desa Sejahtera</h1>
+            <h1 class="display-3 animated slideInDown">Data Warga</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item"><a href="#!">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Data user</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Perangkat desa</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Data User</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Data Penduduk</li>
+                    <li class="breadcrumb-item"><a href="#!">Perangkat Desa</a></li>
                 </ol>
             </nav>
         </div>
     </div>
     <!-- Page Header End -->
 
-    <!-- Data Penduduk Start -->
-    <div class="container py-5">
-        <div class="text-center mb-4">
-            <h3 class="text-success fw-bold">Data Penduduk</h3>
-            <p class="text-muted">Kelola informasi warga desa dengan mudah dan teratur</p>
-            <a href="{{ route('penduduk.create') }}" class="btn btn-success fw-semibold">
-                <i class="fa fa-plus me-2"></i> Tambah Penduduk
-            </a>
-        </div>
+    <!-- Features Start -->
+    <div class="container mt-4">
+        <h3 class="fw-bold text-success">Data Warga</h3>
+        <a href="{{ route('warga.create') }}" class="btn btn-success mb-3">+ Tambah Warga</a>
 
-        <!-- Pesan sukses -->
         @if (session('success'))
             <div class="alert alert-success text-center">{{ session('success') }}</div>
         @endif
 
-        <div class="card shadow">
-            <div class="card-body">
-                <table class="table table-bordered align-middle text-center">
-                    <thead class="table-success">
-                        <tr>
-                            <th>No</th>
-                            <th>NIK</th>
-                            <th>Nama</th>
-                            <th>Alamat</th>
-                            <th>Tanggal Lahir</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($warga as $index => $item)
-                            <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $item->nik }}</td>
-                                <td>{{ $item->nama }}</td>
-                                <td>{{ $item->alamat }}</td>
-                                <td>{{ $item->tanggal_lahir }}</td>
-                                <td>{{ $item->jenis_kelamin }}</td>
-                                <td>
-                                    <a href="{{ route('penduduk.edit', $item->id) }}"
-                                        class="btn btn-sm btn-outline-success">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <form action="{{ route('penduduk.destroy', $item->id) }}" method="POST"
-                                        class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="7" class="text-center text-muted">Belum ada data penduduk.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <table class="table table-bordered text-center align-middle">
+            <thead class="table-success">
+                <tr>
+                    <th>No</th>
+                    <th>No KTP</th>
+                    <th>Nama</th>
+                    <th>Jenis Kelamin</th>
+                    <th>Agama</th>
+                    <th>Pekerjaan</th>
+                    <th>Telp</th>
+                    <th>Email</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($warga as $index => $item)
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $item->no_ktp }}</td>
+                        <td>{{ $item->nama }}</td>
+                        <td>{{ $item->jenis_kelamin }}</td>
+                        <td>{{ $item->agama }}</td>
+                        <td>{{ $item->pekerjaan }}</td>
+                        <td>{{ $item->telp }}</td>
+                        <td>{{ $item->email }}</td>
+                        <td>
+                            <a href="{{ route('warga.edit', $item->id) }}" class="btn btn-sm btn-outline-success">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <form action="{{ route('warga.destroy', $item->id) }}" method="POST" class="d-inline"
+                                onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="9" class="text-muted">Belum ada data warga.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
-    <!-- Data Penduduk End -->
+    <!-- Features End -->
 
     <!-- Footer Start -->
     <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container">
             <div class="row g-5 py-5">
-                <div class="col-lg-3 col-md-7">
+                <div class="col-lg-3 col-md-6">
                     <h4 class="text-light mb-4">Our Office</h4>
                     <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
                     <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
@@ -276,8 +267,7 @@
                         <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
                         <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
                         <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
-                        Designed By <a class="fw-semi-bold" href="https://htmlcodex.com">HTML Codex</a>.
-                        Distributed
+                        Designed By <a class="fw-semi-bold" href="https://htmlcodex.com">HTML Codex</a>. Distributed
                         by
                         <a class="fw-semi-bold" href="https://themewagon.com">ThemeWagon</a>
                     </div>

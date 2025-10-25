@@ -57,8 +57,8 @@
                                 <i class="fa fa-phone-alt text-dark"></i>
                             </div>
                             <div class="ms-2">
-                                <h6 class="text-primary mb-0">Call Us</h6>
-                                <span class="text-white">+012 345 6789</span>
+                                <h6 class="text-primary mb-0">Kontak</h6>
+                                <span class="text-white">+628 122 3562</span>
                             </div>
                         </div>
                     </div>
@@ -68,8 +68,8 @@
                                 <i class="fa fa-envelope-open text-dark"></i>
                             </div>
                             <div class="ms-2">
-                                <h6 class="text-primary mb-0">Mail Us</h6>
-                                <span class="text-white">info@domain.com</span>
+                                <h6 class="text-primary mb-0">Email</h6>
+                                <span class="text-white">DesaSejahtera@domain.com</span>
                             </div>
                         </div>
                     </div>
@@ -79,8 +79,8 @@
                                 <i class="fa fa-map-marker-alt text-dark"></i>
                             </div>
                             <div class="ms-2">
-                                <h6 class="text-primary mb-0">Address</h6>
-                                <span class="text-white">123 Street, NY, USA</span>
+                                <h6 class="text-primary mb-0">Alamat</h6>
+                                <span class="text-white">Dusun II RT 04 RW 02</span>
                             </div>
                         </div>
                     </div>
@@ -103,17 +103,15 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav me-auto">
                         <a href="dashboard" class="nav-item nav-link">Home</a>
-                        <a href="dashboard" class="nav-item nav-link">Home</a>
                         <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
-                        <a href="{{ route('penduduk.index') }}" class="nav-item nav-link">Data Penduduk</a>
+                        <a href="{{ route('warga.index') }}" class="nav-item nav-link">Data Penduduk</a>
                         <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
+                        <div class="d-none d-lg-flex ms-auto">
+                            <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-youtube"></i></a>
+                        </div>
                     </div>
-                    <div class="d-none d-lg-flex ms-auto">
-                        <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
             </nav>
         </div>
     </div>
@@ -121,146 +119,64 @@
 
 
     <!-- Page Header Start -->
-    <div class="container py-5">
-        <h3 class="text-success mb-4">Tambah Data Penduduk</h3>
-
-        <form action="{{ route('penduduk.store') }}" method="POST">
-            @csrf
-            <div class="mb-3">
-                <label>Nama</label>
-                <input type="text" name="nama" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label>Email</label>
-                <input type="email" name="email" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label>Jenis Kelamin</label>
-                <select name="jenis_kelamin" class="form-select" required>
-                    <option value="">-- Pilih Jenis Kelamin --</option>
-                    <option value="Laki-laki">Laki-laki</option>
-                    <option value="Perempuan">Perempuan</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label>Agama</label>
-                <input type="text" name="agama" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label>Pekerjaan</label>
-                <input type="text" name="pekerjaan" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-success">Simpan</button>
-            <a href="{{ route('penduduk.index') }}" class="btn btn-secondary">Batal</a>
-        </form>
+    <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container text-center py-4">
+            <h1 class="display-3 animated slideInDown">Data Warga</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb justify-content-center mb-0">
+                    <li class="breadcrumb-item"><a href="#!">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Pages</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Feature</li>
+                </ol>
+            </nav>
+        </div>
     </div>
     <!-- Page Header End -->
 
-    <!-- Event Start -->
+    <!-- Features Start -->
     <div class="container mt-4">
-        <h3>Tambah Data Penduduk</h3>
-
-        <form action="{{ route('penduduk.store') }}" method="POST">
+        <h3 class="fw-bold text-success">Edit Data Warga</h3>
+        <form action="{{ route('warga.update', $warga->id) }}" method="POST">
             @csrf
+            @method('PUT')
             <div class="mb-3">
                 <label>No KTP</label>
-                <input type="text" name="no_ktp" class="form-control" required>
+                <input type="text" name="no_ktp" value="{{ $warga->no_ktp }}" class="form-control" required>
             </div>
             <div class="mb-3">
                 <label>Nama</label>
-                <input type="text" name="nama" class="form-control" required>
+                <input type="text" name="nama" value="{{ $warga->nama }}" class="form-control" required>
             </div>
             <div class="mb-3">
                 <label>Jenis Kelamin</label>
-                <select name="jenis_kelamin" class="form-select" required>
-                    <option value="">-- Pilih --</option>
-                    <option value="Laki-laki">Laki-laki</option>
-                    <option value="Perempuan">Perempuan</option>
+                <select name="jenis_kelamin" class="form-control" required>
+                    <option value="Laki-laki" {{ $warga->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki
+                    </option>
+                    <option value="Perempuan" {{ $warga->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan
+                    </option>
                 </select>
             </div>
             <div class="mb-3">
                 <label>Agama</label>
-                <input type="text" name="agama" class="form-control" required>
+                <input type="text" name="agama" value="{{ $warga->agama }}" class="form-control">
             </div>
             <div class="mb-3">
                 <label>Pekerjaan</label>
-                <input type="text" name="pekerjaan" class="form-control" required>
+                <input type="text" name="pekerjaan" value="{{ $warga->pekerjaan }}" class="form-control">
             </div>
             <div class="mb-3">
-                <label>No HP</label>
-                <input type="text" name="telp" class="form-control">
+                <label>Telp</label>
+                <input type="text" name="telp" value="{{ $warga->telp }}" class="form-control">
             </div>
             <div class="mb-3">
                 <label>Email</label>
-                <input type="email" name="email" class="form-control">
+                <input type="email" name="email" value="{{ $warga->email }}" class="form-control">
             </div>
-
-            <button type="submit" class="btn btn-success">Simpan</button>
-            <a href="{{ route('penduduk.index') }}" class="btn btn-secondary">Kembali</a>
+            <button type="submit" class="btn btn-success">Update</button>
+            <a href="{{ route('warga.index') }}" class="btn btn-secondary">Batal</a>
         </form>
-
     </div>
-    <!-- Event End -->
-
-    <!-- Testimonial Start -->
-    <div class="container py-5">
-        <div class="text-center mb-4">
-            <h3 class="text-success fw-bold">Data Penduduk Desa Sejahtera </h3>
-            <p class="text-muted">Kelola informasi warga desa dengan mudah dan transparan</p>
-            <a href="{{ route('penduduk.create') }}" class="btn btn-warning fw-semibold text-dark">
-                <i class="fa fa-plus me-2"></i>Tambah Penduduk Warga
-            </a>
-        </div>
-
-        <div class="card shadow">
-            <div class="card-body">
-                <table class="table table-bordered align-middle text-center">
-                    <thead class="table-success">
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Email</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Agama</th>
-                            <th>Pekerjaan</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Siti Rahmawati</td>
-                            <td>siti@gmail.com</td>
-                            <td>Perempuan</td>
-                            <td>Islam</td>
-                            <td>Guru</td>
-                            <td>
-                                <a href="{{ url('guest/edit/1') }}" class="btn btn-sm btn-outline-success"><i
-                                        class="fa fa-edit"></i></a>
-                                <a href="#!" onclick="return confirm('Yakin ingin hapus data ini?')"
-                                    class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Agus Setiawan</td>
-                            <td>agus@gmail.com</td>
-                            <td>Laki-laki</td>
-                            <td>Islam</td>
-                            <td>Petani</td>
-                            <td>
-                                <a href="{{ url('guest/edit/2') }}" class="btn btn-sm btn-outline-success"><i
-                                        class="fa fa-edit"></i></a>
-                                <a href="#!" onclick="return confirm('Yakin ingin hapus data ini?')"
-                                    class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <!-- Testimonial End -->
+    <!-- Features End -->
 
     <!-- Footer Start -->
     <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.1s">
@@ -268,9 +184,9 @@
             <div class="row g-5 py-5">
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-light mb-4">Our Office</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Dusun II RT 04 RW 02</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+628 122 3562</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>DesaSejahtera@domain.com</p>
                     <div class="d-flex pt-3">
                         <a class="btn btn-square btn-primary me-2" href="#!"><i
                                 class="fab fa-x-twitter"></i></a>
@@ -302,22 +218,28 @@
                     <h4 class="text-light mb-4">Gallery</h4>
                     <div class="row g-2">
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="img/gallery-1.jpg" alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-1.jpg') }}"
+                                alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="img/gallery-2.jpg" alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-2.jpg') }}"
+                                alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="img/gallery-3.jpg" alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-3.jpg') }}"
+                                alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="img/gallery-4.jpg" alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-4.jpg') }}"
+                                alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="img/gallery-5.jpg" alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-5.jpg') }}"
+                                alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="img/gallery-6.jpg" alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-6.jpg') }}"
+                                alt="">
                         </div>
                     </div>
                 </div>
@@ -349,14 +271,14 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
+    <script src="{{ asset('assets-guest/lib/wow/wow.min.js') }}"></script>
+    <script src="{{ asset('assets-guest/lib/easing/easing.min.js') }}"></script>
+    <script src="{{ asset('assets-guest/lib/waypoints/waypoints.min.js') }}"></script>
+    <script src="{{ asset('assets-guest/lib/owlcarousel/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assets-guest/lib/counterup/counterup.min.js') }}"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="{{ asset('assets-guest/js/main.js') }}"></script>
 </body>
 
 </html>

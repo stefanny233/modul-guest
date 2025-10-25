@@ -104,7 +104,7 @@
                     <div class="navbar-nav me-auto">
                         <a href="dashbord" class="nav-item nav-link">Home</a>
                         <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
-                        <a href="{{ route('penduduk.index') }}" class="nav-item nav-link">Data Penduduk</a>
+                        <a href="{{ route('warga.index') }}" class="nav-item nav-link">Data Penduduk</a>
                         <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
                     </div>
                     <div class="d-none d-lg-flex ms-auto">
@@ -390,9 +390,9 @@
             <div class="row g-5 py-5">
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-light mb-4">Our Office</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Dusun II RT 04 RW 02</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+628 122 3562</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>DesaSejahtera@domain.com</p>
                     <div class="d-flex pt-3">
                         <a class="btn btn-square btn-primary me-2" href="#!"><i
                                 class="fab fa-x-twitter"></i></a>
@@ -424,27 +424,27 @@
                     <h4 class="text-light mb-4">Gallery</h4>
                     <div class="row g-2">
                         <div class="col-4">
-                            <img class="{{ asset('assets-guest/img-fluid w-100" src="img/gallery-1.jpg') }}"
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-1.jpg') }}"
                                 alt="">
                         </div>
                         <div class="col-4">
-                            <img class="{{ asset('assets-guest/img-fluid w-100" src="img/gallery-2.jpg') }}"
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-2.jpg') }}"
                                 alt="">
                         </div>
                         <div class="col-4">
-                            <img class="{{ asset('assets-guest/img-fluid w-100" src="img/gallery-3.jpg') }}"
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-3.jpg') }}"
                                 alt="">
                         </div>
                         <div class="col-4">
-                            <img class="{{ asset('assets-guest/img-fluid w-100" src="img/gallery-4.jpg') }}"
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-4.jpg') }}"
                                 alt="">
                         </div>
                         <div class="col-4">
-                            <img class="{{ asset('assets-guest/img-fluid w-100" src="img/gallery-5.jpg') }}"
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-5.jpg') }}"
                                 alt="">
                         </div>
                         <div class="col-4">
-                            <img class="{{ asset('assets-guest/img-fluid w-100" src="img/gallery-6.jpg') }}"
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-6.jpg') }}"
                                 alt="">
                         </div>
                     </div>
