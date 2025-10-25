@@ -103,8 +103,9 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav me-auto">
                         <a href="dashboard" class="nav-item nav-link">Home</a>
-                        <a href="penduduk" class="nav-item nav-link">Penduduk Desa</a>
-                        <a href="perangkat_desa" class="nav-item nav-link active">Perangkat Desa</a>
+                        <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
+                        <a href="{{ route('penduduk.index') }}" class="nav-item nav-link">Data Penduduk</a>
+                        <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
                     </div>
                     <div class="d-none d-lg-flex ms-auto">
                         <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>

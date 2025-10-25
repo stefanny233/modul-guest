@@ -20,17 +20,19 @@ class PendudukController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'no_ktp'        => 'required|unique:warga,no_ktp',
             'nama'          => 'required|string|max:255',
-            'nik'           => 'required|numeric|unique:warga',
-            'alamat'        => 'required|string',
-            'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|string',
+            'jenis_kelamin' => 'required',
+            'agama'         => 'required',
+            'pekerjaan'     => 'required',
+            'telp'          => 'nullable',
+            'email'         => 'nullable|email',
         ]);
 
-        warga::create($request->all());
-
+        Warga::create($request->all());
         return redirect()->route('penduduk.index')->with('success', 'Data penduduk berhasil ditambahkan!');
     }
+
     public function edit($id)
     {
         $warga = Warga::findOrFail($id);
@@ -40,22 +42,13 @@ class PendudukController extends Controller
     public function update(Request $request, $id)
     {
         $warga = Warga::findOrFail($id);
-
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'nik'  => "required|numeric|unique:warga,nik,{$warga->id}",
-            'alamat'        => 'required|string',
-            'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|string',
-        ]);
-
         $warga->update($request->all());
-        return redirect()->route('penduduk.index')->with('success', 'Data warga berhasil diupdate!');
+        return redirect()->route('penduduk.index')->with('success', 'Data penduduk berhasil diperbarui!');
     }
 
     public function destroy($id)
     {
         Warga::destroy($id);
-        return redirect()->route('penduduk.index')->with('success', 'Data warga berhasil dihapus!');
+        return redirect()->route('penduduk.index')->with('success', 'Data penduduk berhasil dihapus!');
     }
 }

@@ -125,8 +125,8 @@
             <h1 class="display-3 animated slideInDown">Perangkat Desa</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="#!">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Pages</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Data</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Data Penduduk</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Perangkat Desa</li>
                 </ol>
             </nav>
@@ -136,40 +136,43 @@
 
 
     <!-- Perangkat Desa List Start -->
-<div class="container-fluid py-5">
-    <div class="container">
-        <div class="text-center mb-5">
-            <a href="{{ route('perangkat_desa.create') }}" class="btn btn-primary mt-3">Tambah Perangkat</a>
-        </div>
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <a href="{{ route('perangkat_desa.create') }}" class="btn btn-primary mt-3">Tambah Perangkat</a>
+            </div>
 
-        @if (session('success'))
-            <div class="alert alert-success text-center">{{ session('success') }}</div>
-        @endif
+            @if (session('success'))
+                <div class="alert alert-success text-center">{{ session('success') }}</div>
+            @endif
 
-        <div class="row g-4">
-            @foreach ($perangkat as $p)
-                <div class="col-md-6 col-lg-4">
-                    <div class="donation-item d-flex h-100 p-4">
-                        <div class="donation-detail">
-                            <div class="position-relative mb-4">
-                                @if ($p->foto)
-                                    <img class="img-fluid w-100 rounded" src="{{ asset('storage/' . $p->foto) }}" alt="Foto Perangkat">
-                                @else
-                                    <img class="img-fluid w-100 rounded" src="{{ asset('img/default.jpg') }}" alt="Default Foto">
-                                @endif
+            <div class="row g-4">
+                @foreach ($perangkat as $p)
+                    <div class="col-md-6 col-lg-4">
+                        <div class="donation-item d-flex h-100 p-4">
+                            <div class="donation-detail">
+                                <div class="position-relative mb-4">
+                                    @if ($p->foto)
+                                        <img class="img-fluid w-100 rounded" src="{{ asset('storage/' . $p->foto) }}"
+                                            alt="Foto Perangkat">
+                                    @else
+                                        <img class="img-fluid w-100 rounded" src="{{ asset('img/default.jpg') }}"
+                                            alt="Default Foto">
+                                    @endif
+                                </div>
+                                <h3 class="h5">{{ $p->jabatan }}</h3>
+                                <p><strong>Warga ID:</strong> {{ $p->warga_id }}</p>
+                                <p><strong>NIP:</strong> {{ $p->nip ?? '-' }}</p>
+                                <p><strong>Kontak:</strong> {{ $p->kontak }}</p>
+                                <p><strong>Periode:</strong> {{ $p->periode_mulai }} -
+                                    {{ $p->periode_selesai ?? 'Sekarang' }}</p>
                             </div>
-                            <h3 class="h5">{{ $p->jabatan }}</h3>
-                            <p><strong>Warga ID:</strong> {{ $p->warga_id }}</p>
-                            <p><strong>NIP:</strong> {{ $p->nip ?? '-' }}</p>
-                            <p><strong>Kontak:</strong> {{ $p->kontak }}</p>
-                            <p><strong>Periode:</strong> {{ $p->periode_mulai }} - {{ $p->periode_selesai ?? 'Sekarang' }}</p>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
     </div>
-</div>
 
     <!-- Perangkat Desa List End -->
 

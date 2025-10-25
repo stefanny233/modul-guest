@@ -102,8 +102,9 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav me-auto">
                         <a href="dashboard" class="nav-item nav-link">Home</a>
-                        <a href="penduduk" class="nav-item nav-link">Penduduk Desa</a>
-                        <a href="$perangkatDesa" class="nav-item nav-link active">Perangkat Desa</a>
+                        <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
+                        <a href="{{ route('penduduk.index') }}" class="nav-item nav-link">Data Penduduk</a>
+                        <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
                     </div>
                     <div class="d-none d-lg-flex ms-auto">
                         <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
@@ -120,11 +121,13 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-4">
-            <h1 class="display-3 animated slideInDown">Bina Desa</h1>
+            <h1 class="display-3 animated slideInDown">Pendaftaran
+            </h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item"><a href="#!">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Pages</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Data User</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Data Penduduk</a></li>
                     <li class="breadcrumb-item active" aria-current="page"> Perangkat Desa</li>
                 </ol>
             </nav>
@@ -133,69 +136,70 @@
     <!-- Page Header End -->
 
     <!-- Tambah $perangkatDesa Desa Start -->
-<div class="container-fluid donate py-5">
-    <div class="container">
-        <div class="row g-0">
-            <div class="col-lg-7 donate-text bg-light py-5">
-                <div class="h-100 p-5">
-                    <h1 class="display-6 mb-4">Tambah Data Perangkat Desa</h1>
-                    <form action="{{ route('perangkat_desa.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="row g-3">
-                            <div class="col-12">
-                                <label>Warga ID</label>
-                                <input type="text" name="warga_id" class="form-control" required>
-                            </div>
+    <div class="container-fluid donate py-5">
+        <div class="container">
+            <div class="row g-0">
+                <div class="col-lg-7 donate-text bg-light py-5">
+                    <div class="h-100 p-5">
+                        <h1 class="display-6 mb-4">Tambah Data Perangkat Desa</h1>
+                        <form action="{{ route('perangkat_desa.store') }}" method="POST"
+                            enctype="multipart/form-data">
+                            @csrf
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label>Warga ID</label>
+                                    <input type="text" name="warga_id" class="form-control" required>
+                                </div>
 
-                            <div class="col-12">
-                                <label>Jabatan</label>
-                                <input type="text" name="jabatan" class="form-control" required>
-                            </div>
+                                <div class="col-12">
+                                    <label>Jabatan</label>
+                                    <input type="text" name="jabatan" class="form-control" required>
+                                </div>
 
-                            <div class="col-12">
-                                <label>NIP</label>
-                                <input type="text" name="nip" class="form-control">
-                            </div>
+                                <div class="col-12">
+                                    <label>NIP</label>
+                                    <input type="text" name="nip" class="form-control">
+                                </div>
 
-                            <div class="col-12">
-                                <label>Kontak</label>
-                                <input type="text" name="kontak" class="form-control" required>
-                            </div>
+                                <div class="col-12">
+                                    <label>Kontak</label>
+                                    <input type="text" name="kontak" class="form-control" required>
+                                </div>
 
-                            <div class="col-6">
-                                <label>Periode Mulai</label>
-                                <input type="date" name="periode_mulai" class="form-control" required>
-                            </div>
+                                <div class="col-6">
+                                    <label>Periode Mulai</label>
+                                    <input type="date" name="periode_mulai" class="form-control" required>
+                                </div>
 
-                            <div class="col-6">
-                                <label>Periode Selesai</label>
-                                <input type="date" name="periode_selesai" class="form-control">
-                            </div>
+                                <div class="col-6">
+                                    <label>Periode Selesai</label>
+                                    <input type="date" name="periode_selesai" class="form-control">
+                                </div>
 
-                            <div class="col-12">
-                                <label>Foto</label>
-                                <input type="file" name="foto" class="form-control">
-                            </div>
+                                <div class="col-12">
+                                    <label>Foto</label>
+                                    <input type="file" name="foto" class="form-control">
+                                </div>
 
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary w-100 py-3">
-                                    Simpan Data
-                                </button>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary w-100 py-3">
+                                        Simpan Data
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-lg-5 bg-primary text-center text-white py-5">
-                <div class="h-100 p-5">
-                    <h2 class="display-6 mb-4">Pastikan Data Terisi Lengkap</h2>
-                    <p>Isi semua kolom dengan benar dan upload foto perangkat desa jika tersedia.</p>
+                <div class="col-lg-5 bg-primary text-center text-white py-5">
+                    <div class="h-100 p-5">
+                        <h2 class="display-6 mb-4">Pastikan Data Terisi Lengkap</h2>
+                        <p>Isi semua kolom dengan benar dan upload foto perangkat desa jika tersedia.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
     <!-- Tambah $perangkatDesa Desa End -->
 
 

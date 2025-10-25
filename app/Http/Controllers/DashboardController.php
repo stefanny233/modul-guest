@@ -6,60 +6,56 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $totalPerangkat = PerangkatDesa::count();
-        return view('guest.dashboard', compact('totalPerangkat'));
+        return view('guest.index', compact('totalWarga'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('guest.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email|unique:warga,email',
+        ]);
+
+        Warga::create($request->all());
+        return redirect()->route('dashboard.index')->with('success', 'Data berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $warga = Warga::findOrFail($id);
+        return view('guest.edit', compact('warga'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $warga = Warga::findOrFail($id);
+
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email|unique:warga,email,' . $warga->id,
+        ]);
+
+        $warga->update($request->all());
+        return redirect()->route('dashboard.index')->with('success', 'Data berhasil diperbarui!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        Warga::destroy($id);
+        return redirect()->route('dashboard.index')->with('success', 'Data berhasil dihapus!');
     }
 }

@@ -22,14 +22,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="{{ asset('assets-guest/lib/animate/animate.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets-guest/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('assets-guest/css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="{{ asset('assets-guest/css/style.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -102,22 +102,11 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav me-auto">
-                        <a href="index.html" class="nav-item nav-link">Home</a>
-                        <a href="about.html" class="nav-item nav-link">About</a>
-                        <a href="service.html" class="nav-item nav-link">Service</a>
-                        <a href="donation.html" class="nav-item nav-link">Donation</a>
-                        <div class="nav-item dropdown">
-                            <a href="#!" class="nav-link dropdown-toggle active"
-                                data-bs-toggle="dropdown">Pages</a>
-                            <div class="dropdown-menu bg-light m-0">
-                                <a href="event.html" class="dropdown-item active">Event</a>
-                                <a href="feature.html" class="dropdown-item">Feature</a>
-                                <a href="team.html" class="dropdown-item">Our Team</a>
-                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                <a href="404.html" class="dropdown-item">404 Page</a>
-                            </div>
-                        </div>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        <a href="dashboard" class="nav-item nav-link">Home</a>
+                        <a href="dashboard" class="nav-item nav-link">Home</a>
+                        <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
+                        <a href="{{ route('penduduk.index') }}" class="nav-item nav-link">Data Penduduk</a>
+                        <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
                     </div>
                     <div class="d-none d-lg-flex ms-auto">
                         <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
@@ -132,81 +121,146 @@
 
 
     <!-- Page Header Start -->
-    <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container text-center py-4">
-            <h1 class="display-3 animated slideInDown">Event</h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="#!">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Pages</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Event</li>
-                </ol>
-            </nav>
-        </div>
+    <div class="container py-5">
+        <h3 class="text-success mb-4">Tambah Data Penduduk</h3>
+
+        <form action="{{ route('penduduk.store') }}" method="POST">
+            @csrf
+            <div class="mb-3">
+                <label>Nama</label>
+                <input type="text" name="nama" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Email</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Jenis Kelamin</label>
+                <select name="jenis_kelamin" class="form-select" required>
+                    <option value="">-- Pilih Jenis Kelamin --</option>
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label>Agama</label>
+                <input type="text" name="agama" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Pekerjaan</label>
+                <input type="text" name="pekerjaan" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-success">Simpan</button>
+            <a href="{{ route('penduduk.index') }}" class="btn btn-secondary">Batal</a>
+        </form>
     </div>
     <!-- Page Header End -->
 
     <!-- Event Start -->
-        <div class="container mt-4">
-            <h3>Tambah Data Penduduk</h3>
+    <div class="container mt-4">
+        <h3>Tambah Data Penduduk</h3>
 
-            <form action="{{ route('penduduk.store') }}" method="POST">
-                @csrf
+        <form action="{{ route('penduduk.store') }}" method="POST">
+            @csrf
+            <div class="mb-3">
+                <label>No KTP</label>
+                <input type="text" name="no_ktp" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Nama</label>
+                <input type="text" name="nama" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Jenis Kelamin</label>
+                <select name="jenis_kelamin" class="form-select" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label>Agama</label>
+                <input type="text" name="agama" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Pekerjaan</label>
+                <input type="text" name="pekerjaan" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>No HP</label>
+                <input type="text" name="telp" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label>Email</label>
+                <input type="email" name="email" class="form-control">
+            </div>
 
-                <div class="mb-3">
-                    <label>Nama</label>
-                    <input type="text" name="nama" value="{{ old('nama') }}"
-                        class="form-control @error('nama') is-invalid @enderror">
-                    @error('nama')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
+            <button type="submit" class="btn btn-success">Simpan</button>
+            <a href="{{ route('penduduk.index') }}" class="btn btn-secondary">Kembali</a>
+        </form>
 
-                <div class="mb-3">
-                    <label>NIK</label>
-                    <input type="text" name="nik" value="{{ old('nik') }}"
-                        class="form-control @error('nik') is-invalid @enderror">
-                    @error('nik')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label>Alamat</label>
-                    <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror">{{ old('alamat') }}</textarea>
-                    @error('alamat')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label>Tanggal Lahir</label>
-                    <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}"
-                        class="form-control @error('tanggal_lahir') is-invalid @enderror">
-                    @error('tanggal_lahir')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label>Jenis Kelamin</label>
-                    <select name="jenis_kelamin" class="form-control @error('jenis_kelamin') is-invalid @enderror">
-                        <option value="">-- Pilih --</option>
-                        <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki
-                        </option>
-                        <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan
-                        </option>
-                    </select>
-                    @error('jenis_kelamin')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-
-                <button type="submit" class="btn btn-success">Simpan</button>
-                <a href="{{ route('penduduk.index') }}" class="btn btn-secondary">Kembali</a>
-            </form>
-        </div>
+    </div>
     <!-- Event End -->
+
+    <!-- Testimonial Start -->
+    <div class="container py-5">
+        <div class="text-center mb-4">
+            <h3 class="text-success fw-bold">Data Penduduk Desa Sejahtera </h3>
+            <p class="text-muted">Kelola informasi warga desa dengan mudah dan transparan</p>
+            <a href="{{ route('penduduk.create') }}" class="btn btn-warning fw-semibold text-dark">
+                <i class="fa fa-plus me-2"></i>Tambah Penduduk Warga
+            </a>
+        </div>
+
+        <div class="card shadow">
+            <div class="card-body">
+                <table class="table table-bordered align-middle text-center">
+                    <thead class="table-success">
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Agama</th>
+                            <th>Pekerjaan</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Siti Rahmawati</td>
+                            <td>siti@gmail.com</td>
+                            <td>Perempuan</td>
+                            <td>Islam</td>
+                            <td>Guru</td>
+                            <td>
+                                <a href="{{ url('guest/edit/1') }}" class="btn btn-sm btn-outline-success"><i
+                                        class="fa fa-edit"></i></a>
+                                <a href="#!" onclick="return confirm('Yakin ingin hapus data ini?')"
+                                    class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Agus Setiawan</td>
+                            <td>agus@gmail.com</td>
+                            <td>Laki-laki</td>
+                            <td>Islam</td>
+                            <td>Petani</td>
+                            <td>
+                                <a href="{{ url('guest/edit/2') }}" class="btn btn-sm btn-outline-success"><i
+                                        class="fa fa-edit"></i></a>
+                                <a href="#!" onclick="return confirm('Yakin ingin hapus data ini?')"
+                                    class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Testimonial End -->
 
     <!-- Footer Start -->
     <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.1s">

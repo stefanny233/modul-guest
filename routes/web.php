@@ -25,7 +25,7 @@ Route::resource('login', LoginController::class)->only(['index', 'store']);
 
 // dashboard diarahkan ke view/admin/dashboard.blade.php
 Route::get('/dashboard', function () {
-    return view('guest.dashboard');
+    return view('guest.index');
 })->name('guest.dashboard');
 
 

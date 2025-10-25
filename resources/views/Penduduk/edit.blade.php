@@ -139,7 +139,7 @@
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item"><a href="#!">Home</a></li>
                     <li class="breadcrumb-item"><a href="#!">Pages</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Event</li>
+                    <li class="breadcrumb-item active" aria-current="page">Data Penduduk Desa Sejahtera</li>
                 </ol>
             </nav>
         </div>
@@ -171,14 +171,14 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
         <!-- Libraries Stylesheet -->
-        <link href="lib/animate/animate.min.css" rel="stylesheet">
-        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="{{ asset('assets-guest/lib/animate/animate.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('assets-guest/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
 
         <!-- Customized Bootstrap Stylesheet -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="{{ asset('assets-guest/css/bootstrap.min.css') }}" rel="stylesheet">
 
         <!-- Template Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
+        <link href="{{ asset('assets-guest/css/style.css') }}" rel="stylesheet">
     </head>
 
     <body>
@@ -251,22 +251,9 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav me-auto">
-                            <a href="index.html" class="nav-item nav-link">Home</a>
-                            <a href="about.html" class="nav-item nav-link">About</a>
-                            <a href="service.html" class="nav-item nav-link">Service</a>
-                            <a href="donation.html" class="nav-item nav-link">Donation</a>
-                            <div class="nav-item dropdown">
-                                <a href="#!" class="nav-link dropdown-toggle active"
-                                    data-bs-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu bg-light m-0">
-                                    <a href="event.html" class="dropdown-item active">Event</a>
-                                    <a href="feature.html" class="dropdown-item">Feature</a>
-                                    <a href="team.html" class="dropdown-item">Our Team</a>
-                                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                    <a href="404.html" class="dropdown-item">404 Page</a>
-                                </div>
-                            </div>
-                            <a href="contact.html" class="nav-item nav-link">Contact</a>
+                            <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
+                            <a href="{{ route('penduduk.index') }}" class="nav-item nav-link">Data Penduduk</a>
+                            <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
                         </div>
                         <div class="d-none d-lg-flex ms-auto">
                             <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
@@ -279,22 +266,6 @@
             </div>
         </div>
         <!-- Navbar End -->
-
-
-        <!-- Page Header Start -->
-        <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
-            <div class="container text-center py-4">
-                <h1 class="display-3 animated slideInDown">Event</h1>
-                <nav aria-label="breadcrumb animated slideInDown">
-                    <ol class="breadcrumb justify-content-center mb-0">
-                        <li class="breadcrumb-item"><a href="#!">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#!">Pages</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Event</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-        <!-- Page Header End -->
 
         <!-- Event Start -->
         <div class="container mt-4">
@@ -345,7 +316,8 @@
                     <select name="jenis_kelamin" class="form-control @error('jenis_kelamin') is-invalid @enderror">
                         <option value="">-- Pilih --</option>
                         <option value="Laki-laki"
-                            {{ old('jenis_kelamin', $warga->jenis_kelamin) == 'Laki-laki' ? 'selected' : '' }}>Laki-laki
+                            {{ old('jenis_kelamin', $warga->jenis_kelamin) == 'Laki-laki' ? 'selected' : '' }}>
+                            Laki-laki
                         </option>
                         <option value="Perempuan"
                             {{ old('jenis_kelamin', $warga->jenis_kelamin) == 'Perempuan' ? 'selected' : '' }}>
@@ -361,7 +333,65 @@
             </form>
         </div>
         <!-- Event End -->
+        <!-- Testimonial Start -->
+        <div class="container py-5">
+            <div class="text-center mb-4">
+                <h3 class="text-success fw-bold">Data Penduduk Desa Sejahtera</h3>
+                <p class="text-muted">Kelola informasi warga desa dengan mudah dan transparan</p>
+                <a href="{{ route('penduduk.create') }}" class="btn btn-warning fw-semibold text-dark">
+                    <i class="fa fa-plus me-2"></i>Tambah Penduduk Warga
+                </a>
+            </div>
 
+            <div class="card shadow">
+                <div class="card-body">
+                    <table class="table table-bordered align-middle text-center">
+                        <thead class="table-success">
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Jenis Kelamin</th>
+                                <th>Agama</th>
+                                <th>Pekerjaan</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Siti Rahmawati</td>
+                                <td>siti@gmail.com</td>
+                                <td>Perempuan</td>
+                                <td>Islam</td>
+                                <td>Guru</td>
+                                <td>
+                                    <a href="{{ url('guest/edit/1') }}" class="btn btn-sm btn-outline-success"><i
+                                            class="fa fa-edit"></i></a>
+                                    <a href="#!" onclick="return confirm('Yakin ingin hapus data ini?')"
+                                        class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Agus Setiawan</td>
+                                <td>agus@gmail.com</td>
+                                <td>Laki-laki</td>
+                                <td>Islam</td>
+                                <td>Petani</td>
+                                <td>
+                                    <a href="{{ url('guest/edit/2') }}" class="btn btn-sm btn-outline-success"><i
+                                            class="fa fa-edit"></i></a>
+                                    <a href="#!" onclick="return confirm('Yakin ingin hapus data ini?')"
+                                        class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Testimonial End -->
         <!-- Footer Start -->
         <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.1s">
             <div class="container">
@@ -372,13 +402,13 @@
                         <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
                         <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
                         <div class="d-flex pt-3">
-                            <a class="btn btn-square btn-primary me-2" href="#!"><i
+                            <a class="{{ asset('assets-guest/btn btn-square btn-primary me-2') }}" href="#!"><i
                                     class="fab fa-x-twitter"></i></a>
-                            <a class="btn btn-square btn-primary me-2" href="#!"><i
+                            <a class="{{ asset('assets-guest/btn btn-square btn-primary me-2') }}" href="#!"><i
                                     class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-primary me-2" href="#!"><i
+                            <a class="{{ asset('assets-guest/btn btn-square btn-primary me-2') }}" href="#!"><i
                                     class="fab fa-youtube"></i></a>
-                            <a class="btn btn-square btn-primary me-2" href="#!"><i
+                            <a class="{{ asset('assets-guest/btn btn-square btn-primary me-2') }}" href="#!"><i
                                     class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
@@ -505,22 +535,28 @@
                     <h4 class="text-light mb-4">Gallery</h4>
                     <div class="row g-2">
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="img/gallery-1.jpg" alt="">
+                            <img class="{{ asset('assets-guest/img-fluid w-100" src="img/gallery-1.jpg') }}"
+                                alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="img/gallery-2.jpg" alt="">
+                            <img class="{{ asset('assets-guest/img-fluid w-100" src="img/gallery-2.jpg') }}"
+                                alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="img/gallery-3.jpg" alt="">
+                            <img class="{{ asset('assets-guest/img-fluid w-100" src="img/gallery-3.jpg') }}"
+                                alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="img/gallery-4.jpg" alt="">
+                            <img class="{{ asset('assets-guest/img-fluid w-100" src="img/gallery-4.jpg') }}"
+                                alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="img/gallery-5.jpg" alt="">
+                            <img class="{{ asset('assets-guest/img-fluid w-100" src="img/gallery-5.jpg') }}"
+                                alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="img/gallery-6.jpg" alt="">
+                            <img class="{{ asset('assets-guest/img-fluid w-100" src="img/gallery-6.jpg') }}"
+                                alt="">
                         </div>
                     </div>
                 </div>
@@ -552,14 +588,14 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
+    <script src="{{ asset('assets-guest/lib/wow/wow.min.js') }}"></script>
+    <script src="{{ asset('assets-guest/lib/easing/easing.min.js') }}"></script>
+    <script src="{{ asset('assets-guest/lib/waypoints/waypoints.min.js') }}"></script>
+    <script src="{{ asset('assets-guest/lib/owlcarousel/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assets-guest/lib/counterup/counterup.min.js') }}"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="{{ asset('assets-guest/js/main.js') }}"></script>
 </body>
 
 </html>

@@ -10,13 +10,15 @@ return new class extends Migration
     {
         Schema::create('warga', function (Blueprint $table) {
             $table->id();
+            $table->string('no_ktp')->unique(); // NIK
             $table->string('nama');
-            $table->string('nik')->unique();
-            $table->string('alamat');
-            $table->string('no_hp')->nullable();
+            $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
+            $table->string('agama');
+            $table->string('pekerjaan');
+            $table->string('telp')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
-
     }
 
     public function down(): void
