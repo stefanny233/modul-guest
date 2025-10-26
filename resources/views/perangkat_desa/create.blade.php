@@ -46,7 +46,7 @@
         <div class="row align-items-center h-100">
             <div class="col-lg-4 text-center text-lg-start">
                 <a href="index.html">
-                    <h1 class="display-5 text-primary m-0">Charitize</h1>
+                    <h1 class="display-5 text-primary m-0">Desa Sejahtera</h1>
                 </a>
             </div>
             <div class="col-lg-8 d-none d-lg-block">
@@ -57,8 +57,8 @@
                                 <i class="fa fa-phone-alt text-dark"></i>
                             </div>
                             <div class="ms-2">
-                                <h6 class="text-primary mb-0">Call Us</h6>
-                                <span class="text-white">+012 345 6789</span>
+                                <h6 class="text-primary mb-0">Kontak</h6>
+                                <span class="text-white">+628 122 3562</span>
                             </div>
                         </div>
                     </div>
@@ -68,8 +68,8 @@
                                 <i class="fa fa-envelope-open text-dark"></i>
                             </div>
                             <div class="ms-2">
-                                <h6 class="text-primary mb-0">Mail Us</h6>
-                                <span class="text-white">info@domain.com</span>
+                                <h6 class="text-primary mb-0">Email</h6>
+                                <span class="text-white">DesaSejahtera@edomain.com</span>
                             </div>
                         </div>
                     </div>
@@ -79,8 +79,8 @@
                                 <i class="fa fa-map-marker-alt text-dark"></i>
                             </div>
                             <div class="ms-2">
-                                <h6 class="text-primary mb-0">Address</h6>
-                                <span class="text-white">123 Street, NY, USA</span>
+                                <h6 class="text-primary mb-0">Alamat</h6>
+                                <span class="text-white">Dusun II RT 04 RW 02</span>
                             </div>
                         </div>
                     </div>
@@ -181,11 +181,17 @@
                                     <input type="file" name="foto" class="form-control">
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-12 d-flex gap-2">
                                     <button type="submit" class="btn btn-primary w-100 py-3">
                                         Simpan Data
                                     </button>
+
+                                    <a href="{{ route('perangkat_desa.index') }}"
+                                        class="btn btn-secondary w-100 py-3">
+                                        Batal
+                                    </a>
                                 </div>
+
                             </div>
                         </form>
                     </div>
@@ -211,9 +217,9 @@
             <div class="row g-5 py-5">
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-light mb-4">Our Office</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Dusun II RT 04 RW 02</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+628 122 3562</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>DesaSejahtera@edomain.com</p>
                     <div class="d-flex pt-3">
                         <a class="btn btn-square btn-primary me-2" href="#!"><i
                                 class="fab fa-x-twitter"></i></a>

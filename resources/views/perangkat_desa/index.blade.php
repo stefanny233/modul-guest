@@ -136,42 +136,40 @@
 
 
     <!-- Perangkat Desa List Start -->
-    <div class="container-fluid py-5">
-        <div class="container">
-            <div class="text-center mb-5">
-                <a href="{{ route('perangkat_desa.create') }}" class="btn btn-primary mt-3">Tambah Perangkat</a>
-            </div>
+    <div class="container mt-4">
+        <h3 class="fw-bold text-success">Tambah Perangkat</h3>
+        <a href="{{ route('perangkat_desa.create') }}" class="btn btn-success mb-3">+ Tambah Perangkat</a>
 
-            @if (session('success'))
-                <div class="alert alert-success text-center">{{ session('success') }}</div>
-            @endif
+        @if (session('success'))
+            <div class="alert alert-success text-center">{{ session('success') }}</div>
+        @endif
 
-            <div class="row g-4">
-                @foreach ($perangkat as $p)
-                    <div class="col-md-6 col-lg-4">
-                        <div class="donation-item d-flex h-100 p-4">
-                            <div class="donation-detail">
-                                <div class="position-relative mb-4">
-                                    @if ($p->foto)
-                                        <img class="img-fluid w-100 rounded" src="{{ asset('storage/' . $p->foto) }}"
-                                            alt="Foto Perangkat">
-                                    @else
-                                        <img class="img-fluid w-100 rounded" src="{{ asset('img/default.jpg') }}"
-                                            alt="Default Foto">
-                                    @endif
-                                </div>
-                                <h3 class="h5">{{ $p->jabatan }}</h3>
-                                <p><strong>Warga ID:</strong> {{ $p->warga_id }}</p>
-                                <p><strong>NIP:</strong> {{ $p->nip ?? '-' }}</p>
-                                <p><strong>Kontak:</strong> {{ $p->kontak }}</p>
-                                <p><strong>Periode:</strong> {{ $p->periode_mulai }} -
-                                    {{ $p->periode_selesai ?? 'Sekarang' }}</p>
+        <div class="row g-4">
+            @foreach ($perangkat as $p)
+                <div class="col-md-6 col-lg-4">
+                    <div class="donation-item d-flex h-100 p-4">
+                        <div class="donation-detail">
+                            <div class="position-relative mb-4">
+                                @if ($p->foto)
+                                    <img class="img-fluid w-100 rounded" src="{{ asset('storage/' . $p->foto) }}"
+                                        alt="Foto Perangkat">
+                                @else
+                                    <img class="img-fluid w-100 rounded" src="{{ asset('img/default.jpg') }}"
+                                        alt="Default Foto">
+                                @endif
                             </div>
+                            <h3 class="h5">{{ $p->jabatan }}</h3>
+                            <p><strong>Warga ID:</strong> {{ $p->warga_id }}</p>
+                            <p><strong>NIP:</strong> {{ $p->nip ?? '-' }}</p>
+                            <p><strong>Kontak:</strong> {{ $p->kontak }}</p>
+                            <p><strong>Periode:</strong> {{ $p->periode_mulai }} -
+                                {{ $p->periode_selesai ?? 'Sekarang' }}</p>
                         </div>
                     </div>
-                @endforeach
-            </div>
+                </div>
+            @endforeach
         </div>
+    </div>
     </div>
 
     <!-- Perangkat Desa List End -->
@@ -182,9 +180,9 @@
             <div class="row g-5 py-5">
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-light mb-4">Our Office</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Dusun II RT 04 RW 02</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+628 122 3562</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>DesaSejahtera@edomain.com</p>
                     <div class="d-flex pt-3">
                         <a class="btn btn-square btn-primary me-2" href="#!"><i
                                 class="fab fa-x-twitter"></i></a>
