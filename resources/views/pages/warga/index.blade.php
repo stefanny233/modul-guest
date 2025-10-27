@@ -110,6 +110,7 @@
                             <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
                             <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-facebook-f"></i></a>
                             <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-youtube"></i></a>
+                            <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-whatsapp"></i></a>
                         </div>
                     </div>
             </nav>
@@ -215,21 +216,21 @@
                             <div class="col-sm-6 wow fadeIn" data-wow-delay="0.1s">
                                 <div class="text-center bg-success py-5 px-4 h-100">
                                     <i class="fa fa-users fa-3x text-warning mb-3"></i>
-                                    <h1 class="display-5 mb-0" data-toggle="counter-up">120</h1>
+                                    <h1 class="display-5 mb-0" data-toggle="counter-up">2</h1>
                                     <span class="text-light">Perangkat & Relawan</span>
                                 </div>
                             </div>
                             <div class="col-sm-6 wow fadeIn" data-wow-delay="0.3s">
                                 <div class="text-center bg-secondary py-5 px-4 h-100">
                                     <i class="fa fa-award fa-3x text-success mb-3"></i>
-                                    <h1 class="display-5 text-white mb-0" data-toggle="counter-up">15</h1>
+                                    <h1 class="display-5 text-white mb-0" data-toggle="counter-up">0</h1>
                                     <span class="text-white">Penghargaan Desa</span>
                                 </div>
                             </div>
                             <div class="col-sm-6 wow fadeIn" data-wow-delay="0.5s">
                                 <div class="text-center bg-secondary py-5 px-4 h-100">
                                     <i class="fa fa-list-check fa-3x text-success mb-3"></i>
-                                    <h1 class="display-5 text-white mb-0" data-toggle="counter-up">230</h1>
+                                    <h1 class="display-5 text-white mb-0" data-toggle="counter-up">2</h1>
                                     <span class="text-white">Program Terlaksana</span>
                                 </div>
                             </div>
