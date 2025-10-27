@@ -29,4 +29,4 @@ Route::resource('perangkat_desa', PerangkatDesaController::class);
 //Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 
 // Route::get('/auth', [AuthController::class, 'index'])->name('auth.index');
-// Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login');
+Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login');
