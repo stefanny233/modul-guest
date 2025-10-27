@@ -324,7 +324,7 @@
     </div>
     <!-- Keunggulan Program End --> --}}
 
-    <!-- Testimonial Start -->
+    {{-- <!-- Testimonial Start -->
     <div class="container py-5">
         <div class="text-center mb-4">
             <h3 class="text-success fw-bold">Data Penduduk Desa Sejahtera</h3>
@@ -382,7 +382,7 @@
             </div>
         </div>
     </div>
-    <!-- Testimonial End -->
+    <!-- Testimonial End --> --}}
 
     <!-- Footer Start -->
     <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.1s">
