@@ -90,7 +90,6 @@
     </div>
     <!-- Topbar End -->
 
-
     <!-- Navbar Start -->
     <div class="container-fluid bg-secondary px-0 wow fadeIn" data-wow-delay="0.1s">
         <div class="nav-bar">
@@ -106,12 +105,12 @@
                         <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
                         <a href="{{ route('warga.index') }}" class="nav-item nav-link">Data Penduduk</a>
                         <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
-                    <div class="d-none d-lg-flex ms-auto">
-                        <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-youtube"></i></a>
+                        <div class="d-none d-lg-flex ms-auto">
+                            <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-youtube"></i></a>
+                        </div>
                     </div>
-                </div>
             </nav>
         </div>
     </div>
@@ -121,13 +120,13 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-4">
-            <h1 class="display-3 animated slideInDown">Hay User!</h1>
+            <h1 class="display-3 animated slideInDown">Manajemen Data User</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="#!">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Data user</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Tentang</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data User</a></li>
                     <li class="breadcrumb-item"><a href="#!">Data Penduduk</a></li>
-                    <li class="breadcrumb-item"><a href="#!">>Perangkat Desa</li>
+                    <li class="breadcrumb-item"><a href="#!">Perangkat Desa</li>
                 </ol>
             </nav>
         </div>
@@ -137,17 +136,18 @@
     <!-- Event Start -->
     <div class="container py-5">
         <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
-                <h4>Silahkan Melalukan Pendaftaran</h4>
+            <div class="card-header bg-warning text-white">
+                <h4>Edit Data User</h4>
             </div>
             <div class="card-body">
-                <form action="{{ route('users.store') }}" method="POST">
+                <form action="{{ route('users.update', $user->id) }}" method="POST">
                     @csrf
+                    @method('PUT')
 
                     <div class="mb-3">
                         <label class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control" value="{{ old('name') }}"
-                            required>
+                        <input type="text" name="name" class="form-control"
+                            value="{{ old('name', $user->name) }}" required>
                         @error('name')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
@@ -155,8 +155,8 @@
 
                     <div class="mb-3">
                         <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" value="{{ old('email') }}"
-                            required>
+                        <input type="email" name="email" class="form-control"
+                            value="{{ old('email', $user->email) }}" required>
                         @error('email')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
@@ -164,7 +164,8 @@
 
                     <div class="mb-3">
                         <label class="form-label">Password</label>
-                        <input type="password" name="password" class="form-control" required>
+                        <input type="password" name="password" class="form-control"
+                            placeholder="Biarkan kosong jika tidak diubah">
                         @error('password')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
@@ -172,11 +173,12 @@
 
                     <div class="mb-4">
                         <label class="form-label">Confirm Password</label>
-                        <input type="password" name="password_confirmation" class="form-control" required>
+                        <input type="password" name="password_confirmation" class="form-control"
+                            placeholder="Konfirmasi password baru">
                     </div>
 
                     <div class="text-end">
-                        <button type="submit" class="btn btn-success px-4">Simpan</button>
+                        <button type="submit" class="btn btn-primary px-4">Perbarui</button>
                         <a href="{{ route('users.index') }}" class="btn btn-secondary px-4">Batal</a>
                     </div>
                 </form>
@@ -184,7 +186,6 @@
         </div>
     </div>
     <!-- Event End -->
-
 
     <!-- Team Start -->
     <div class="container-fluid py-5">
@@ -293,28 +294,22 @@
                     <h4 class="text-light mb-4">Gallery</h4>
                     <div class="row g-2">
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-1.jpg') }}"
-                                alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-1.jpg') }}" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-2.jpg') }}"
-                                alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-2.jpg') }}" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-3.jpg') }}"
-                                alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-3.jpg') }}" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-4.jpg') }}"
-                                alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-4.jpg') }}" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-5.jpg') }}"
-                                alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-5.jpg') }}" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-6.jpg') }}"
-                                alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-6.jpg') }}" alt="">
                         </div>
                     </div>
                 </div>

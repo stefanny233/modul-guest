@@ -46,7 +46,7 @@
         <div class="row align-items-center h-100">
             <div class="col-lg-4 text-center text-lg-start">
                 <a href="index.html">
-                    <h1 class="display-5 text-primary m-0">Desa Sejahtera</h1>
+                    <h1 class="display-5 text-primary m-0">Charitize</h1>
                 </a>
             </div>
             <div class="col-lg-8 d-none d-lg-block">
@@ -57,8 +57,8 @@
                                 <i class="fa fa-phone-alt text-dark"></i>
                             </div>
                             <div class="ms-2">
-                                <h6 class="text-primary mb-0">Kontak</h6>
-                                <span class="text-white">+628 122 3562</span>
+                                <h6 class="text-primary mb-0">Call Us</h6>
+                                <span class="text-white">+012 345 6789</span>
                             </div>
                         </div>
                     </div>
@@ -68,8 +68,8 @@
                                 <i class="fa fa-envelope-open text-dark"></i>
                             </div>
                             <div class="ms-2">
-                                <h6 class="text-primary mb-0">Email</h6>
-                                <span class="text-white">DesaSejahtera@edomain.com</span>
+                                <h6 class="text-primary mb-0">Mail Us</h6>
+                                <span class="text-white">info@domain.com</span>
                             </div>
                         </div>
                     </div>
@@ -79,8 +79,8 @@
                                 <i class="fa fa-map-marker-alt text-dark"></i>
                             </div>
                             <div class="ms-2">
-                                <h6 class="text-primary mb-0">Alamat</h6>
-                                <span class="text-white">Dusun II RT 04 RW 02</span>
+                                <h6 class="text-primary mb-0">Address</h6>
+                                <span class="text-white">123 Street, NY, USA</span>
                             </div>
                         </div>
                     </div>
@@ -89,6 +89,7 @@
         </div>
     </div>
     <!-- Topbar End -->
+
 
     <!-- Navbar Start -->
     <div class="container-fluid bg-secondary px-0 wow fadeIn" data-wow-delay="0.1s">
@@ -101,7 +102,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav me-auto">
-                        <a href="dashboard" class="nav-item nav-link">Home</a>
+                        <a href="dashboard" class="nav-item nav-link">Tentang</a>
                         <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
                         <a href="{{ route('warga.index') }}" class="nav-item nav-link">Data Penduduk</a>
                         <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
@@ -117,99 +118,54 @@
     </div>
     <!-- Navbar End -->
 
+    <div class="container py-5">
+        <h1 class="mb-4">Edit Perangkat Desa</h1>
 
-    <!-- Page Header Start -->
-    <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container text-center py-4">
-            <h1 class="display-3 animated slideInDown">Pendaftaran
-            </h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="#!">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Data User</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Data Penduduk</a></li>
-                    <li class="breadcrumb-item active" aria-current="page"> Perangkat Desa</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-    <!-- Page Header End -->
-
-    <!-- Tambah $perangkatDesa Desa Start -->
-    <div class="container-fluid donate py-5">
-        <div class="container">
-            <div class="row g-0">
-                <div class="col-lg-7 donate-text bg-light py-5">
-                    <div class="h-100 p-5">
-                        <h1 class="display-6 mb-4">Tambah Data Perangkat Desa</h1>
-                        <form action="{{ route('perangkat_desa.store') }}" method="POST"
-                            enctype="multipart/form-data">
-                            @csrf
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <label>Warga ID</label>
-                                    <input type="text" name="warga_id" class="form-control" required>
-                                </div>
-
-                                <div class="col-12">
-                                    <label>Jabatan</label>
-                                    <input type="text" name="jabatan" class="form-control" required>
-                                </div>
-
-                                <div class="col-12">
-                                    <label>NIP</label>
-                                    <input type="text" name="nip" class="form-control">
-                                </div>
-
-                                <div class="col-12">
-                                    <label>Kontak</label>
-                                    <input type="text" name="kontak" class="form-control" required>
-                                </div>
-
-                                <div class="col-6">
-                                    <label>Periode Mulai</label>
-                                    <input type="date" name="periode_mulai" class="form-control" required>
-                                </div>
-
-                                <div class="col-6">
-                                    <label>Periode Selesai</label>
-                                    <input type="date" name="periode_selesai" class="form-control">
-                                </div>
-
-                                <div class="col-12">
-                                    <label>Foto</label>
-                                    <input type="file" name="foto" class="form-control">
-                                </div>
-
-                                <div class="col-12 d-flex gap-2">
-                                    <button type="submit" class="btn btn-primary w-100 py-3">
-                                        Simpan Data
-                                    </button>
-
-                                    <a href="{{ route('perangkat_desa.index') }}"
-                                        class="btn btn-secondary w-100 py-3">
-                                        Batal
-                                    </a>
-                                </div>
-
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="col-lg-5 bg-primary text-center text-white py-5">
-                    <div class="h-100 p-5">
-                        <h2 class="display-6 mb-4">Pastikan Data Terisi Lengkap</h2>
-                        <p>Isi semua kolom dengan benar dan upload foto perangkat desa jika tersedia.</p>
-                    </div>
-                </div>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
-        </div>
+        @endif
+
+        <form action="{{ route('perangkat_desa.update', $perangkat->id) }}" method="POST"
+            enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <div class="mb-3">
+                <label for="warga_id" class="form-label">Nama Warga</label>
+                <select name="warga_id" class="form-control" required>
+                    @foreach ($warga as $w)
+                        <option value="{{ $w->id }}" {{ $perangkat->warga_id == $w->id ? 'selected' : '' }}>
+                            {{ $w->nama }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="mb-3"><label>Jabatan</label><input type="text" name="jabatan" class="form-control"
+                    value="{{ $perangkat->jabatan }}" required></div>
+            <div class="mb-3"><label>NIP</label><input type="text" name="nip" class="form-control"
+                    value="{{ $perangkat->nip }}" required></div>
+            <div class="mb-3"><label>Kontak</label><input type="text" name="kontak" class="form-control"
+                    value="{{ $perangkat->kontak }}" required></div>
+            <div class="mb-3"><label>Periode Mulai</label><input type="date" name="periode_mulai"
+                    class="form-control" value="{{ $perangkat->periode_mulai }}" required></div>
+            <div class="mb-3"><label>Periode Selesai</label><input type="date" name="periode_selesai"
+                    class="form-control" value="{{ $perangkat->periode_selesai }}" required></div>
+            <div class="mb-3">
+                <label>Foto</label>
+                <input type="file" name="foto" class="form-control">
+                @if ($perangkat->foto)
+                    <img src="{{ asset('storage/' . $perangkat->foto) }}" width="80" class="mt-2">
+                @endif
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
     </div>
-    <!-- Tambah $perangkatDesa Desa End -->
-
-
-
+    <!-- Perangkat Desa List End -->
 
     <!-- Footer Start -->
     <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.1s">
@@ -219,7 +175,7 @@
                     <h4 class="text-light mb-4">Our Office</h4>
                     <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Dusun II RT 04 RW 02</p>
                     <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+628 122 3562</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>DesaSejahtera@edomain.com</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>DesaSejahtera@domain.com</p>
                     <div class="d-flex pt-3">
                         <a class="btn btn-square btn-primary me-2" href="#!"><i
                                 class="fab fa-x-twitter"></i></a>

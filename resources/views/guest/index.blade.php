@@ -102,7 +102,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav me-auto">
-                        <a href="dashbord" class="nav-item nav-link">Home</a>
+                        <a href="dashbord" class="nav-item nav-link">Tentang</a>
                         <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
                         <a href="{{ route('warga.index') }}" class="nav-item nav-link">Data Penduduk</a>
                         <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
@@ -254,7 +254,7 @@
     </div>
     <!-- Program Unggulan End -->
 
-    <!-- Keunggulan Program Start -->
+    {{-- <!-- Keunggulan Program Start -->
     <div class="container-fluid py-5">
         <div class="container">
             <div class="row g-5 align-items-center">
@@ -322,7 +322,7 @@
             </div>
         </div>
     </div>
-    <!-- Keunggulan Program End -->
+    <!-- Keunggulan Program End --> --}}
 
     <!-- Testimonial Start -->
     <div class="container py-5">

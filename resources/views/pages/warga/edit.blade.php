@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Desa Sejahtera</title>
+    <title>Charitize - Charity Organization Website Template</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -102,12 +102,10 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav me-auto">
-                        <div class="navbar-nav me-auto">
-                            <a href="dashboard" class="nav-item nav-link">Home</a>
-                            <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
-                            <a href="{{ route('warga.index') }}" class="nav-item nav-link">Data Penduduk</a>
-                            <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
-                        </div>
+                        <a href="dashboard" class="nav-item nav-link">Tentang</a>
+                        <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
+                        <a href="{{ route('warga.index') }}" class="nav-item nav-link">Data Penduduk</a>
+                        <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
                         <div class="d-none d-lg-flex ms-auto">
                             <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
                             <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-facebook-f"></i></a>
@@ -123,142 +121,62 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-4">
-            <h1 class="display-3 animated slideInDown">Manajemen Data User</h1>
+            <h1 class="display-3 animated slideInDown">Data Warga</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item"><a href="#!">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Data User</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Data Penduduk</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Perangkat Desa</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Pages</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Feature</li>
                 </ol>
             </nav>
         </div>
     </div>
     <!-- Page Header End -->
 
-    <!-- Event Start -->
-    <div class="container py-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <a href="{{ route('users.create') }}" class="btn btn-success">
-                <i class="fa fa-plus me-2"></i> Tambah User
-            </a>
-        </div>
-
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <table class="table table-bordered table-striped align-middle text-center">
-                    <thead class="table-primary">
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Email</th>
-                            <th>Tanggal Dibuat</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($users as $index => $user)
-                            <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ $user->created_at->format('d M Y') }}</td>
-                                <td>
-                                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">
-                                        <i class="fa fa-edit"></i> Edit
-                                    </a>
-                                    <form action="{{ route('users.destroy', $user->id) }}" method="POST"
-                                        class="d-inline" onsubmit="return confirm('Yakin ingin menghapus user ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">
-                                            <i class="fa fa-trash"></i> Hapus
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="text-muted">Belum ada data pengguna.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+    <!-- Features Start -->
+    <div class="container mt-4">
+        <h3 class="fw-bold text-success">Edit Data Warga</h3>
+        <form action="{{ route('warga.update', $warga->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="mb-3">
+                <label>No KTP</label>
+                <input type="text" name="no_ktp" value="{{ $warga->no_ktp }}" class="form-control" required>
             </div>
-        </div>
+            <div class="mb-3">
+                <label>Nama</label>
+                <input type="text" name="nama" value="{{ $warga->nama }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Jenis Kelamin</label>
+                <select name="jenis_kelamin" class="form-control" required>
+                    <option value="Laki-laki" {{ $warga->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki
+                    </option>
+                    <option value="Perempuan" {{ $warga->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan
+                    </option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label>Agama</label>
+                <input type="text" name="agama" value="{{ $warga->agama }}" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label>Pekerjaan</label>
+                <input type="text" name="pekerjaan" value="{{ $warga->pekerjaan }}" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label>Telp</label>
+                <input type="text" name="telp" value="{{ $warga->telp }}" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label>Email</label>
+                <input type="email" name="email" value="{{ $warga->email }}" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Update</button>
+            <a href="{{ route('warga.index') }}" class="btn btn-secondary">Batal</a>
+        </form>
     </div>
-    <!-- Event End -->
-
-    <!-- Team Start -->
-    <div class="container-fluid py-5">
-        <div class="container">
-            <div class="text-center mx-auto wow fadeIn" data-wow-delay="0.1s" style="max-width: 600px;">
-                <p class="section-title bg-white text-center text-success px-3">TIM KAMI</p>
-                <h1 class="display-6 mb-4 fw-bold text-dark">
-                    Kenali Sosok di Balik Program Bina Desa
-                </h1>
-            </div>
-
-            <div class="row g-4 justify-content-center">
-
-                <!-- Stefanny Huang -->
-                <div class="col-md-6 col-lg-5 wow fadeIn" data-wow-delay="0.1s">
-                    <div class="team-item text-center rounded-4 shadow-sm p-4 h-100"
-                        style="background: linear-gradient(135deg, #e8f9f0 0%, #fffbe6 100%); border: 2px solid #198754;">
-                        <div class="d-flex justify-content-center align-items-center mb-3"
-                            style="width: 120px; height: 120px; border-radius: 50%; background-color: #198754; color: white; font-size: 48px; margin: 0 auto;">
-                            <i class="fa fa-user"></i>
-                        </div>
-                        <h3 class="text-success mb-1">Stefanny Huang</h3>
-                        <span class="text-muted mb-3 d-block">Koordinator Program Pemberdayaan</span>
-                        <p class="text-secondary small">
-                            Memimpin inisiatif pemberdayaan masyarakat melalui pelatihan kewirausahaan dan pendidikan
-                            keterampilan warga desa.
-                        </p>
-                        <div class="d-flex justify-content-center mt-3">
-                            <a class="btn btn-square btn-outline-success mx-1" href="#!"><i
-                                    class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-outline-success mx-1" href="#!"><i
-                                    class="fab fa-instagram"></i></a>
-                            <a class="btn btn-square btn-outline-success mx-1" href="#!"><i
-                                    class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Febby Fahrezy -->
-                <div class="col-md-6 col-lg-5 wow fadeIn" data-wow-delay="0.3s">
-                    <div class="team-item text-center rounded-4 shadow-sm p-4 h-100"
-                        style="background: linear-gradient(135deg, #fffbe6 0%, #e8f9f0 100%); border: 2px solid #ffc107;">
-                        <div class="d-flex justify-content-center align-items-center mb-3"
-                            style="width: 120px; height: 120px; border-radius: 50%; background-color: #ffc107; color: white; font-size: 48px; margin: 0 auto;">
-                            <i class="fa fa-user-tie"></i>
-                        </div>
-                        <h3 class="text-success mb-1">Febby Fahrezy</h3>
-                        <span class="text-muted mb-3 d-block">Kepala Bidang Infrastruktur Desa</span>
-                        <p class="text-secondary small">
-                            Mengawasi proyek pembangunan desa dan memastikan fasilitas publik berjalan sesuai visi Desa
-                            Sejahtera yang berkelanjutan.
-                        </p>
-                        <div class="d-flex justify-content-center mt-3">
-                            <a class="btn btn-square btn-outline-warning mx-1" href="#!"><i
-                                    class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-outline-warning mx-1" href="#!"><i
-                                    class="fab fa-instagram"></i></a>
-                            <a class="btn btn-square btn-outline-warning mx-1" href="#!"><i
-                                    class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- Team End -->
+    <!-- Features End -->
 
     <!-- Footer Start -->
     <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.1s">
@@ -268,7 +186,7 @@
                     <h4 class="text-light mb-4">Our Office</h4>
                     <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Dusun II RT 04 RW 02</p>
                     <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+628 122 3562</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>DesaSejahtera@edomain.com</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>DesaSejahtera@domain.com</p>
                     <div class="d-flex pt-3">
                         <a class="btn btn-square btn-primary me-2" href="#!"><i
                                 class="fab fa-x-twitter"></i></a>
@@ -300,22 +218,28 @@
                     <h4 class="text-light mb-4">Gallery</h4>
                     <div class="row g-2">
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-1.jpg') }}" alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-1.jpg') }}"
+                                alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-2.jpg') }}" alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-2.jpg') }}"
+                                alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-3.jpg') }}" alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-3.jpg') }}"
+                                alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-4.jpg') }}" alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-4.jpg') }}"
+                                alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-5.jpg') }}" alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-5.jpg') }}"
+                                alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-6.jpg') }}" alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-6.jpg') }}"
+                                alt="">
                         </div>
                     </div>
                 </div>

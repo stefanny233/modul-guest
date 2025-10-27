@@ -46,7 +46,7 @@
         <div class="row align-items-center h-100">
             <div class="col-lg-4 text-center text-lg-start">
                 <a href="index.html">
-                    <h1 class="display-5 text-primary m-0">Charitize</h1>
+                    <h1 class="display-5 text-primary m-0">Desa Sejahtera</h1>
                 </a>
             </div>
             <div class="col-lg-8 d-none d-lg-block">
@@ -57,8 +57,8 @@
                                 <i class="fa fa-phone-alt text-dark"></i>
                             </div>
                             <div class="ms-2">
-                                <h6 class="text-primary mb-0">Call Us</h6>
-                                <span class="text-white">+012 345 6789</span>
+                                <h6 class="text-primary mb-0">Kontak</h6>
+                                <span class="text-white">+628 122 3562</span>
                             </div>
                         </div>
                     </div>
@@ -68,8 +68,8 @@
                                 <i class="fa fa-envelope-open text-dark"></i>
                             </div>
                             <div class="ms-2">
-                                <h6 class="text-primary mb-0">Mail Us</h6>
-                                <span class="text-white">info@domain.com</span>
+                                <h6 class="text-primary mb-0">Email</h6>
+                                <span class="text-white">DesaSejahtera@domain.com</span>
                             </div>
                         </div>
                     </div>
@@ -79,8 +79,8 @@
                                 <i class="fa fa-map-marker-alt text-dark"></i>
                             </div>
                             <div class="ms-2">
-                                <h6 class="text-primary mb-0">Address</h6>
-                                <span class="text-white">123 Street, NY, USA</span>
+                                <h6 class="text-primary mb-0">Alamat</h6>
+                                <span class="text-white">Dusun II RT 04 RW 02</span>
                             </div>
                         </div>
                     </div>
@@ -106,7 +106,6 @@
                         <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
                         <a href="{{ route('warga.index') }}" class="nav-item nav-link">Data Penduduk</a>
                         <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
-                    </div>
                     <div class="d-none d-lg-flex ms-auto">
                         <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
                         <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-facebook-f"></i></a>
@@ -118,54 +117,141 @@
     </div>
     <!-- Navbar End -->
 
-    <div class="container py-5">
-        <h1 class="mb-4">Edit Perangkat Desa</h1>
 
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <form action="{{ route('perangkat_desa.update', $perangkat->id) }}" method="POST"
-            enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-            <div class="mb-3">
-                <label for="warga_id" class="form-label">Nama Warga</label>
-                <select name="warga_id" class="form-control" required>
-                    @foreach ($warga as $w)
-                        <option value="{{ $w->id }}" {{ $perangkat->warga_id == $w->id ? 'selected' : '' }}>
-                            {{ $w->nama }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="mb-3"><label>Jabatan</label><input type="text" name="jabatan" class="form-control"
-                    value="{{ $perangkat->jabatan }}" required></div>
-            <div class="mb-3"><label>NIP</label><input type="text" name="nip" class="form-control"
-                    value="{{ $perangkat->nip }}" required></div>
-            <div class="mb-3"><label>Kontak</label><input type="text" name="kontak" class="form-control"
-                    value="{{ $perangkat->kontak }}" required></div>
-            <div class="mb-3"><label>Periode Mulai</label><input type="date" name="periode_mulai"
-                    class="form-control" value="{{ $perangkat->periode_mulai }}" required></div>
-            <div class="mb-3"><label>Periode Selesai</label><input type="date" name="periode_selesai"
-                    class="form-control" value="{{ $perangkat->periode_selesai }}" required></div>
-            <div class="mb-3">
-                <label>Foto</label>
-                <input type="file" name="foto" class="form-control">
-                @if ($perangkat->foto)
-                    <img src="{{ asset('storage/' . $perangkat->foto) }}" width="80" class="mt-2">
-                @endif
-            </div>
-
-            <button type="submit" class="btn btn-primary">Update</button>
-        </form>
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container text-center py-4">
+            <h1 class="display-3 animated slideInDown">Hay User!</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb justify-content-center mb-0">
+                    <li class="breadcrumb-item"><a href="#!">Tentang</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data user</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Data Penduduk</a></li>
+                    <li class="breadcrumb-item"><a href="#!">>Perangkat Desa</li>
+                </ol>
+            </nav>
+        </div>
     </div>
-    <!-- Perangkat Desa List End -->
+    <!-- Page Header End -->
+
+    <!-- Event Start -->
+    <div class="container py-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4>Silahkan Melalukan Pendaftaran</h4>
+            </div>
+            <div class="card-body">
+                <form action="{{ route('users.store') }}" method="POST">
+                    @csrf
+
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" name="name" class="form-control" value="{{ old('name') }}"
+                            required>
+                        @error('name')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" value="{{ old('email') }}"
+                            required>
+                        @error('email')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" required>
+                        @error('password')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Confirm Password</label>
+                        <input type="password" name="password_confirmation" class="form-control" required>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-success px-4">Simpan</button>
+                        <a href="{{ route('users.index') }}" class="btn btn-secondary px-4">Batal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Event End -->
+
+
+    <!-- Team Start -->
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="text-center mx-auto wow fadeIn" data-wow-delay="0.1s" style="max-width: 600px;">
+                <p class="section-title bg-white text-center text-success px-3">TIM KAMI</p>
+                <h1 class="display-6 mb-4 fw-bold text-dark">
+                    Kenali Sosok di Balik Program Bina Desa
+                </h1>
+            </div>
+
+            <div class="row g-4 justify-content-center">
+
+                <!-- Stefanny Huang -->
+                <div class="col-md-6 col-lg-5 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="team-item text-center rounded-4 shadow-sm p-4 h-100"
+                        style="background: linear-gradient(135deg, #e8f9f0 0%, #fffbe6 100%); border: 2px solid #198754;">
+                        <div class="d-flex justify-content-center align-items-center mb-3"
+                            style="width: 120px; height: 120px; border-radius: 50%; background-color: #198754; color: white; font-size: 48px; margin: 0 auto;">
+                            <i class="fa fa-user"></i>
+                        </div>
+                        <h3 class="text-success mb-1">Stefanny Huang</h3>
+                        <span class="text-muted mb-3 d-block">Koordinator Program Pemberdayaan</span>
+                        <p class="text-secondary small">
+                            Memimpin inisiatif pemberdayaan masyarakat melalui pelatihan kewirausahaan dan pendidikan
+                            keterampilan warga desa.
+                        </p>
+                        <div class="d-flex justify-content-center mt-3">
+                            <a class="btn btn-square btn-outline-success mx-1" href="#!"><i
+                                    class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-outline-success mx-1" href="#!"><i
+                                    class="fab fa-instagram"></i></a>
+                            <a class="btn btn-square btn-outline-success mx-1" href="#!"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Febby Fahrezy -->
+                <div class="col-md-6 col-lg-5 wow fadeIn" data-wow-delay="0.3s">
+                    <div class="team-item text-center rounded-4 shadow-sm p-4 h-100"
+                        style="background: linear-gradient(135deg, #fffbe6 0%, #e8f9f0 100%); border: 2px solid #ffc107;">
+                        <div class="d-flex justify-content-center align-items-center mb-3"
+                            style="width: 120px; height: 120px; border-radius: 50%; background-color: #ffc107; color: white; font-size: 48px; margin: 0 auto;">
+                            <i class="fa fa-user-tie"></i>
+                        </div>
+                        <h3 class="text-success mb-1">Febby Fahrezy</h3>
+                        <span class="text-muted mb-3 d-block">Kepala Bidang Infrastruktur Desa</span>
+                        <p class="text-secondary small">
+                            Mengawasi proyek pembangunan desa dan memastikan fasilitas publik berjalan sesuai visi Desa
+                            Sejahtera yang berkelanjutan.
+                        </p>
+                        <div class="d-flex justify-content-center mt-3">
+                            <a class="btn btn-square btn-outline-warning mx-1" href="#!"><i
+                                    class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-outline-warning mx-1" href="#!"><i
+                                    class="fab fa-instagram"></i></a>
+                            <a class="btn btn-square btn-outline-warning mx-1" href="#!"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Team End -->
 
     <!-- Footer Start -->
     <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.1s">

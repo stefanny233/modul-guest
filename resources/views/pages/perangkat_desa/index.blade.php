@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Charitize - Charity Organization Website Template</title>
+    <title>Desa Sejahtera</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -90,6 +90,7 @@
     </div>
     <!-- Topbar End -->
 
+
     <!-- Navbar Start -->
     <div class="container-fluid bg-secondary px-0 wow fadeIn" data-wow-delay="0.1s">
         <div class="nav-bar">
@@ -101,16 +102,17 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav me-auto">
-                        <a href="dashboard" class="nav-item nav-link">Home</a>
+                        <a href="dashboard" class="nav-item nav-link">Tentang</a>
                         <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
                         <a href="{{ route('warga.index') }}" class="nav-item nav-link">Data Penduduk</a>
                         <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
-                        <div class="d-none d-lg-flex ms-auto">
-                            <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-youtube"></i></a>
-                        </div>
                     </div>
+                    <div class="d-none d-lg-flex ms-auto">
+                        <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
             </nav>
         </div>
     </div>
@@ -120,72 +122,70 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-4">
-            <h1 class="display-3 animated slideInDown">Manajemen Data User</h1>
+            <h1 class="display-3 animated slideInDown">Perangkat Desa</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="#!">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Data User</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Data</a></li>
                     <li class="breadcrumb-item"><a href="#!">Data Penduduk</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Perangkat Desa</li>
+                    <li class="breadcrumb-item active" aria-current="page">Perangkat Desa</li>
                 </ol>
             </nav>
         </div>
     </div>
     <!-- Page Header End -->
 
-    <!-- Event Start -->
+
+    <!-- Perangkat Desa List Start -->
     <div class="container py-5">
-        <div class="card shadow-sm">
-            <div class="card-header bg-warning text-white">
-                <h4>Edit Data User</h4>
-            </div>
-            <div class="card-body">
-                <form action="{{ route('users.update', $user->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-
-                    <div class="mb-3">
-                        <label class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control"
-                            value="{{ old('name', $user->name) }}" required>
-                        @error('name')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control"
-                            value="{{ old('email', $user->email) }}" required>
-                        @error('email')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Password</label>
-                        <input type="password" name="password" class="form-control"
-                            placeholder="Biarkan kosong jika tidak diubah">
-                        @error('password')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label">Confirm Password</label>
-                        <input type="password" name="password_confirmation" class="form-control"
-                            placeholder="Konfirmasi password baru">
-                    </div>
-
-                    <div class="text-end">
-                        <button type="submit" class="btn btn-primary px-4">Perbarui</button>
-                        <a href="{{ route('users.index') }}" class="btn btn-secondary px-4">Batal</a>
-                    </div>
-                </form>
-            </div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold text-success">Data Perangkat Desa</h3>
+            <a href="{{ route('perangkat_desa.create') }}" class="btn btn-success">
+                <i class="fa fa-plus me-2"></i> Tambah Perangkat
+            </a>
         </div>
+
+        @if (session('success'))
+            <div class="alert alert-success text-center">{{ session('success') }}</div>
+        @endif
+
+        @if ($perangkat->isEmpty())
+            <div class="text-center text-muted py-5">
+                <p>Belum ada data perangkat desa.</p>
+            </div>
+        @else
+            <div class="row g-4">
+                @foreach ($perangkat as $p)
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card shadow-sm border-0 h-100"
+                            style="border-radius: 15px; background: linear-gradient(180deg, #e9fce1 0%, #d7f5c5 100%);">
+                            <div class="card-body text-dark p-4">
+                                {{-- Foto opsional --}}
+                                {{-- <div class="text-center mb-3">
+                                <img src="{{ $p->foto ? asset('storage/' . $p->foto) : asset('img/default.jpg') }}"
+                                    alt="Foto Perangkat" class="rounded-circle shadow-sm" width="100" height="100"
+                                    style="object-fit: cover;">
+                            </div> --}}
+
+                                <h5 class="fw-bold text-success mb-2">{{ $p->jabatan }}</h5>
+
+                                <div class="small">
+                                    <p class="mb-1"><strong>Warga ID:</strong> {{ $p->warga_id }}</p>
+                                    <p class="mb-1"><strong>NIP:</strong> {{ $p->nip ?? '-' }}</p>
+                                    <p class="mb-1"><strong>Kontak:</strong> {{ $p->kontak }}</p>
+                                    <p class="mb-0"><strong>Periode:</strong> {{ $p->periode_mulai }} -
+                                        {{ $p->periode_selesai ?? 'Sekarang' }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
     </div>
-    <!-- Event End -->
+    <!-- Perangkat Desa List End -->
+
+
 
     <!-- Team Start -->
     <div class="container-fluid py-5">
@@ -262,7 +262,7 @@
                     <h4 class="text-light mb-4">Our Office</h4>
                     <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Dusun II RT 04 RW 02</p>
                     <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+628 122 3562</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>DesaSejahtera@domain.com</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>DesaSejahtera@edomain.com</p>
                     <div class="d-flex pt-3">
                         <a class="btn btn-square btn-primary me-2" href="#!"><i
                                 class="fab fa-x-twitter"></i></a>
@@ -294,22 +294,28 @@
                     <h4 class="text-light mb-4">Gallery</h4>
                     <div class="row g-2">
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-1.jpg') }}" alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-1.jpg') }}"
+                                alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-2.jpg') }}" alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-2.jpg') }}"
+                                alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-3.jpg') }}" alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-3.jpg') }}"
+                                alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-4.jpg') }}" alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-4.jpg') }}"
+                                alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-5.jpg') }}" alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-5.jpg') }}"
+                                alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-6.jpg') }}" alt="">
+                            <img class="img-fluid w-100" src="{{ asset('assets-guest/img/gallery-6.jpg') }}"
+                                alt="">
                         </div>
                     </div>
                 </div>

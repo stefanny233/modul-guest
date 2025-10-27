@@ -11,7 +11,7 @@ class PerangkatDesaController extends Controller
     public function index()
     {
         $perangkat = PerangkatDesa::latest()->get();
-        return view('perangkat_desa.index', compact('perangkat'));
+        return view('pages.perangkat_desa.index', compact('perangkat'));
     }
 
     public function create()

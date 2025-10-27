@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Desa Sejahtera</title>
+    <title>Charitize - Charity Organization Website Template</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -57,8 +57,8 @@
                                 <i class="fa fa-phone-alt text-dark"></i>
                             </div>
                             <div class="ms-2">
-                                <h6 class="text-primary mb-0">Call Us</h6>
-                                <span class="text-white">+012 345 6789</span>
+                                <h6 class="text-primary mb-0">Kontak</h6>
+                                <span class="text-white">+628 122 3562</span>
                             </div>
                         </div>
                     </div>
@@ -68,8 +68,8 @@
                                 <i class="fa fa-envelope-open text-dark"></i>
                             </div>
                             <div class="ms-2">
-                                <h6 class="text-primary mb-0">Mail Us</h6>
-                                <span class="text-white">info@domain.com</span>
+                                <h6 class="text-primary mb-0">Email</h6>
+                                <span class="text-white">DesaSejahtera@domain.com</span>
                             </div>
                         </div>
                     </div>
@@ -79,8 +79,8 @@
                                 <i class="fa fa-map-marker-alt text-dark"></i>
                             </div>
                             <div class="ms-2">
-                                <h6 class="text-primary mb-0">Address</h6>
-                                <span class="text-white">123 Street, NY, USA</span>
+                                <h6 class="text-primary mb-0">Alamat</h6>
+                                <span class="text-white">Dusun II RT 04 RW 02</span>
                             </div>
                         </div>
                     </div>
@@ -102,17 +102,16 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav me-auto">
-                        <a href="dashboard" class="nav-item nav-link">Home</a>
+                        <a href="dashboard" class="nav-item nav-link">Tentang</a>
                         <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
                         <a href="{{ route('warga.index') }}" class="nav-item nav-link">Data Penduduk</a>
                         <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
+                        <div class="d-none d-lg-flex ms-auto">
+                            <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-youtube"></i></a>
+                        </div>
                     </div>
-                    <div class="d-none d-lg-flex ms-auto">
-                        <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
             </nav>
         </div>
     </div>
@@ -122,57 +121,159 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-4">
-            <h1 class="display-3 animated slideInDown">Perangkat Desa</h1>
+            <h1 class="display-3 animated slideInDown">Data Warga</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="#!">Data</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Data Penduduk</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Perangkat Desa</li>
+                    <li class="breadcrumb-item"><a href="#!">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Data User</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data Penduduk</li>
+                    <li class="breadcrumb-item"><a href="#!">Perangkat Desa</a></li>
                 </ol>
             </nav>
         </div>
     </div>
     <!-- Page Header End -->
 
-
-    <!-- Perangkat Desa List Start -->
+    <!-- Features Start -->
     <div class="container mt-4">
-        <h3 class="fw-bold text-success">Tambah Perangkat</h3>
-        <a href="{{ route('perangkat_desa.create') }}" class="btn btn-success mb-3">+ Tambah Perangkat</a>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="fw-bold text-success">Data Warga</h3>
+            <a href="{{ route('warga.create') }}" class="btn btn-success">+ Tambah Warga</a>
+        </div>
 
         @if (session('success'))
             <div class="alert alert-success text-center">{{ session('success') }}</div>
         @endif
 
-        <div class="row g-4">
-            @foreach ($perangkat as $p)
-                <div class="col-md-6 col-lg-4">
-                    <div class="donation-item d-flex h-100 p-4">
-                        <div class="donation-detail">
-                            <div class="position-relative mb-4">
-                                @if ($p->foto)
-                                    <img class="img-fluid w-100 rounded" src="{{ asset('storage/' . $p->foto) }}"
-                                        alt="Foto Perangkat">
-                                @else
-                                    <img class="img-fluid w-100 rounded" src="{{ asset('img/default.jpg') }}"
-                                        alt="Default Foto">
-                                @endif
+        @if ($warga->isEmpty())
+            <div class="text-center text-muted py-5">
+                <p>Belum ada data warga.</p>
+            </div>
+        @else
+            <div class="row g-4">
+                @foreach ($warga as $index => $item)
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card shadow-sm border-0 h-100"
+                            style="border-radius: 15px; background: linear-gradient(180deg, #d4ed91 0%, #b3e283 100%);">
+                            <div class="card-body text-center p-4">
+                                {{-- <!-- Foto -->
+                                <div class="mb-3">
+                                    <img src="{{ asset('images/default-avatar.png') }}" alt="Foto Warga"
+                                        class="rounded-circle shadow" width="100" height="100"
+                                        style="object-fit: cover;">
+                                </div> --}}
+
+                                <!-- Nama -->
+                                <h5 class="fw-bold text-dark mb-1">{{ $item->nama }}</h5>
+                                <p class="text-muted small mb-3">{{ $item->pekerjaan ?? 'Pekerjaan tidak diketahui' }}
+                                </p>
+
+                                <!-- Detail Info -->
+                                <div class="text-start small text-dark">
+                                    <p class="mb-1"><strong>No KTP:</strong> {{ $item->no_ktp }}</p>
+                                    <p class="mb-1"><strong>Jenis Kelamin:</strong> {{ $item->jenis_kelamin }}</p>
+                                    <p class="mb-1"><strong>Agama:</strong> {{ $item->agama }}</p>
+                                    <p class="mb-1"><strong>Telp:</strong> {{ $item->telp }}</p>
+                                    <p class="mb-1"><strong>Email:</strong> {{ $item->email }}</p>
+                                </div>
                             </div>
-                            <h3 class="h5">{{ $p->jabatan }}</h3>
-                            <p><strong>Warga ID:</strong> {{ $p->warga_id }}</p>
-                            <p><strong>NIP:</strong> {{ $p->nip ?? '-' }}</p>
-                            <p><strong>Kontak:</strong> {{ $p->kontak }}</p>
-                            <p><strong>Periode:</strong> {{ $p->periode_mulai }} -
-                                {{ $p->periode_selesai ?? 'Sekarang' }}</p>
+
+                            <!-- Aksi -->
+                            <div class="card-footer bg-transparent border-0 text-center pb-4">
+                                <a href="{{ route('warga.edit', $item->id) }}"
+                                    class="btn btn-sm btn-outline-success me-2" title="Edit Data">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+
+                                <form action="{{ route('warga.destroy', $item->id) }}" method="POST"
+                                    class="d-inline" onsubmit="return confirm('Yakin ingin hapus data ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus Data">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+
+                            </form>
+                        </div>
+                    </div>
+            </div>
+        @endforeach
+    </div>
+    @endif
+    </div>
+    <!-- Features End -->
+
+    <!-- Keunggulan Program Start -->
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6">
+                    <div class="rounded overflow-hidden">
+                        <div class="row g-0">
+                            <div class="col-sm-6 wow fadeIn" data-wow-delay="0.1s">
+                                <div class="text-center bg-success py-5 px-4 h-100">
+                                    <i class="fa fa-users fa-3x text-warning mb-3"></i>
+                                    <h1 class="display-5 mb-0" data-toggle="counter-up">120</h1>
+                                    <span class="text-light">Perangkat & Relawan</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 wow fadeIn" data-wow-delay="0.3s">
+                                <div class="text-center bg-secondary py-5 px-4 h-100">
+                                    <i class="fa fa-award fa-3x text-success mb-3"></i>
+                                    <h1 class="display-5 text-white mb-0" data-toggle="counter-up">15</h1>
+                                    <span class="text-white">Penghargaan Desa</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 wow fadeIn" data-wow-delay="0.5s">
+                                <div class="text-center bg-secondary py-5 px-4 h-100">
+                                    <i class="fa fa-list-check fa-3x text-success mb-3"></i>
+                                    <h1 class="display-5 text-white mb-0" data-toggle="counter-up">230</h1>
+                                    <span class="text-white">Program Terlaksana</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 wow fadeIn" data-wow-delay="0.7s">
+                                <div class="text-center bg-success py-5 px-4 h-100">
+                                    <i class="fa fa-comments fa-3x text-warning mb-3"></i>
+                                    <h1 class="display-5 mb-0" data-toggle="counter-up">500+</h1>
+                                    <span class="text-light">Aspirasi Warga</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            @endforeach
+
+                <div class="col-lg-6">
+                    <p class="section-title bg-white text-start text-success pe-3">Mengapa Kami!</p>
+                    <h1 class="display-6 mb-4 wow fadeIn" data-wow-delay="0.2s">
+                        Alasan Mengapa Warga Memilih Program Bina Desa
+                    </h1>
+                    <p class="mb-4 wow fadeIn" data-wow-delay="0.3s">
+                        Program <b>Bina Desa</b> hadir untuk meningkatkan kualitas hidup masyarakat melalui
+                        pemberdayaan, pelayanan publik, dan pembangunan berkelanjutan. Kami percaya kemajuan desa
+                        berawal dari kolaborasi dan kepedulian bersama.
+                    </p>
+
+                    <p class="text-dark wow fadeIn" data-wow-delay="0.4s">
+                        <i class="fa fa-check text-success me-2"></i>Pelayanan publik transparan dan cepat
+                    </p>
+                    <p class="text-dark wow fadeIn" data-wow-delay="0.5s">
+                        <i class="fa fa-check text-success me-2"></i>Program pemberdayaan berbasis masyarakat
+                    </p>
+                    <p class="text-dark wow fadeIn" data-wow-delay="0.6s">
+                        <i class="fa fa-check text-success me-2"></i>Kolaborasi pemerintah dan warga secara aktif
+                    </p>
+
+                    <div class="d-flex mt-4 wow fadeIn" data-wow-delay="0.7s">
+                        <a class="btn btn-success py-3 px-4 me-3" href="#!">Lihat Program</a>
+                        <a class="btn btn-warning py-3 px-4 text-dark" href="#!">Hubungi Kami</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    </div>
-
-    <!-- Perangkat Desa List End -->
+    <!-- Keunggulan Program End -->
 
     <!-- Footer Start -->
     <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.1s">
