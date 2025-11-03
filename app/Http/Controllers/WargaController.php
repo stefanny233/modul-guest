@@ -14,7 +14,7 @@ class WargaController extends Controller
 
     public function create()
     {
-        return view('warga.create');
+        return view('pages.warga.create');
     }
 
     public function store(Request $request)
@@ -33,10 +33,11 @@ class WargaController extends Controller
         return redirect()->route('warga.index')->with('success', 'Data warga berhasil ditambahkan!');
     }
 
+
     public function edit($id)
     {
         $warga = Warga::findOrFail($id);
-        return view('warga.edit', compact('warga'));
+        return view('pages.warga.edit', compact('warga'));
     }
 
     public function update(Request $request, $id)

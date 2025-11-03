@@ -1,123 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <title>Charitize - Charity Organization Website Template</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
-
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
-
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600;700&family=Open+Sans&display=swap"
-        rel="stylesheet">
-
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href="{{ asset('assets-guest/lib/animate/animate.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets-guest/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="{{ asset('assets-guest/css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
-    <link href="{{ asset('assets-guest/css/style.css') }}" rel="stylesheet">
-</head>
-
-<body>
-    <!-- Spinner Start -->
-    <div id="spinner"
-        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
-    </div>
-    <!-- Spinner End -->
-
-
-    <!-- Topbar Start -->
-    <div class="container-fluid bg-secondary top-bar wow fadeIn" data-wow-delay="0.1s">
-        <div class="row align-items-center h-100">
-            <div class="col-lg-4 text-center text-lg-start">
-                <a href="index.html">
-                    <h1 class="display-5 text-primary m-0">Desa Sejahtera</h1>
-                </a>
-            </div>
-            <div class="col-lg-8 d-none d-lg-block">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="d-flex justify-content-end">
-                            <div class="flex-shrink-0 btn-square bg-primary">
-                                <i class="fa fa-phone-alt text-dark"></i>
-                            </div>
-                            <div class="ms-2">
-                                <h6 class="text-primary mb-0">Kontak</h6>
-                                <span class="text-white">+628 122 3562</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="d-flex justify-content-end">
-                            <div class="flex-shrink-0 btn-square bg-primary">
-                                <i class="fa fa-envelope-open text-dark"></i>
-                            </div>
-                            <div class="ms-2">
-                                <h6 class="text-primary mb-0">Email</h6>
-                                <span class="text-white">DesaSejahtera@domain.com</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="d-flex justify-content-end">
-                            <div class="flex-shrink-0 btn-square bg-primary">
-                                <i class="fa fa-map-marker-alt text-dark"></i>
-                            </div>
-                            <div class="ms-2">
-                                <h6 class="text-primary mb-0">Alamat</h6>
-                                <span class="text-white">Dusun II RT 04 RW 02</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Topbar End -->
-
-
-    <!-- Navbar Start -->
-    <div class="container-fluid bg-secondary px-0 wow fadeIn" data-wow-delay="0.1s">
-        <div class="nav-bar">
-            <nav class="navbar navbar-expand-lg bg-primary navbar-dark px-4 py-lg-0">
-                <h4 class="d-lg-none m-0">Menu</h4>
-                <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse"
-                    data-bs-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav me-auto">
-                        <a href="dashboard" class="nav-item nav-link">Home</a>
-                        <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
-                        <a href="{{ route('warga.index') }}" class="nav-item nav-link">Data Penduduk</a>
-                        <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
-                    <div class="d-none d-lg-flex ms-auto">
-                        <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </div>
-    <!-- Navbar End -->
-
-
+@extends('layouts.dashboard.app')
+@section('content')
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-4">
@@ -146,8 +28,7 @@
 
                     <div class="mb-3">
                         <label class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control" value="{{ old('name') }}"
-                            required>
+                        <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
                         @error('name')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
@@ -155,8 +36,7 @@
 
                     <div class="mb-3">
                         <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" value="{{ old('email') }}"
-                            required>
+                        <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
                         @error('email')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
@@ -263,13 +143,10 @@
                     <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+628 122 3562</p>
                     <p class="mb-2"><i class="fa fa-envelope me-3"></i>DesaSejahtera@domain.com</p>
                     <div class="d-flex pt-3">
-                        <a class="btn btn-square btn-primary me-2" href="#!"><i
-                                class="fab fa-x-twitter"></i></a>
-                        <a class="btn btn-square btn-primary me-2" href="#!"><i
-                                class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square btn-primary me-2" href="#!"><i class="fab fa-x-twitter"></i></a>
+                        <a class="btn btn-square btn-primary me-2" href="#!"><i class="fab fa-facebook-f"></i></a>
                         <a class="btn btn-square btn-primary me-2" href="#!"><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-square btn-primary me-2" href="#!"><i
-                                class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-square btn-primary me-2" href="#!"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -354,6 +231,7 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset('assets-guest/js/main.js') }}"></script>
-</body>
+    </body>
 
-</html>
+    </html>
+@endsection

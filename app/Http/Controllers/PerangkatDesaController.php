@@ -16,7 +16,10 @@ class PerangkatDesaController extends Controller
 
     public function create()
     {
-        return view('perangkat_desa.create');
+        return view('pages.perangkat_desa.create');
+    }
+    public function show(){
+
     }
 
     public function store(Request $request)

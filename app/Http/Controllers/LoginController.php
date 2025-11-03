@@ -17,6 +17,7 @@ class LoginController extends Controller
     // Proses login
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -36,8 +37,11 @@ class LoginController extends Controller
                 'user_email' => $user->email,
             ]);
 
-            return redirect()->route('guest.dashboard');
+
+            return redirect()->route('dashboard.index');
         }
+
+
 
         return back()->withErrors(['email' => 'Email atau password salah.'])->withInput();
     }

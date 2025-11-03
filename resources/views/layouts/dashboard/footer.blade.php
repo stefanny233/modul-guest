@@ -71,5 +71,11 @@
         </div>
     </div>
 </div>
-<!-- Back to Top -->
-    <a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/08117696236?text=Halo,%20saya%20ingin%20bertanya"
+   class="btn btn-success btn-lg btn-lg-square whatsapp-float"
+   target="_blank"
+   title="Chat via WhatsApp">
+   <i class="bi bi-whatsapp"></i>
+</a>

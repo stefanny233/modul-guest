@@ -7,7 +7,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav me-auto">
-                    <a href="dashbord" class="nav-item nav-link">Tentang</a>
+                    <a href="{{route('dashboard.index')}}" class="nav-item nav-link">Home</a>
                     <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
                     <a href="{{ route('warga.index') }}" class="nav-item nav-link">Data Penduduk</a>
                     <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
@@ -15,7 +15,7 @@
                 <div class="d-none d-lg-flex ms-auto">
                     <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
                     <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-whatsapp"></i></a>
+                    <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
         </nav>

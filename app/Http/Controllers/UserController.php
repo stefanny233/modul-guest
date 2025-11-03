@@ -48,7 +48,7 @@ class UserController extends Controller
     // TAMPILKAN FORM EDIT
     public function edit(User $user)
     {
-        return view('users.edit', compact('user'));
+        return view('pages.users.edit', compact('user'));
     }
 
     // PERBARUI DATA → KEMBALI KE INDEX
