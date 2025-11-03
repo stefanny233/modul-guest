@@ -121,7 +121,7 @@
                     <div class="d-none d-lg-flex ms-auto">
                         <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-twitter"></i></a>
                         <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-square btn-dark ms-2" href="#!"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
             </nav>
@@ -570,46 +570,46 @@
 
 
     <!-- Testimonial Start -->
-        <div class="container py-5">
-            <div class="card shadow-lg p-4 mx-auto" style="max-width: 600px;">
-                <h4 class="text-center text-success mb-4">Edit Data Penduduk</h4>
+    <div class="container py-5">
+        <div class="card shadow-lg p-4 mx-auto" style="max-width: 600px;">
+            <h4 class="text-center text-success mb-4">Edit Data Penduduk</h4>
 
-                <form>
-                    <div class="mb-3">
-                        <label class="form-label">Nama Lengkap</label>
-                        <input type="text" class="form-control" value="Siti Rahmawati">
-                    </div>
+            <form>
+                <div class="mb-3">
+                    <label class="form-label">Nama Lengkap</label>
+                    <input type="text" class="form-control" value="Siti Rahmawati">
+                </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" value="siti@gmail.com">
-                    </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" value="siti@gmail.com">
+                </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Jenis Kelamin</label>
-                        <select class="form-select">
-                            <option>Laki-laki</option>
-                            <option selected>Perempuan</option>
-                        </select>
-                    </div>
+                <div class="mb-3">
+                    <label class="form-label">Jenis Kelamin</label>
+                    <select class="form-select">
+                        <option>Laki-laki</option>
+                        <option selected>Perempuan</option>
+                    </select>
+                </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Agama</label>
-                        <input type="text" class="form-control" value="Islam">
-                    </div>
+                <div class="mb-3">
+                    <label class="form-label">Agama</label>
+                    <input type="text" class="form-control" value="Islam">
+                </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Pekerjaan</label>
-                        <input type="text" class="form-control" value="Guru">
-                    </div>
+                <div class="mb-3">
+                    <label class="form-label">Pekerjaan</label>
+                    <input type="text" class="form-control" value="Guru">
+                </div>
 
-                    <div class="text-center mt-4">
-                        <a href="{{ url('guest') }}" class="btn btn-secondary">Kembali</a>
-                        <button type="submit" class="btn btn-success">Perbarui</button>
-                    </div>
-                </form>
-            </div>
+                <div class="text-center mt-4">
+                    <a href="{{ url('guest') }}" class="btn btn-secondary">Kembali</a>
+                    <button type="submit" class="btn btn-success">Perbarui</button>
+                </div>
+            </form>
         </div>
+    </div>
     <!-- Testimonial End -->
 
     <!-- Footer Start -->

@@ -11,7 +11,7 @@ class LoginController extends Controller
     // Menampilkan halaman login
     public function index()
     {
-        return view('login');
+        return view('pages.auth.auth');
     }
 
     // Proses login

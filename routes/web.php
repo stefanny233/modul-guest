@@ -18,7 +18,7 @@ Route::resource('login', LoginController::class)->only(['index', 'store']);
 
 // dashboard diarahkan ke view/admin/dashboard.blade.php
 Route::get('/dashboard', function () {
-    return view('guest.index');
+    return view('pages.guest.index');
 })->name('guest.dashboard');
 
 // ROUTE DATA warga (Tanpa Middleware Auth)
