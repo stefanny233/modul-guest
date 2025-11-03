@@ -19,71 +19,64 @@
     <!-- Event Start -->
     <div class="container py-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3 class="fw-bold text-success">Data User</h3>
-            <a href="{{ route('users.create') }}" class="btn btn-success">
-                <i class="fa fa-plus me-2"></i> Tambah User
-            </a>
+            <h3 class="fw-bold text-success">Data User</h3> <a href="{{ route('users.create') }}" class="btn btn-success">
+                <i class="fa fa-plus me-2"></i> Tambah User </a>
         </div>
-
         @if (session('success'))
             <div class="alert alert-success text-center">{{ session('success') }}</div>
-        @endif
+            @endif @if ($users->isEmpty())
+                <div class="text-center text-muted py-5">
+                    <p>Belum ada data pengguna.</p>
+                </div>
+            @else
+                <div class="row g-4">
+                    @foreach ($users as $index => $user)
+                        <div class="col-md-4 col-lg-3">
+                            <div class="card border-0 h-100"
+                                style="border-radius: 15px; background: #ffffff; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);">
 
-        @if ($users->isEmpty())
-            <div class="text-center text-muted py-5">
-                <p>Belum ada data pengguna.</p>
-            </div>
-        @else
-            <div class="row g-4">
-                @foreach ($users as $index => $user)
-                    <div class="col-md-4 col-lg-3">
-                        <div class="card shadow-sm border-0 h-100"
-                            style="border-radius: 15px; background: linear-gradient(180deg, #d4ed91 0%, #b3e283 100%);">
-                            <div class="card-body text-center p-4">
 
-                                {{-- <!-- Avatar Default -->
-                                <div class="mb-3">
-                                    <img src="{{ asset('images/default-avatar.png') }}" alt="Foto User"
-                                        class="rounded-circle shadow" width="100" height="100"
-                                        style="object-fit: cover;">
-                                </div> --}}
+                                <div class="card-body text-center p-4">
+                                    <!-- Foto Profil -->
+                                    <div class="mb-3">
+                                        <img src="{{ asset('assets-guest/img/team-2.jpg') }}" alt="Foto User"
+                                            class="rounded-circle shadow-sm" width="100" height="100"
+                                            style="object-fit: cover;">
+                                    </div>
+                                    <!-- Nama -->
+                                    <h5 class="fw-bold text-dark mb-1">{{ $user->name }}</h5>
+                                    <p class="text-muted small mb-3">{{ $user->email }}</p>
 
-                                <!-- Nama -->
-                                <h5 class="fw-bold text-dark mb-1">{{ $user->name }}</h5>
-                                <p class="text-muted small mb-3">{{ $user->email }}</p>
+                                    <!-- Detail Info -->
+                                    <div class="text-start small text-dark">
+                                        <p class="mb-1"><strong>No:</strong> {{ $index + 1 }}</p>
+                                        <p class="mb-1"><strong>Tanggal Dibuat:</strong>
+                                            {{ $user->created_at->format('d M Y') }}</p>
+                                    </div>
+                                </div>
 
-                                <!-- Detail Info -->
-                                <div class="text-start small text-dark">
-                                    <p class="mb-1"><strong>No:</strong> {{ $index + 1 }}</p>
-                                    <p class="mb-1"><strong>Tanggal Dibuat:</strong>
-                                        {{ $user->created_at->format('d M Y') }}</p>
+                                <!-- Aksi -->
+                                <div class="card-footer bg-transparent border-0 text-center pb-4">
+                                    <a href="{{ route('users.edit', $user->id) }}"
+                                        class="btn btn-sm btn-outline-success me-2" title="Edit Data">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline"
+                                        onsubmit="return confirm('Yakin ingin menghapus user ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus Data">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
-
-                            <!-- Aksi -->
-                            <div class="card-footer bg-transparent border-0 text-center pb-4">
-                                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-outline-success me-2"
-                                    title="Edit Data">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-
-                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline"
-                                    onsubmit="return confirm('Yakin ingin menghapus user ini?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus Data">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
                         </div>
-                    </div>
-                @endforeach
-            </div>
-        @endif
+                    @endforeach
+                </div>
+            @endif
     </div>
     <!-- Event End -->
-
 
     <!-- Team Start -->
     <div class="container-fluid py-5">

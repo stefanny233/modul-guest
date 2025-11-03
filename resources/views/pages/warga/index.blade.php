@@ -35,40 +35,41 @@
             <div class="row g-4">
                 @foreach ($warga as $index => $item)
                     <div class="col-md-4 col-lg-3">
-                        <div class="card shadow-sm border-0 h-100"
-                            style="border-radius: 15px; background: linear-gradient(180deg, #d4ed91 0%, #b3e283 100%);">
+                        <div class="card border-0 h-100"
+                            style="border-radius: 15px; background: #ffffff; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);">
                             <div class="card-body text-center p-4">
-                                {{-- <!-- Foto -->
+                                <!-- Foto Profil -->
                                 <div class="mb-3">
-                                    <img src="{{ asset('images/default-avatar.png') }}" alt="Foto Warga"
-                                        class="rounded-circle shadow" width="100" height="100"
+                                    <img src="{{ asset('assets-guest/img/team-2.jpg') }}" alt="Foto User"
+                                        class="rounded-circle shadow-sm" width="100" height="100"
                                         style="object-fit: cover;">
-                                </div> --}}
-
+                                </div>
                                 <!-- Nama -->
                                 <h5 class="fw-bold text-dark mb-1">{{ $item->nama }}</h5>
-                                <p class="text-muted small mb-3">{{ $item->pekerjaan ?? 'Pekerjaan tidak diketahui' }}
+                                <p class="text-muted small mb-3">
+                                    {{ $item->pekerjaan ?? 'Pekerjaan tidak diketahui' }}
                                 </p>
 
                                 <!-- Detail Info -->
-                                <div class="text-start small text-dark">
+                                <div class="text-start small text-dark mx-auto"
+                                    style="display: inline-block; text-align: left; line-height: 1.7;">
                                     <p class="mb-1"><strong>No KTP:</strong> {{ $item->no_ktp }}</p>
                                     <p class="mb-1"><strong>Jenis Kelamin:</strong> {{ $item->jenis_kelamin }}</p>
                                     <p class="mb-1"><strong>Agama:</strong> {{ $item->agama }}</p>
                                     <p class="mb-1"><strong>Telp:</strong> {{ $item->telp }}</p>
-                                    <p class="mb-1"><strong>Email:</strong> {{ $item->email }}</p>
+                                    <p class="mb-0"><strong>Email:</strong> {{ $item->email }}</p>
                                 </div>
                             </div>
 
                             <!-- Aksi -->
                             <div class="card-footer bg-transparent border-0 text-center pb-4">
-                                <a href="{{ route('warga.edit', $item->id) }}"
-                                    class="btn btn-sm btn-outline-success me-2" title="Edit Data">
+                                <a href="{{ route('warga.edit', $item->id) }}" class="btn btn-sm btn-outline-success me-2"
+                                    title="Edit Data">
                                     <i class="fa fa-edit"></i>
                                 </a>
 
-                                <form action="{{ route('warga.destroy', $item->id) }}" method="POST"
-                                    class="d-inline" onsubmit="return confirm('Yakin ingin hapus data ini?')">
+                                <form action="{{ route('warga.destroy', $item->id) }}" method="POST" class="d-inline"
+                                    onsubmit="return confirm('Yakin ingin hapus data ini?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus Data">
@@ -76,15 +77,13 @@
                                     </button>
                                 </form>
                             </div>
-
-                            </form>
                         </div>
                     </div>
+                @endforeach
             </div>
-        @endforeach
+        @endif
     </div>
-    @endif
-    </div>
+
     <!-- Features End -->
 
     <!-- Keunggulan Program Start -->
@@ -156,5 +155,4 @@
         </div>
     </div>
     <!-- Keunggulan Program End -->
-    @endsection
-
+@endsection
