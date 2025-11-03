@@ -27,10 +27,6 @@
                         <form action="{{ route('perangkat_desa.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row g-3">
-                                {{-- <div class="col-12">
-                                    <label>Warga ID</label>
-                                    <input type="text" name="warga_id" class="form-control" required>
-                                </div> --}}
 
                                 <div class="col-12">
                                     <label>Jabatan</label>
