@@ -25,60 +25,28 @@
                     <div class="h-100 p-5">
                         <h1 class="display-6 mb-4">Tambah Data Perangkat Desa</h1>
                         <form action="{{ route('perangkat_desa.store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <label>Warga ID</label>
-                                    <input type="text" name="warga_id" class="form-control" required>
-                                </div>
-
-                                <div class="col-12">
-                                    <label>Jabatan</label>
-                                    <input type="text" name="jabatan" class="form-control" required>
-                                </div>
-
-                                <div class="col-12">
-                                    <label>NIP</label>
-                                    <input type="text" name="nip" class="form-control">
-                                </div>
-
-                                <div class="col-12">
-                                    <label>Kontak</label>
-                                    <input type="text" name="kontak" class="form-control" required>
-                                </div>
-
-                                <div class="col-6">
-                                    <label>Periode Mulai</label>
-                                    <input type="date" name="periode_mulai" class="form-control" required>
-                                </div>
-
-                                <div class="col-6">
-                                    <label>Periode Selesai</label>
-                                    <input type="date" name="periode_selesai" class="form-control">
-                                </div>
-
-                                <div class="col-12">
-                                    <label>Foto</label>
-                                    <input type="file" name="foto" class="form-control">
-                                </div>
-
-                                <div class="col-12 d-flex gap-2">
-                                    <button type="submit" class="btn btn-primary w-100 py-3">
-                                        Simpan Data
-                                    </button>
-
-                                    <a href="{{ route('perangkat_desa.index') }}" class="btn btn-secondary w-100 py-3">
-                                        Batal
-                                    </a>
-                                </div>
-
+                            @csrf <div class="row g-3">
+                                <div class="col-12"> <label>Jabatan</label> <input type="text" name="jabatan"
+                                        class="form-control" required> </div>
+                                <div class="col-12"> <label>NIP</label> <input type="text" name="nip"
+                                        class="form-control"> </div>
+                                <div class="col-12"> <label>Kontak</label> <input type="text" name="kontak"
+                                        class="form-control" required> </div>
+                                <div class="col-6"> <label>Periode Mulai</label> <input type="date" name="periode_mulai"
+                                        class="form-control" required> </div>
+                                <div class="col-6"> <label>Periode Selesai</label> <input type="date"
+                                        name="periode_selesai" class="form-control"> </div>
+                                <div class="col-12"> <label>Foto</label> <input type="file" name="foto"
+                                        class="form-control"> </div>
+                                <div class="col-12 d-flex gap-2"> <button type="submit" class="btn btn-primary w-100 py-3">
+                                        Simpan Data </button> <a href="{{ route('perangkat_desa.index') }}"
+                                        class="btn btn-secondary w-100 py-3"> Batal </a> </div>
                             </div>
                         </form>
                     </div>
                 </div>
-
                 <div class="col-lg-5 bg-primary text-center text-white py-5">
-                    <div class="h-100 p-5">
+                    <div class="h-100 p-5 d-flex align-items-center"><div>
                         <h2 class="display-6 mb-4">Pastikan Data Terisi Lengkap</h2>
                         <p>Isi semua kolom dengan benar dan upload foto perangkat desa jika tersedia.</p>
                     </div>
@@ -111,7 +79,8 @@
                         <h3 class="text-success mb-1">Stefanny Huang</h3>
                         <span class="text-muted mb-3 d-block">Koordinator Program Pemberdayaan</span>
                         <p class="text-secondary small">
-                            Memimpin inisiatif pemberdayaan masyarakat melalui pelatihan kewirausahaan dan pendidikan
+                            Memimpin inisiatif pemberdayaan masyarakat melalui pelatihan kewirausahaan dan
+                            pendidikan
                             keterampilan warga desa.
                         </p>
                         <div class="d-flex justify-content-center mt-3">
@@ -136,7 +105,9 @@
                         <h3 class="text-success mb-1">Febby Fahrezy</h3>
                         <span class="text-muted mb-3 d-block">Kepala Bidang Infrastruktur Desa</span>
                         <p class="text-secondary small">
-                            Mengawasi proyek pembangunan desa dan memastikan fasilitas publik berjalan sesuai visi Desa
+                            Mengawasi proyek pembangunan desa dan memastikan fasilitas publik berjalan sesuai
+                            visi
+                            Desa
                             Sejahtera yang berkelanjutan.
                         </p>
                         <div class="d-flex justify-content-center mt-3">

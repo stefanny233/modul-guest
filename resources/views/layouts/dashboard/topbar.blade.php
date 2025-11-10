@@ -13,7 +13,7 @@
                                 <i class="fa fa-phone-alt text-dark"></i>
                             </div>
                             <div class="ms-2">
-                                <h6 class="text-primary mb-0">Kontak</h6>
+                                <h6 class="text-primary mb-0">WhatsApp</h6>
                                 <span class="text-white">+628 122 3562</span>
                             </div>
                         </div>

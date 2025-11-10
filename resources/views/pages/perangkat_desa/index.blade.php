@@ -38,8 +38,8 @@
             <div class="row g-4">
                 @foreach ($perangkat as $p)
                     <div class="col-md-6 col-lg-4">
-                        <div class="card shadow-sm border-0 h-100"
-                            style="border-radius: 15px; background: linear-gradient(180deg, #e9fce1 0%, #d7f5c5 100%);">
+                        <div class="card border-0 h-100"
+                            style="border-radius: 15px; background: #ffffff; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);">
                             <div class="card-body text-dark p-4">
                                 {{-- Foto opsional --}}
                                 {{-- <div class="text-center mb-3">
@@ -51,7 +51,6 @@
                                 <h5 class="fw-bold text-success mb-2">{{ $p->jabatan }}</h5>
 
                                 <div class="small">
-                                    <p class="mb-1"><strong>Warga ID:</strong> {{ $p->warga_id }}</p>
                                     <p class="mb-1"><strong>NIP:</strong> {{ $p->nip ?? '-' }}</p>
                                     <p class="mb-1"><strong>Kontak:</strong> {{ $p->kontak }}</p>
                                     <p class="mb-0"><strong>Periode:</strong> {{ $p->periode_mulai }} -
