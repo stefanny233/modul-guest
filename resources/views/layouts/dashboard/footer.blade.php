@@ -7,10 +7,10 @@
                 <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+628 122 3562</p>
                 <p class="mb-2"><i class="fa fa-envelope me-3"></i>DesaSejahtera@domain.com</p>
                 <div class="d-flex pt-3">
-                    <a class="btn btn-square btn-primary me-2" href="#!"><i class="fab fa-x-twitter"></i></a>
-                    <a class="btn btn-square btn-primary me-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-square btn-primary me-2" href="#!"><i class="fab fa-youtube"></i></a>
-                    <a class="btn btn-square btn-primary me-2" href="#!"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-square btn-primary me-2" href="https://x.com/"><i class="fab fa-x-twitter"></i></a>
+                    <a class="btn btn-square btn-primary me-2" href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-square btn-primary me-2" href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a>
+                    <a class="btn btn-square btn-primary me-2" href="https://www.linkedin.com/"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">

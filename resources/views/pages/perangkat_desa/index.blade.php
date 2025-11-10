@@ -96,11 +96,11 @@
                             keterampilan warga desa.
                         </p>
                         <div class="d-flex justify-content-center mt-3">
-                            <a class="btn btn-square btn-outline-success mx-1" href="#!"><i
+                            <a class="btn btn-square btn-outline-success mx-1" href="https://www.facebook.com/"><i
                                     class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-outline-success mx-1" href="#!"><i
+                            <a class="btn btn-square btn-outline-success mx-1" href="https://www.instagram.com/"><i
                                     class="fab fa-instagram"></i></a>
-                            <a class="btn btn-square btn-outline-success mx-1" href="#!"><i
+                            <a class="btn btn-square btn-outline-success mx-1" href="https://www.linkedin.com/"><i
                                     class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
@@ -121,11 +121,11 @@
                             Sejahtera yang berkelanjutan.
                         </p>
                         <div class="d-flex justify-content-center mt-3">
-                            <a class="btn btn-square btn-outline-warning mx-1" href="#!"><i
+                            <a class="btn btn-square btn-outline-warning mx-1" href="https://www.facebook.com/"><i
                                     class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-outline-warning mx-1" href="#!"><i
+                            <a class="btn btn-square btn-outline-warning mx-1" href="https://www.instagram.com/"><i
                                     class="fab fa-instagram"></i></a>
-                            <a class="btn btn-square btn-outline-warning mx-1" href="#!"><i
+                            <a class="btn btn-square btn-outline-warning mx-1" href="https://www.linkedin.com/"><i
                                     class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
