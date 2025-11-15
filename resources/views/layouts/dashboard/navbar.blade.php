@@ -11,6 +11,8 @@
                     <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
                     <a href="{{ route('warga.index') }}" class="nav-item nav-link">Data Penduduk</a>
                     <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
+                    <a href="{{ route('lembaga.index') }}" class="nav-item nav-link">Lembaga Desa</a>
+                    <a href="{{ route('jabatan.index') }}" class="nav-item nav-link">Jabatan Desa</a>
                 </div>
                 <div class="d-none d-lg-flex ms-auto">
                     <a class="btn btn-square btn-dark ms-2" href="https://x.com/"><i class="fab fa-twitter"></i></a>

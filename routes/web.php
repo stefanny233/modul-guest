@@ -5,7 +5,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\WargaController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LembagaDesaController;
 use App\Http\Controllers\PerangkatDesaController;
+use App\Http\Controllers\JabatanLembagaController;
 
 // use App\Http\Controllers\AuthController; // (bisa diaktifkan kalau dibutuhkan)
 
@@ -27,6 +29,10 @@ Route::resource('dashboard', DashboardController::class);
 // ROUTE DATA warga (Tanpa Middleware Auth)
 Route::resource('warga', WargaController::class);
 Route::resource('perangkat_desa', PerangkatDesaController::class);
+
+
+Route::resource('lembaga', LembagaDesaController::class);
+Route::resource('jabatan', JabatanLembagaController::class);
 
 //Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 //Route::post('/register', [AuthController::class, 'register'])->name('register.post');

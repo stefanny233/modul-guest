@@ -40,24 +40,84 @@
                     <div class="col-md-6 col-lg-4">
                         <div class="card border-0 h-100"
                             style="border-radius: 15px; background: #ffffff; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);">
-                            <div class="card-body text-dark p-4">
-                                {{-- Foto opsional --}}
-                                {{-- <div class="text-center mb-3">
-                                <img src="{{ $p->foto ? asset('storage/' . $p->foto) : asset('img/default.jpg') }}"
-                                    alt="Foto Perangkat" class="rounded-circle shadow-sm" width="100" height="100"
-                                    style="object-fit: cover;">
-                            </div> --}}
+
+                            <div class="card-body text-dark p-4 text-center">
+
+                                <!-- FOTO / LOGO PERANGKAT (otomatiskan berdasarkan: foto -> logo gambar -> icon jabatan) -->
+                                <div class="mb-3">
+                                    @php
+                                        // slugify jabatan untuk nama file logo (opsional)
+                                        $jabatanSlug = Str::slug($p->jabatan ?? 'default');
+
+                                        // path logo gambar di storage (public/storage/logos/{slug}.png)
+                                        $logoPath = 'storage/logos/' . $jabatanSlug . '.png';
+
+                                        // mapping fallback icon per jabatan (Font Awesome)
+                                        $icons = [
+                                            'kepala-desa' => 'fa-user-tie',
+                                            'sekretaris' => 'fa-user-edit',
+                                            'kaur-keuangan' => 'fa-wallet',
+                                            'kaur-umum' => 'fa-clipboard',
+                                            'kasi-pemerintahan' => 'fa-landmark',
+                                            'kasi-pelayanan' => 'fa-handshake',
+                                        ];
+
+                                        $icon = $icons[$jabatanSlug] ?? 'fa-user';
+                                    @endphp
+
+                                    @if ($p->foto)
+                                        {{-- tampilkan foto yang diupload --}}
+                                        <img src="{{ asset('storage/' . $p->foto) }}"
+                                            alt="Foto {{ $p->nama ?? $p->jabatan }}" class="rounded-circle shadow-sm"
+                                            width="100" height="100" style="object-fit: cover;">
+                                    @elseif (file_exists(public_path($logoPath)))
+                                        {{-- kalau ada file logo khusus per jabatan (mis: public/storage/logos/kepala-desa.png) --}}
+                                        <img src="{{ asset($logoPath) }}" alt="Logo {{ $p->jabatan }}"
+                                            class="rounded-circle shadow-sm" width="100" height="100"
+                                            style="object-fit: cover;">
+                                    @else
+                                        {{-- fallback ke icon Font Awesome sesuai jabatan --}}
+                                        <div class="rounded-circle shadow-sm d-flex justify-content-center align-items-center bg-success text-white"
+                                            style="width:100px;height:100px;margin:auto;font-size:40px;">
+                                            <i class="fa {{ $icon }}"></i>
+                                        </div>
+                                    @endif
+                                </div>
 
                                 <h5 class="fw-bold text-success mb-2">{{ $p->jabatan }}</h5>
 
-                                <div class="small">
+                                <div class="small text-start">
                                     <p class="mb-1"><strong>NIP:</strong> {{ $p->nip ?? '-' }}</p>
                                     <p class="mb-1"><strong>Kontak:</strong> {{ $p->kontak }}</p>
-                                    <p class="mb-0"><strong>Periode:</strong> {{ $p->periode_mulai }} -
-                                        {{ $p->periode_selesai ?? 'Sekarang' }}
+                                    <p class="mb-0"><strong>Periode:</strong>
+                                        {{ $p->periode_mulai }} - {{ $p->periode_selesai ?? 'Sekarang' }}
                                     </p>
                                 </div>
                             </div>
+
+                            <div class="card-footer bg-transparent border-0 text-center pb-4">
+
+                                <!-- Tombol Edit -->
+                                <a href="{{ route('perangkat_desa.edit', $p) }}"
+                                    class="btn btn-sm btn-outline-success me-2" title="Edit Data">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+
+                                <!-- Tombol Delete -->
+                                <form action="{{ route('perangkat_desa.destroy', $p) }}" method="POST" class="d-inline"
+                                    onsubmit="return confirm('Yakin ingin hapus data ini?')">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus Data">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
+
+                            </div>
+                            <!-- Aksi End -->
+
                         </div>
                     </div>
                 @endforeach
@@ -65,6 +125,7 @@
         @endif
     </div>
     <!-- Perangkat Desa List End -->
+
 
 
 
