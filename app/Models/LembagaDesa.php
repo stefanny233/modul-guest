@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class LembagaDesa extends Model
 {
     protected $table = 'lembaga_desa';
-    protected $primaryKey = 'lembaga_id'; // ← WAJIB
+    protected $primaryKey = 'lembaga_id'; 
 
     public $incrementing = true;          // PK auto increment
     protected $keyType = 'int';           // tipe data integer
@@ -18,4 +18,9 @@ class LembagaDesa extends Model
         'kontak',
         'logo',
     ];
+
+    public function jabatan()
+    {
+        return $this->hasMany(\App\Models\JabatanDesa::class, 'lembaga_id', 'lembaga_id');
+    }
 }

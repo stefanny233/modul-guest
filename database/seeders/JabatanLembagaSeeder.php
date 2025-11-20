@@ -29,15 +29,14 @@ class JabatanLembagaSeeder extends Seeder
         $columns = Schema::getColumnListing('jabatan_lembaga');
 
         foreach ($items as $it) {
-            // hanya gunakan kolom yang ada di DB
+
             $row = array_intersect_key($it, array_flip($columns));
 
-            // buat slug otomatis jika kolom slug ada
+
             if (in_array('slug', $columns) && ! empty($row['nama_jabatan'])) {
                 $row['slug'] = Str::slug($row['nama_jabatan']);
             }
 
-            // gunakan updateOrInsert supaya tidak duplikat
             $where = [];
             if (isset($row['nama_jabatan'])) {
                 $where['nama_jabatan'] = $row['nama_jabatan'];
@@ -49,7 +48,7 @@ class JabatanLembagaSeeder extends Seeder
             if (! empty($where)) {
                 DB::table('jabatan_lembaga')->updateOrInsert($where, $row);
             } else {
-                // fallback: insert tapi hati-hati (jarang terjadi)
+
                 DB::table('jabatan_lembaga')->insert($row);
             }
         }

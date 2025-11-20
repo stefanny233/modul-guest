@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RtController;
+use App\Http\Controllers\RwController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\WargaController;
@@ -34,6 +36,8 @@ Route::resource('perangkat_desa', PerangkatDesaController::class);
 Route::resource('lembaga', LembagaDesaController::class);
 Route::resource('jabatan', JabatanLembagaController::class);
 
+Route::resource('rw', RwController::class);
+Route::resource('rt', RtController::class);
 //Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 //Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 

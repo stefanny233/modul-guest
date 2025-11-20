@@ -7,9 +7,20 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav me-auto">
-                    <a href="{{route('dashboard.index')}}" class="nav-item nav-link">Home</a>
+
+                    <a href="{{ route('dashboard.index') }}" class="nav-item nav-link">Home</a>
                     <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
-                    <a href="{{ route('warga.index') }}" class="nav-item nav-link">Data Penduduk</a>
+                    <div class="nav-item dropdown">
+                        <a href="{{ route('warga.index') }}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            Data Penduduk
+                        </a>
+                        <div class="dropdown-menu bg-light m-0">
+                            <a href="{{ route('warga.index') }}" class="dropdown-item">Warga</a>
+                            <a href="RT.html" class="dropdown-item">RT</a>
+                            <a href="RW.html" class="dropdown-item">RW</a>
+                        </div>
+                    </div>
+
                     <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
                     <a href="{{ route('lembaga.index') }}" class="nav-item nav-link">Lembaga Desa</a>
                     <a href="{{ route('jabatan.index') }}" class="nav-item nav-link">Jabatan Desa</a>
