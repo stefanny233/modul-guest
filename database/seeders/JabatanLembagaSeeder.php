@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Faker\Factory as Faker;
+use App\Models\LembagaDesa;
 
 class JabatanLembagaSeeder extends Seeder
 {
@@ -14,53 +15,49 @@ class JabatanLembagaSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
 
-        // Atur sesuai berapa banyak lembaga di DBmu.
-        // Jika kamu punya 7 lembaga, biarkan 7. Kalau lebih, ubah angka ini.
-        $maxLembagaId = 7;
+        // ambil semua id lembaga yang tersedia di DB
+        $lembagaIds = LembagaDesa::pluck('lembaga_id')->toArray();
 
-        // ambil daftar kolom untuk keamanan
+        // kalau kosong, buat beberapa lembaga default dulu (atau exit)
+        if (empty($lembagaIds)) {
+            // pilihan: jalankan seeder lembaga atau buat default minimal
+            LembagaDesa::insert([
+                ['nama_lembaga' => 'Karang Taruna', 'deskripsi' => '...', 'kontak' => null],
+                ['nama_lembaga' => 'PKK Desa', 'deskripsi' => '...', 'kontak' => null],
+                ['nama_lembaga' => 'BUMDes', 'deskripsi' => '...', 'kontak' => null],
+            ]);
+            $lembagaIds = LembagaDesa::pluck('lembaga_id')->toArray();
+        }
+
         $columns = Schema::getColumnListing('jabatan_lembaga');
 
         for ($i = 1; $i <= 100; $i++) {
+
             $namaJabatan = $faker->randomElement([
                 'Ketua', 'Wakil Ketua', 'Sekretaris', 'Bendahara',
                 'Anggota', 'Koordinator', 'Supervisor', 'Pembina',
                 'Penasehat', 'Staf Administrasi'
             ]);
 
-            $lembagaId = $faker->numberBetween(1, $maxLembagaId);
+            // pilih lembaga id dari yang benar-benar ada
+            $lembagaId = $faker->randomElement($lembagaIds);
 
-            // data mentah yang ingin disimpan
             $row = [
                 'lembaga_id'   => $lembagaId,
-                'nama_jabatan' => $namaJabatan,
+                'nama_jabatan' => $namaJabatan . ' ' . $i, // tambahkan i supaya unik jika mau insert tanpa update
                 'level'        => (string) $faker->numberBetween(1, 5),
                 'keterangan'   => $faker->sentence(8),
             ];
 
-            // jika kolom slug ada, buat slug yang unik dengan index
             if (in_array('slug', $columns)) {
                 $row['slug'] = Str::slug($namaJabatan . '-' . $lembagaId . '-' . $i);
             }
 
-            // pastikan hanya kolom yang valid yang kita kirim ke DB
+            // jaga hanya kolom yang ada
             $row = array_intersect_key($row, array_flip($columns));
 
-            // gunakan updateOrInsert untuk mencegah duplicate key error
-            // pencarian berdasarkan kombinasi unik (lembaga_id + nama_jabatan)
-            $where = [];
-            if (isset($row['lembaga_id'])) {
-                $where['lembaga_id'] = $row['lembaga_id'];
-            }
-            if (isset($row['nama_jabatan'])) {
-                $where['nama_jabatan'] = $row['nama_jabatan'];
-            }
-
-            if (! empty($where)) {
-                DB::table('jabatan_lembaga')->updateOrInsert($where, $row);
-            } else {
-                DB::table('jabatan_lembaga')->insert($row);
-            }
+            // gunakan insert langsung (unique dijamin karena nama_jabatan diberi suffix i)
+            DB::table('jabatan_lembaga')->insert($row);
         }
     }
 }
