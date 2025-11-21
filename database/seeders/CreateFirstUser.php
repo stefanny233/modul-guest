@@ -20,5 +20,7 @@ class CreateFirstUser extends Seeder
             'password' => Hash::make('pani123')
 
         ]);
+
+        User::factory()->count(100)->create();
     }
 }

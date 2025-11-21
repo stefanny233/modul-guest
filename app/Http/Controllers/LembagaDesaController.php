@@ -9,9 +9,39 @@ class LembagaDesaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lembaga = LembagaDesa::latest()->get();
+        $q       = $request->input('q');
+        $nama    = $request->input('nama_lembaga');
+        $perPage = (int) $request->input('per_page', 9);
+
+        $allowed = [6, 9, 12, 24];
+        if (! in_array($perPage, $allowed)) {
+            $perPage = 9;
+        }
+
+        $query = LembagaDesa::query();
+
+        if ($q) {
+            $query->where(function ($qb) use ($q) {
+                $qb->where('nama_lembaga', 'like', "%{$q}%")
+                    ->orWhere('deskripsi', 'like', "%{$q}%")
+                    ->orWhere('kontak', 'like', "%{$q}%");
+            });
+        }
+
+        if ($nama) {
+            $query->where('nama_lembaga', $nama);
+        }
+
+        if (array_key_exists('created_at', LembagaDesa::firstOrNew()->getAttributes())) {
+            $query->orderBy('created_at', 'desc');
+        } else {
+            $query->orderBy('lembaga_id', 'desc');
+        }
+
+        $lembaga = $query->paginate($perPage)->withQueryString();
+
         return view('pages.lembaga.index', compact('lembaga'));
     }
 
@@ -21,14 +51,14 @@ class LembagaDesaController extends Controller
     public function create()
     {
         $daftarLembaga = [
-        'Karang Taruna',
-        'PKK Desa',
-        'Badan Permusyawaratan Desa (BPD)',
-        'LPM Desa',
-        'Posyandu',
-        'RT/RW',
-        'BUMDes',
-    ];
+            'Karang Taruna',
+            'PKK Desa',
+            'Badan Permusyawaratan Desa (BPD)',
+            'LPM Desa',
+            'Posyandu',
+            'RT/RW',
+            'BUMDes',
+        ];
         return view('pages.lembaga.create', compact('daftarLembaga'));
     }
 

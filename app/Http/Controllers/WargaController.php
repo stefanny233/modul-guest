@@ -6,9 +6,39 @@ use Illuminate\Http\Request;
 
 class WargaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $warga = Warga::all();
+        $q       = $request->input('q');
+        $from    = $request->input('from');
+        $to      = $request->input('to');
+        $perPage = (int) $request->input('per_page', 12);
+
+        $allowed = [6, 12, 24, 48];
+        if (! in_array($perPage, $allowed)) {
+            $perPage = 12;
+        }
+
+        $query = Warga::query();
+
+        if ($q) {
+            $query->where(function ($qb) use ($q) {
+                $qb->where('nama', 'like', "%{$q}%")
+                    ->orWhere('no_ktp', 'like', "%{$q}%")
+                    ->orWhere('email', 'like', "%{$q}%");
+            });
+        }
+
+        if ($from) {
+            $query->whereDate('created_at', '>=', $from);
+        }
+        if ($to) {
+            $query->whereDate('created_at', '<=', $to);
+        }
+
+        $query->orderBy('created_at', 'desc');
+
+        $warga = $query->paginate($perPage)->withQueryString();
+
         return view('pages.warga.index', compact('warga'));
     }
 
@@ -32,7 +62,6 @@ class WargaController extends Controller
         Warga::create($request->all());
         return redirect()->route('warga.index')->with('success', 'Data warga berhasil ditambahkan!');
     }
-
 
     public function edit($id)
     {

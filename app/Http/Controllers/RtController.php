@@ -2,6 +2,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Rt;
+use App\Models\Rw;
+use App\Models\Warga;
 
 class RtController extends Controller
 {
@@ -42,15 +45,15 @@ class RtController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Rt $rt)
     {
-        //
+        return view('rt.show', compact('rt'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Rt $rt)
     {
         $rws    = Rw::select('rw_id', 'nomor_rw')->get();
         $wargas = Warga::select('id', 'nama')->get();
@@ -60,7 +63,7 @@ class RtController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Rt $rt)
     {
         $request->validate([
             'rw_id'             => 'required|exists:rw,rw_id',
@@ -72,18 +75,12 @@ class RtController extends Controller
         return redirect()->route('rt.index')->with('success', 'RT berhasil diubah.');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(Rt $rt)
     {
         $rt->delete();
         return redirect()->route('rt.index')->with('success', 'RT berhasil dihapus.');
     }
 }
-
-/**
- * Remove the specified resource from storage.
- */
-public function destroy(string $id)
-{
-    //
-}
-};

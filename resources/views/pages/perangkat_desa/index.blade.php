@@ -1,6 +1,8 @@
 @extends('layouts.dashboard.app')
 @section('content')
 
+    <!-- local image path (chat upload): /mnt/data/45836255-1aa6-47aa-a5e5-4de9c129a39f.png -->
+
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-4">
@@ -26,6 +28,59 @@
             </a>
         </div>
 
+        <!-- SEARCH & FILTER -->
+        <div class="row mb-4">
+            <div class="col-lg-8">
+                <form method="GET" action="{{ route('perangkat_desa.index') }}" class="row g-2">
+                    <div class="col-md-6">
+                        <input type="text" name="q" value="{{ request('q') }}" class="form-control"
+                            placeholder="Cari jabatan, NIP, kontak atau nama warga...">
+                    </div>
+
+                    <div class="col-md-4">
+                        <select name="jabatan" class="form-select">
+                            <option value="">Semua Jabatan</option>
+                            @php
+                                $jabatanOptions = [
+                                    'Kepala Desa','Sekretaris Desa','Kaur Keuangan','Kaur Umum',
+                                    'Kasi Pemerintahan','Kasi Kesejahteraan','Kasi Pelayanan','Kepala Dusun','Staff Desa'
+                                ];
+                            @endphp
+                            @foreach ($jabatanOptions as $j)
+                                <option value="{{ $j }}" {{ request('jabatan') == $j ? 'selected' : '' }}>
+                                    {{ $j }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 d-grid">
+                        <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-lg-4">
+                <form method="GET" action="{{ route('perangkat_desa.index') }}" class="d-flex justify-content-end">
+                    {{-- preserve filters when changing per_page --}}
+                    <input type="hidden" name="q" value="{{ request('q') }}">
+                    <input type="hidden" name="jabatan" value="{{ request('jabatan') }}">
+
+                    <div class="input-group w-auto">
+                        <label class="input-group-text">Per halaman</label>
+                        <select class="form-select" name="per_page" onchange="this.form.submit()">
+                            @php $opts = [6,9,12,24]; $current = (int) request('per_page', 9); @endphp
+                            @foreach ($opts as $opt)
+                                <option value="{{ $opt }}" {{ $current === (int)$opt ? 'selected' : '' }}>
+                                    {{ $opt }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         @if (session('success'))
             <div class="alert alert-success text-center">{{ session('success') }}</div>
         @endif
@@ -35,6 +90,23 @@
                 <p>Belum ada data perangkat desa.</p>
             </div>
         @else
+
+            <div class="mb-2 d-flex justify-content-between align-items-center">
+                <div>
+                    <small class="text-muted">
+                        Menampilkan <strong>{{ $perangkat->firstItem() }} - {{ $perangkat->lastItem() }}</strong>
+                        dari <strong>{{ $perangkat->total() }}</strong> perangkat
+                        @if (request('q'))
+                            untuk pencarian "<strong>{{ request('q') }}</strong>"
+                        @endif
+                    </small>
+                </div>
+                <div>
+                    <small class="text-muted">Halaman <strong>{{ $perangkat->currentPage() }}</strong> dari
+                        <strong>{{ $perangkat->lastPage() }}</strong></small>
+                </div>
+            </div>
+
             <div class="row g-4">
                 @foreach ($perangkat as $p)
                     <div class="col-md-6 col-lg-4">
@@ -47,7 +119,7 @@
                                 <div class="mb-3">
                                     @php
                                         // slugify jabatan untuk nama file logo (opsional)
-                                        $jabatanSlug = Str::slug($p->jabatan ?? 'default');
+                                        $jabatanSlug = \Illuminate\Support\Str::slug($p->jabatan ?? 'default');
 
                                         // path logo gambar di storage (public/storage/logos/{slug}.png)
                                         $logoPath = 'storage/logos/' . $jabatanSlug . '.png';
@@ -55,7 +127,7 @@
                                         // mapping fallback icon per jabatan (Font Awesome)
                                         $icons = [
                                             'kepala-desa' => 'fa-user-tie',
-                                            'sekretaris' => 'fa-user-edit',
+                                            'sekretaris-desa' => 'fa-user-edit',
                                             'kaur-keuangan' => 'fa-wallet',
                                             'kaur-umum' => 'fa-clipboard',
                                             'kasi-pemerintahan' => 'fa-landmark',
@@ -122,12 +194,15 @@
                     </div>
                 @endforeach
             </div>
+
+            {{-- pagination links --}}
+            <div class="mt-4 d-flex justify-content-center">
+                {{ $perangkat->links('pagination::bootstrap-5') }}
+            </div>
+
         @endif
     </div>
     <!-- Perangkat Desa List End -->
-
-
-
 
     <!-- Team Start -->
     <div class="container-fluid py-5">

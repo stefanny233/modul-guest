@@ -10,10 +10,51 @@ class JabatanLembagaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $jabatan = JabatanLembaga::with('lembaga')->orderBy('created_at', 'desc')->paginate(12);
-        return view('pages.jabatan.index', compact('jabatan'));
+        $q         = $request->input('q');
+        $lembagaId = $request->input('lembaga_id');
+        $perPage   = (int) $request->input('per_page', 12);
+
+        $allowed = [6, 12, 24, 48];
+        if (! in_array($perPage, $allowed)) {
+            $perPage = 12;
+        }
+
+        $lembagaList = LembagaDesa::orderBy('nama_lembaga')->get();
+
+        $query = JabatanLembaga::with('lembaga');
+
+        if ($q) {
+            $query->where(function ($qb) use ($q) {
+                $qb->where('nama_jabatan', 'like', "%{$q}%")
+                    ->orWhere('level', 'like', "%{$q}%")
+                    ->orWhere('keterangan', 'like', "%{$q}%")
+                    ->orWhereHas('lembaga', function ($q2) use ($q) {
+                        $q2->where('nama_lembaga', 'like', "%{$q}%");
+                    });
+            });
+        }
+
+        if ($lembagaId) {
+            $query->where('lembaga_id', $lembagaId);
+        }
+
+        try {
+            $attrs = JabatanLembaga::firstOrNew()->getAttributes();
+            if (array_key_exists('created_at', $attrs)) {
+                $query->orderBy('created_at', 'desc');
+            } else {
+                $query->orderBy('jabatan_id', 'desc');
+            }
+        } catch (\Throwable $e) {
+
+            $query->orderBy('jabatan_id', 'desc');
+        }
+
+        $jabatan = $query->paginate($perPage)->withQueryString();
+
+        return view('pages.jabatan.index', compact('jabatan', 'lembagaList'));
     }
 
     /**

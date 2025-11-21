@@ -8,9 +8,40 @@ use Illuminate\Support\Facades\Storage;
 
 class PerangkatDesaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $perangkat = PerangkatDesa::latest()->get();
+        $q       = $request->input('q');
+        $jabatan = $request->input('jabatan');
+        $perPage = (int) $request->input('per_page', 9);
+
+        $allowed = [6, 9, 12, 24];
+        if (! in_array($perPage, $allowed)) {
+            $perPage = 9;
+        }
+
+        $query = PerangkatDesa::query()->with('warga');
+
+        if ($q) {
+            $query->where(function ($qb) use ($q) {
+                $qb->where('jabatan', 'like', "%{$q}%")
+                    ->orWhere('nip', 'like', "%{$q}%")
+                    ->orWhere('kontak', 'like', "%{$q}%")
+                    ->orWhereHas('warga', function ($q2) use ($q) {
+                        $q2->where('nama', 'like', "%{$q}%")
+                            ->orWhere('no_ktp', 'like', "%{$q}%")
+                            ->orWhere('email', 'like', "%{$q}%");
+                    });
+            });
+        }
+
+        if ($jabatan) {
+            $query->where('jabatan', $jabatan);
+        }
+
+        $query->orderBy('created_at', 'desc');
+
+        $perangkat = $query->paginate($perPage)->withQueryString();
+
         return view('pages.perangkat_desa.index', compact('perangkat'));
     }
 
@@ -107,26 +138,26 @@ class PerangkatDesaController extends Controller
                 Storage::disk('public')->delete($perangkat->foto);
             }
             $validated['foto'] = $request->file('foto')->store('perangkat', 'public');
-    }
-
-            $perangkat->update($data);
-
-            return redirect()->route('perangkat_desa.index')->with('success', 'Data berhasil diupdate!');
         }
 
-        public function destroy($id)
-        {
-            $perangkat = PerangkatDesa::findOrFail($id);
+        $perangkat->update($data);
 
-            // Hapus foto lama kalau ada
-            if ($perangkat->foto) {
-                Storage::delete('public/' . $perangkat->foto);
-            }
+        return redirect()->route('perangkat_desa.index')->with('success', 'Data berhasil diupdate!');
+    }
 
-            // Hapus datanya
-            $perangkat->delete();
+    public function destroy($id)
+    {
+        $perangkat = PerangkatDesa::findOrFail($id);
 
-            return redirect()->route('perangkat_desa.index')->with('success', 'Data berhasil dihapus');
+        // Hapus foto lama kalau ada
+        if ($perangkat->foto) {
+            Storage::delete('public/' . $perangkat->foto);
         }
 
+        // Hapus datanya
+        $perangkat->delete();
+
+        return redirect()->route('perangkat_desa.index')->with('success', 'Data berhasil dihapus');
     }
+
+}

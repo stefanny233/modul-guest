@@ -1,9 +1,9 @@
 <?php
-
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\LembagaDesa;
+use Faker\Factory as Faker;
+use Illuminate\Database\Seeder;
 
 class LembagaDesaSeeder extends Seeder
 {
@@ -12,16 +12,25 @@ class LembagaDesaSeeder extends Seeder
      */
     public function run(): void
     {
-        LembagaDesa::create([
-            'nama_lembaga' => 'Karang Taruna',
-            'deskripsi'    => 'Organisasi kepemudaan desa',
-            'kontak'       => '081234567890',
-        ]);
+        $faker = Faker::create('id_ID');
 
-        LembagaDesa::create([
-            'nama_lembaga' => 'BUMDes',
-            'deskripsi'    => 'Badan usaha milik desa',
-            'kontak'       => '081298765432',
-        ]);
+        $daftarLembaga = [
+            'Karang Taruna',
+            'PKK Desa',
+            'Badan Permusyawaratan Desa (BPD)',
+            'LPM Desa',
+            'Posyandu',
+            'RT/RW',
+            'BUMDes',
+        ];
+
+        for ($i = 1; $i <= 100; $i++) {
+            LembagaDesa::create([
+                'nama_lembaga' => $faker->randomElement($daftarLembaga),
+                'deskripsi'    => $faker->sentence(10),
+                'kontak'       => $faker->phoneNumber(),
+                'logo'         => null, // biarkan null, aman
+            ]);
+        }
     }
 }

@@ -1,6 +1,8 @@
 @extends('layouts.dashboard.app')
 @section('content')
 
+    {{-- local image reference: /mnt/data/45836255-1aa6-47aa-a5e5-4de9c129a39f.png --}}
+
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-4">
@@ -27,6 +29,66 @@
             </a>
         </div>
 
+        <!-- SEARCH & FILTER -->
+        <div class="row mb-4">
+            <div class="col-lg-8">
+                <form method="GET" action="{{ route('lembaga.index') }}" class="row g-2">
+                    <div class="col-md-6">
+                        <input type="text" name="q" value="{{ request('q') }}" class="form-control"
+                            placeholder="Cari nama lembaga, deskripsi atau kontak...">
+                    </div>
+
+                    <div class="col-md-4">
+                        <select name="nama_lembaga" class="form-select">
+                            <option value="">Semua Lembaga</option>
+                            @php
+                                $daftarLembaga = [
+                                    'Karang Taruna',
+                                    'PKK Desa',
+                                    'Badan Permusyawaratan Desa (BPD)',
+                                    'LPM Desa',
+                                    'Posyandu',
+                                    'RT/RW',
+                                    'BUMDes',
+                                ];
+                            @endphp
+                            @foreach ($daftarLembaga as $d)
+                                <option value="{{ $d }}" {{ request('nama_lembaga') == $d ? 'selected' : '' }}>
+                                    {{ $d }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 d-grid">
+                        <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-lg-4">
+                <form method="GET" action="{{ route('lembaga.index') }}" class="d-flex justify-content-end">
+                    <input type="hidden" name="q" value="{{ request('q') }}">
+                    <input type="hidden" name="nama_lembaga" value="{{ request('nama_lembaga') }}">
+
+                    <div class="input-group w-auto">
+                        <label class="input-group-text">Per halaman</label>
+                        <select class="form-select" name="per_page" onchange="this.form.submit()">
+                            @php
+                                $opts = [6, 9, 12, 24];
+                                $current = (int) request('per_page', 9);
+                            @endphp
+                            @foreach ($opts as $opt)
+                                <option value="{{ $opt }}" {{ $current === (int) $opt ? 'selected' : '' }}>
+                                    {{ $opt }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         @if (session('success'))
             <div class="alert alert-success text-center">{{ session('success') }}</div>
         @endif
@@ -36,6 +98,22 @@
                 <p>Belum ada data lembaga.</p>
             </div>
         @else
+            <div class="mb-2 d-flex justify-content-between align-items-center">
+                <div>
+                    <small class="text-muted">
+                        Menampilkan <strong>{{ $lembaga->firstItem() }} - {{ $lembaga->lastItem() }}</strong>
+                        dari <strong>{{ $lembaga->total() }}</strong> lembaga
+                        @if (request('q'))
+                            untuk pencarian "<strong>{{ request('q') }}</strong>"
+                        @endif
+                    </small>
+                </div>
+                <div>
+                    <small class="text-muted">Halaman <strong>{{ $lembaga->currentPage() }}</strong> dari
+                        <strong>{{ $lembaga->lastPage() }}</strong></small>
+                </div>
+            </div>
+
             <div class="row g-4">
                 @foreach ($lembaga as $l)
                     <div class="col-md-6 col-lg-4">
@@ -63,7 +141,7 @@
                                 </h5>
 
                                 <p class="small text-muted">
-                                    {{ Str::limit($l->deskripsi, 100) }}
+                                    {{ \Illuminate\Support\Str::limit($l->deskripsi, 100) }}
                                 </p>
 
                                 <p class="mb-2">
@@ -97,6 +175,11 @@
                         </div>
                     </div>
                 @endforeach
+            </div>
+
+            {{-- pagination links --}}
+            <div class="mt-4 d-flex justify-content-center">
+                {{ $lembaga->links('pagination::bootstrap-5') }}
             </div>
         @endif
 

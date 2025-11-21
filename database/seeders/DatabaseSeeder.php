@@ -20,6 +20,12 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
+            CreateFirstUser::class,
+            WargaSeeder::class,
+            PerangkatDesaSeeder::class,
+        ]);
+
+        $this->call([
             LembagaDesaSeeder::class,
             JabatanLembagaSeeder::class,
         ]);

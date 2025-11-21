@@ -7,83 +7,107 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    // TAMPILKAN SEMUA USER
-    public function index()
+
+    public function index(Request $request)
     {
-        $users = User::latest()->get();
-        return view('pages.users.index', compact('users'));
-    }
+            $q       = $request->input('q');
+            $from    = $request->input('from');
+            $to      = $request->input('to');
+            $perPage = (int) $request->input('per_page', 12);
 
-    // TAMPILKAN FORM TAMBAH
-    public function create()
-    {
-        return view('pages.users.create');
-    }
+            // pastikan perPage memiliki nilai wajar
+            $allowed = [6, 12, 24, 48];
+            if (! in_array($perPage, $allowed)) {
+                $perPage = 12;
+            }
 
-    public function show(){
+            $query = User::query();
 
-    }
+            if ($q) {
+                $query->where(function ($qb) use ($q) {
+                    $qb->where('name', 'like', "%{$q}%")
+                        ->orWhere('email', 'like', "%{$q}%");
+                });
+            }
 
-    // SIMPAN DATA BARU → KEMBALI KE INDEX
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|email|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
+            if ($from) {
+                $query->whereDate('created_at', '>=', $from);
+            }
+            if ($to) {
+                $query->whereDate('created_at', '<=', $to);
+            }
 
-        User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+            $query->orderBy('created_at', 'desc');
 
-        // BALIK KE INDEX DENGAN PESAN SUKSES
-        return redirect()
-            ->route('users.index')
-            ->with('success', 'User berhasil ditambahkan.');
-    }
+            $users = $query->paginate($perPage)->withQueryString();
 
-    // TAMPILKAN FORM EDIT
-    public function edit(User $user)
-    {
-        return view('pages.users.edit', compact('user'));
-    }
-
-    // PERBARUI DATA → KEMBALI KE INDEX
-    public function update(Request $request, User $user)
-    {
-        $request->validate([
-            'name'  => 'required|string|max:255',
-            'email' => "required|email|unique:users,email,{$user->id}",
-            'password' => 'nullable|min:6|confirmed',
-        ]);
-
-        $data = [
-            'name'  => $request->name,
-            'email' => $request->email,
-        ];
-
-        if ($request->filled('password')) {
-            $data['password'] = Hash::make($request->password);
+            return view('pages.users.index', compact('users'));
         }
 
-        $user->update($data);
+        public function show()
+        {
 
-        // BALIK KE INDEX DENGAN PESAN SUKSES
-        return redirect()
-            ->route('users.index')
-            ->with('success', 'Data user berhasil diperbarui.');
+        }
+
+        public function store(Request $request)
+        {
+            $request->validate([
+                'name'     => 'required|string|max:255',
+                'email'    => 'required|email|unique:users',
+                'password' => 'required|min:6|confirmed',
+            ]);
+
+            User::create([
+                'name'     => $request->name,
+                'email'    => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+
+            // BALIK KE INDEX DENGAN PESAN SUKSES
+            return redirect()
+                ->route('users.index')
+                ->with('success', 'User berhasil ditambahkan.');
+        }
+
+        // TAMPILKAN FORM EDIT
+        public function edit(User $user)
+        {
+            return view('pages.users.edit', compact('user'));
+        }
+
+        // PERBARUI DATA → KEMBALI KE INDEX
+        public function update(Request $request, User $user)
+        {
+            $request->validate([
+                'name'  => 'required|string|max:255',
+                'email' => "required|email|unique:users,email,{$user->id}",
+                'password' => 'nullable|min:6|confirmed',
+            ]);
+
+            $data = [
+                'name'  => $request->name,
+                'email' => $request->email,
+            ];
+
+            if ($request->filled('password')) {
+                $data['password'] = Hash::make($request->password);
+            }
+
+            $user->update($data);
+
+            // BALIK KE INDEX DENGAN PESAN SUKSES
+            return redirect()
+                ->route('users.index')
+                ->with('success', 'Data user berhasil diperbarui.');
+        }
+
+        // HAPUS DATA → TETAP DI INDEX
+        public function destroy(User $user)
+        {
+            $user->delete();
+
+            return redirect()
+                ->route('users.index')
+                ->with('success', 'User berhasil dihapus.');
+        }
     }
-
-    // HAPUS DATA → TETAP DI INDEX
-    public function destroy(User $user)
-    {
-        $user->delete();
-
-        return redirect()
-            ->route('users.index')
-            ->with('success', 'User berhasil dihapus.');
-    }
-}
