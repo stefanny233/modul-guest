@@ -1,22 +1,21 @@
 <?php
-
 namespace Database\Seeders;
-
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
 use App\Models\Rw;
+use Illuminate\Support\Facades\DB;
 
 class RwSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        Rw::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('rw')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        Rw::create(['nomor_rw' => '001', 'keterangan' => 'RW 001']);
-        Rw::create(['nomor_rw' => '002', 'keterangan' => 'RW 002']);
+        for ($i = 1; $i <= 10; $i++) {
+            Rw::create([
+                'keterangan' => 'RW ' . str_pad($i,2,'0',STR_PAD_LEFT),
+            ]);
+        }
     }
 }

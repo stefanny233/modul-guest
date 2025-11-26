@@ -1,8 +1,5 @@
 @extends('layouts.dashboard.app')
 @section('content')
-
-    <!-- local image path (chat upload): /mnt/data/45836255-1aa6-47aa-a5e5-4de9c129a39f.png -->
-
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-4">
@@ -18,8 +15,6 @@
     </div>
     <!-- Page Header End -->
 
-
-    <!-- Perangkat Desa List Start -->
     <div class="container py-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h3 class="fw-bold text-success">Data Perangkat Desa</h3>
@@ -42,8 +37,15 @@
                             <option value="">Semua Jabatan</option>
                             @php
                                 $jabatanOptions = [
-                                    'Kepala Desa','Sekretaris Desa','Kaur Keuangan','Kaur Umum',
-                                    'Kasi Pemerintahan','Kasi Kesejahteraan','Kasi Pelayanan','Kepala Dusun','Staff Desa'
+                                    'Kepala Desa',
+                                    'Sekretaris Desa',
+                                    'Kaur Keuangan',
+                                    'Kaur Umum',
+                                    'Kasi Pemerintahan',
+                                    'Kasi Kesejahteraan',
+                                    'Kasi Pelayanan',
+                                    'Kepala Dusun',
+                                    'Staff Desa',
                                 ];
                             @endphp
                             @foreach ($jabatanOptions as $j)
@@ -69,9 +71,12 @@
                     <div class="input-group w-auto">
                         <label class="input-group-text">Per halaman</label>
                         <select class="form-select" name="per_page" onchange="this.form.submit()">
-                            @php $opts = [6,9,12,24]; $current = (int) request('per_page', 9); @endphp
+                            @php
+                                $opts = [6, 9, 12, 24];
+                                $current = (int) request('per_page', 9);
+                            @endphp
                             @foreach ($opts as $opt)
-                                <option value="{{ $opt }}" {{ $current === (int)$opt ? 'selected' : '' }}>
+                                <option value="{{ $opt }}" {{ $current === (int) $opt ? 'selected' : '' }}>
                                     {{ $opt }}
                                 </option>
                             @endforeach
@@ -90,7 +95,6 @@
                 <p>Belum ada data perangkat desa.</p>
             </div>
         @else
-
             <div class="mb-2 d-flex justify-content-between align-items-center">
                 <div>
                     <small class="text-muted">
@@ -111,20 +115,15 @@
                 @foreach ($perangkat as $p)
                     <div class="col-md-6 col-lg-4">
                         <div class="card border-0 h-100"
-                            style="border-radius: 15px; background: #ffffff; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);">
+                            style="border-radius: 15px; background: #ffffff; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);">
 
                             <div class="card-body text-dark p-4 text-center">
 
-                                <!-- FOTO / LOGO PERANGKAT (otomatiskan berdasarkan: foto -> logo gambar -> icon jabatan) -->
+                                <!-- FOTO / ICON -->
                                 <div class="mb-3">
                                     @php
-                                        // slugify jabatan untuk nama file logo (opsional)
                                         $jabatanSlug = \Illuminate\Support\Str::slug($p->jabatan ?? 'default');
-
-                                        // path logo gambar di storage (public/storage/logos/{slug}.png)
                                         $logoPath = 'storage/logos/' . $jabatanSlug . '.png';
-
-                                        // mapping fallback icon per jabatan (Font Awesome)
                                         $icons = [
                                             'kepala-desa' => 'fa-user-tie',
                                             'sekretaris-desa' => 'fa-user-edit',
@@ -133,22 +132,18 @@
                                             'kasi-pemerintahan' => 'fa-landmark',
                                             'kasi-pelayanan' => 'fa-handshake',
                                         ];
-
                                         $icon = $icons[$jabatanSlug] ?? 'fa-user';
                                     @endphp
 
-                                    @if ($p->foto)
-                                        {{-- tampilkan foto yang diupload --}}
+                                    @if (!empty($p->foto) && file_exists(public_path('storage/' . $p->foto)))
                                         <img src="{{ asset('storage/' . $p->foto) }}"
                                             alt="Foto {{ $p->nama ?? $p->jabatan }}" class="rounded-circle shadow-sm"
                                             width="100" height="100" style="object-fit: cover;">
                                     @elseif (file_exists(public_path($logoPath)))
-                                        {{-- kalau ada file logo khusus per jabatan (mis: public/storage/logos/kepala-desa.png) --}}
                                         <img src="{{ asset($logoPath) }}" alt="Logo {{ $p->jabatan }}"
                                             class="rounded-circle shadow-sm" width="100" height="100"
                                             style="object-fit: cover;">
                                     @else
-                                        {{-- fallback ke icon Font Awesome sesuai jabatan --}}
                                         <div class="rounded-circle shadow-sm d-flex justify-content-center align-items-center bg-success text-white"
                                             style="width:100px;height:100px;margin:auto;font-size:40px;">
                                             <i class="fa {{ $icon }}"></i>
@@ -160,35 +155,28 @@
 
                                 <div class="small text-start">
                                     <p class="mb-1"><strong>NIP:</strong> {{ $p->nip ?? '-' }}</p>
-                                    <p class="mb-1"><strong>Kontak:</strong> {{ $p->kontak }}</p>
+                                    <p class="mb-1"><strong>Kontak:</strong> {{ $p->kontak ?? '-' }}</p>
                                     <p class="mb-0"><strong>Periode:</strong>
-                                        {{ $p->periode_mulai }} - {{ $p->periode_selesai ?? 'Sekarang' }}
+                                        {{ $p->periode_mulai ?? '-' }} - {{ $p->periode_selesai ?? 'Sekarang' }}
                                     </p>
                                 </div>
                             </div>
 
                             <div class="card-footer bg-transparent border-0 text-center pb-4">
-
-                                <!-- Tombol Edit -->
-                                <a href="{{ route('perangkat_desa.edit', $p) }}"
+                                <a href="{{ route('perangkat_desa.edit', $p->id) }}"
                                     class="btn btn-sm btn-outline-success me-2" title="Edit Data">
                                     <i class="fa fa-edit"></i>
                                 </a>
 
-                                <!-- Tombol Delete -->
-                                <form action="{{ route('perangkat_desa.destroy', $p) }}" method="POST" class="d-inline"
-                                    onsubmit="return confirm('Yakin ingin hapus data ini?')">
-
+                                <form action="{{ route('perangkat_desa.destroy', $p->id) }}" method="POST"
+                                    class="d-inline" onsubmit="return confirm('Yakin ingin hapus data ini?')">
                                     @csrf
                                     @method('DELETE')
-
                                     <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus Data">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </form>
-
                             </div>
-                            <!-- Aksi End -->
 
                         </div>
                     </div>
@@ -199,10 +187,8 @@
             <div class="mt-4 d-flex justify-content-center">
                 {{ $perangkat->links('pagination::bootstrap-5') }}
             </div>
-
         @endif
     </div>
-    <!-- Perangkat Desa List End -->
 
     <!-- Team Start -->
     <div class="container-fluid py-5">
@@ -270,5 +256,4 @@
         </div>
     </div>
     <!-- Team End -->
-
 @endsection

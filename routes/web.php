@@ -5,7 +5,6 @@ use App\Http\Controllers\RtController;
 use App\Http\Controllers\RwController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\WargaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LembagaDesaController;
 use App\Http\Controllers\PerangkatDesaController;
@@ -29,15 +28,15 @@ Route::resource('login', LoginController::class);
 Route::resource('dashboard', DashboardController::class);
 
 // ROUTE DATA warga (Tanpa Middleware Auth)
-Route::resource('warga', WargaController::class);
+Route::resource('warga', App\Http\Controllers\WargaController::class);
+Route::resource('rt', RtController::class);
+Route::resource('rw', RwController::class);
 Route::resource('perangkat_desa', PerangkatDesaController::class);
 
 
 Route::resource('lembaga', LembagaDesaController::class);
 Route::resource('jabatan', JabatanLembagaController::class);
 
-Route::resource('rw', RwController::class);
-Route::resource('rt', RtController::class);
 //Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 //Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 

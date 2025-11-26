@@ -16,8 +16,8 @@
                         </a>
                         <div class="dropdown-menu bg-light m-0">
                             <a href="{{ route('warga.index') }}" class="dropdown-item">Warga</a>
-                            <a href="RT.html" class="dropdown-item">RT</a>
-                            <a href="RW.html" class="dropdown-item">RW</a>
+                            <a href="{{ route('rt.index') }}" class="dropdown-item">RT</a>
+                            <a href="{{ route('rw.index') }}" class="dropdown-item">RW</a>
                         </div>
                     </div>
 

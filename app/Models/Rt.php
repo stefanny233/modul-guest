@@ -1,21 +1,18 @@
 <?php
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Rt extends Model
 {
-    protected $table      = 'rt';
-    protected $primaryKey = 'rt_id';
-    public $incrementing  = true;
-    protected $keyType    = 'int';
+    use HasFactory;
 
-    protected $fillable = [
-        'rw_id',
-        'nomor_rt',
-        'ketua_rt_warga_id',
-        'keterangan',
-    ];
+    protected $table = 'rt';
+    protected $primaryKey = 'rt_id';
+    public $incrementing = true;
+    protected $keyType = 'int';
+    protected $fillable = ['rw_id','nomor_rt','ketua_rt_warga_id','keterangan'];
 
     public function rw()
     {
@@ -24,6 +21,6 @@ class Rt extends Model
 
     public function ketua()
     {
-        return $this->belongsTo(Warga::class, 'ketua_rt_warga_id', 'id');
+        return $this->belongsTo(\App\Models\Warga::class, 'ketua_rt_warga_id', 'id');
     }
 }

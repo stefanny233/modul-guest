@@ -1,8 +1,5 @@
 @extends('layouts.dashboard.app')
 @section('content')
-
-    {{-- local image reference: /mnt/data/45836255-1aa6-47aa-a5e5-4de9c129a39f.png --}}
-
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-4">

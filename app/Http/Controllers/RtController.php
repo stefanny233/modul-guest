@@ -1,20 +1,48 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Rt;
 use App\Models\Rw;
-use App\Models\Warga;
+use Illuminate\Http\Request;
 
 class RtController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rts = Rt::with(['rw', 'ketua'])->paginate(15);
-        return view('rt.index', compact('rts'));
+        $q       = $request->input('q');
+        $rwId    = $request->input('rw_id');
+        $perPage = (int) $request->input('per_page', 15);
+        $allowed = [6, 9, 12, 15, 24];
+        if (! in_array($perPage, $allowed)) {
+            $perPage = 15;
+        }
+
+        $query = \App\Models\Rt::with(['rw', 'ketua']);
+
+        if ($q) {
+            $query->where(function ($qb) use ($q) {
+                $qb->where('nomor_rt', 'like', "%{$q}%")
+                    ->orWhere('keterangan', 'like', "%{$q}%")
+                    ->orWhereHas('ketua', function ($q2) use ($q) {
+                        $q2->where('nama', 'like', "%{$q}%");
+                    });
+            });
+        }
+
+        if ($rwId) {
+            $query->where('rw_id', $rwId);
+        }
+
+        $rts = $query->orderBy('rt_id', 'asc')->paginate($perPage)->withQueryString();
+
+        $rws = \App\Models\Rw::select('rw_id', 'nomor_rw', 'keterangan')->orderBy('rw_id')->get();
+
+        $warga = \App\Models\Warga::select('id', 'nama')->orderBy('nama')->get();
+
+        return view('pages.Rt.index', compact('rts', 'rws', 'warga'));
     }
 
     /**
@@ -23,8 +51,8 @@ class RtController extends Controller
     public function create()
     {
         $rws    = Rw::select('rw_id', 'nomor_rw')->get();
-        $wargas = Warga::select('id', 'nama')->get();
-        return view('rt.create', compact('rws', 'wargas'));
+        $wargas = \App\Models\Warga::select('id', 'nama')->get();
+        return view('pages.rt.create', compact('rws', 'wargas'));
     }
 
     /**
@@ -32,13 +60,14 @@ class RtController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'rw_id'             => 'required|exists:rw,rw_id',
-            'nomor_rt'          => 'required',
+        $data = $request->validate([
+            'rw_id'             => 'nullable|exists:rw,rw_id',
+            'nomor_rt'          => 'required|string|max:50',
             'ketua_rt_warga_id' => 'nullable|exists:warga,id',
+            'keterangan'        => 'nullable|string',
         ]);
 
-        Rt::create($request->only('rw_id', 'nomor_rt', 'ketua_rt_warga_id', 'keterangan'));
+        Rt::create($data);
         return redirect()->route('rt.index')->with('success', 'RT berhasil ditambahkan.');
     }
 
@@ -47,7 +76,8 @@ class RtController extends Controller
      */
     public function show(Rt $rt)
     {
-        return view('rt.show', compact('rt'));
+        //
+
     }
 
     /**
@@ -56,7 +86,7 @@ class RtController extends Controller
     public function edit(Rt $rt)
     {
         $rws    = Rw::select('rw_id', 'nomor_rw')->get();
-        $wargas = Warga::select('id', 'nama')->get();
+        $wargas = \App\Models\Warga::select('id', 'nama')->get();
         return view('rt.edit', compact('rt', 'rws', 'wargas'));
     }
 
@@ -65,13 +95,14 @@ class RtController extends Controller
      */
     public function update(Request $request, Rt $rt)
     {
-        $request->validate([
-            'rw_id'             => 'required|exists:rw,rw_id',
-            'nomor_rt'          => 'required',
+        $data = $request->validate([
+            'rw_id'             => 'nullable|exists:rw,rw_id',
+            'nomor_rt'          => 'required|string|max:50',
             'ketua_rt_warga_id' => 'nullable|exists:warga,id',
+            'keterangan'        => 'nullable|string',
         ]);
 
-        $rt->update($request->only('rw_id', 'nomor_rt', 'ketua_rt_warga_id', 'keterangan'));
+        $rt->update($data);
         return redirect()->route('rt.index')->with('success', 'RT berhasil diubah.');
     }
 
