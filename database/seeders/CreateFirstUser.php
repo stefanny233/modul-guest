@@ -20,8 +20,12 @@ class CreateFirstUser extends Seeder
             ]
         );
 
-        if (User::count() < 5) {
-            User::factory()->count(100)->create();
+        $target  = 100;
+        $current = User::count();
+        $needed  = $target - $current;
+
+        if ($needed > 0) {
+            User::factory()->count($needed)->create();
         }
     }
 }

@@ -131,13 +131,14 @@ class PerangkatDesaController extends Controller
             'warga_id',
         ]);
 
+        // handle foto
         if ($request->hasFile('foto')) {
-
-            // Hapus foto lama jika ada
+            // Hapus foto lama jika ada (disk public)
             if ($perangkat->foto && Storage::disk('public')->exists($perangkat->foto)) {
                 Storage::disk('public')->delete($perangkat->foto);
             }
-            $validated['foto'] = $request->file('foto')->store('perangkat', 'public');
+            // simpan foto baru
+            $data['foto'] = $request->file('foto')->store('perangkat_desa', 'public');
         }
 
         $perangkat->update($data);
@@ -149,9 +150,9 @@ class PerangkatDesaController extends Controller
     {
         $perangkat = PerangkatDesa::findOrFail($id);
 
-        // Hapus foto lama kalau ada
-        if ($perangkat->foto) {
-            Storage::delete('public/' . $perangkat->foto);
+        // Hapus foto lama kalau ada (pakai disk public)
+        if ($perangkat->foto && Storage::disk('public')->exists($perangkat->foto)) {
+            Storage::disk('public')->delete($perangkat->foto);
         }
 
         // Hapus datanya

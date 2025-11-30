@@ -154,18 +154,36 @@
     <!-- Event End -->
 
     <!-- Team Start -->
-    <div class="container-fluid py-5">
-        <div class="container">
-            <div class="text-center mx-auto wow fadeIn" data-wow-delay="0.1s" style="max-width: 600px;">
-                <p class="section-title bg-white text-center text-success px-3">TIM KAMI</p>
-                <h1 class="display-6 mb-4 fw-bold text-dark">
-                    Kenali Sosok di Balik Program Bina Desa
-                </h1>
+    <div class="container my-5">
+        <div class="row justify-content-center g-4">
+
+            <!-- TOTAL USER -->
+            <div class="col-md-3 col-sm-6">
+                <div class="p-4 text-center rounded-4 shadow-sm"
+                    style="background: linear-gradient(135deg, #d8f3dc 0%, #b7e4c7 100%); color:#22577A;">
+                    <h6 class="fw-bold mb-1">Total User</h6>
+                    <p class="fs-3 fw-bold">{{ $users->total() }}</p>
+                </div>
             </div>
 
-            <div class="row g-4 justify-content-center">
-                <!-- Team items... (tetap seperti semula) -->
+            <!-- ACTIVE (7 DAYS) -->
+            <div class="col-md-3 col-sm-6">
+                <div class="p-4 text-center rounded-4 shadow-sm"
+                    style="background: linear-gradient(135deg, #fde2e4 0%, #fad2e1 100%); color:#8a3a47;">
+                    <h6 class="fw-bold mb-1">Active (7 Hari)</h6>
+                    <p class="fs-3 fw-bold">{{ $activeLast7Days ?? 12 }}</p>
+                </div>
             </div>
+
+            <!-- ADMIN COUNT -->
+            <div class="col-md-3 col-sm-6">
+                <div class="p-4 text-center rounded-4 shadow-sm"
+                    style="background: linear-gradient(135deg, #e2eafc 0%, #cfdef3 100%); color:#394867;">
+                    <h6 class="fw-bold mb-1">Admin</h6>
+                    <p class="fs-3 fw-bold">{{ $adminCount ?? 3 }}</p>
+                </div>
+            </div>
+
         </div>
     </div>
     <!-- Team End -->

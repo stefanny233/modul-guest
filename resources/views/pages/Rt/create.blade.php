@@ -1,28 +1,12 @@
 @extends('layouts.dashboard.app')
 @section('content')
-    <!-- Page Header Start -->
-    <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container text-center py-4">
-            <h1 class="display-3 animated slideInDown">Lembaga Desa</h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="#!">Data</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Data Penduduk</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Prengkat Desa</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Lembaga Desa</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-    <!-- Page Header End -->
     <div class="container mt-4">
-        <h3 class="fw-bold">Tambah RT</h3>
-
+        <h3>Tambah RT</h3>
         <form action="{{ route('rt.store') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label>Pilih RW</label>
-                <select name="rw_id" class="form-control" required>
+                <select name="rw_id" class="form-control">
                     <option value="">-- Pilih RW --</option>
                     @foreach ($rws as $rw)
                         <option value="{{ $rw->rw_id }}">{{ $rw->nomor_rw }}</option>
@@ -30,9 +14,7 @@
                 </select>
             </div>
 
-            <div class="mb-3">
-                <label>Nomor RT</label>
-                <input type="text" name="nomor_rt" class="form-control" required>
+            <div class="mb-3"><label>Nomor RT</label><input type="text" name="nomor_rt" class="form-control" required>
             </div>
 
             <div class="mb-3">
@@ -45,8 +27,7 @@
                 </select>
             </div>
 
-            <div class="mb-3">
-                <label>Keterangan</label>
+            <div class="mb-3"><label>Keterangan</label>
                 <textarea name="keterangan" class="form-control"></textarea>
             </div>
 
@@ -55,70 +36,101 @@
         </form>
     </div>
 
-    <!-- Team Start -->
-    <div class="container-fluid py-5">
-        <div class="container">
-            <div class="text-center mx-auto wow fadeIn" data-wow-delay="0.1s" style="max-width: 600px;">
-                <p class="section-title bg-white text-center text-success px-3">TIM KAMI</p>
-                <h1 class="display-6 mb-4 fw-bold text-dark">
-                    Kenali Sosok di Balik Program Bina Desa
-                </h1>
+    <div class="container my-5">
+
+        <div class="text-center mb-4">
+            <p class="section-title bg-white px-3" style="color:#215d50; border-left:4px solid #e3a83a;">FASILITAS WILAYAH
+            </p>
+            <h2 class="fw-bold" style="color:#215d50;">Fasilitas Umum di Wilayah RW/RT</h2>
+            <p class="text-muted">Berikut daftar fasilitas desa yang tersedia dan dapat dimanfaatkan oleh warga.</p>
+        </div>
+
+        <div class="row g-4">
+
+            <!-- POS RONDA -->
+            <div class="col-md-6 col-lg-4">
+                <div class="p-4 shadow-sm rounded-4 text-center h-100"
+                    style="background: linear-gradient(135deg, #edf7f3 0%, #ffffff 100%); border: 1px solid #b8d9cd;">
+                    <div class="mb-3" style="font-size: 45px; color:#215d50;">
+                        <i class="fa fa-shield-alt"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2" style="color:#215d50;">Pos Ronda</h5>
+                    <p class="text-muted small">
+                        Tempat penjagaan keamanan lingkungan yang aktif setiap malam oleh warga setempat.
+                    </p>
+                </div>
             </div>
 
-            <div class="row g-4 justify-content-center">
-
-                <!-- Stefanny Huang -->
-                <div class="col-md-6 col-lg-5 wow fadeIn" data-wow-delay="0.1s">
-                    <div class="team-item text-center rounded-4 shadow-sm p-4 h-100"
-                        style="background: linear-gradient(135deg, #e8f9f0 0%, #fffbe6 100%); border: 2px solid #198754;">
-                        <div class="d-flex justify-content-center align-items-center mb-3"
-                            style="width: 120px; height: 120px; border-radius: 50%; background-color: #198754; color: white; font-size: 48px; margin: 0 auto;">
-                            <i class="fa fa-user"></i>
-                        </div>
-                        <h3 class="text-success mb-1">Stefanny Huang</h3>
-                        <span class="text-muted mb-3 d-block">Koordinator Program Pemberdayaan</span>
-                        <p class="text-secondary small">
-                            Memimpin inisiatif pemberdayaan masyarakat melalui pelatihan kewirausahaan dan pendidikan
-                            keterampilan warga desa.
-                        </p>
-                        <div class="d-flex justify-content-center mt-3">
-                            <a class="btn btn-square btn-outline-success mx-1" href="#!"><i
-                                    class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-outline-success mx-1" href="#!"><i
-                                    class="fab fa-instagram"></i></a>
-                            <a class="btn btn-square btn-outline-success mx-1" href="#!"><i
-                                    class="fab fa-linkedin-in"></i></a>
-                        </div>
+            <!-- POSYANDU -->
+            <div class="col-md-6 col-lg-4">
+                <div class="p-4 shadow-sm rounded-4 text-center h-100"
+                    style="background: linear-gradient(135deg, #fff7df 0%, #ffffff 100%); border: 1px solid #f4d79b;">
+                    <div class="mb-3" style="font-size: 45px; color:#e3a83a;">
+                        <i class="fa fa-baby"></i>
                     </div>
+                    <h5 class="fw-bold mb-2" style="color:#e3a83a;">Posyandu</h5>
+                    <p class="text-muted small">
+                        Layanan kesehatan ibu & anak dengan kegiatan rutin seperti timbang balita dan imunisasi.
+                    </p>
                 </div>
-
-                <!-- Febby Fahrezy -->
-                <div class="col-md-6 col-lg-5 wow fadeIn" data-wow-delay="0.3s">
-                    <div class="team-item text-center rounded-4 shadow-sm p-4 h-100"
-                        style="background: linear-gradient(135deg, #fffbe6 0%, #e8f9f0 100%); border: 2px solid #ffc107;">
-                        <div class="d-flex justify-content-center align-items-center mb-3"
-                            style="width: 120px; height: 120px; border-radius: 50%; background-color: #ffc107; color: white; font-size: 48px; margin: 0 auto;">
-                            <i class="fa fa-user-tie"></i>
-                        </div>
-                        <h3 class="text-success mb-1">Febby Fahrezy</h3>
-                        <span class="text-muted mb-3 d-block">Kepala Bidang Infrastruktur Desa</span>
-                        <p class="text-secondary small">
-                            Mengawasi proyek pembangunan desa dan memastikan fasilitas publik berjalan sesuai visi Desa
-                            Sejahtera yang berkelanjutan.
-                        </p>
-                        <div class="d-flex justify-content-center mt-3">
-                            <a class="btn btn-square btn-outline-warning mx-1" href="#!"><i
-                                    class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-outline-warning mx-1" href="#!"><i
-                                    class="fab fa-instagram"></i></a>
-                            <a class="btn btn-square btn-outline-warning mx-1" href="#!"><i
-                                    class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </div>
-                </div>
-
             </div>
+
+            <!-- BALAI WARGA -->
+            <div class="col-md-6 col-lg-4">
+                <div class="p-4 shadow-sm rounded-4 text-center h-100"
+                    style="background: linear-gradient(135deg, #edf2ff 0%, #ffffff 100%); border: 1px solid #c2cff5;">
+                    <div class="mb-3" style="font-size: 45px; color:#215d50;">
+                        <i class="fa fa-users"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2" style="color:#215d50;">Balai Warga</h5>
+                    <p class="text-muted small">
+                        Sarana pertemuan warga untuk musyawarah, kegiatan sosial, dan program pembinaan desa.
+                    </p>
+                </div>
+            </div>
+
+            <!-- TEMPAT IBADAH -->
+            <div class="col-md-6 col-lg-4">
+                <div class="p-4 shadow-sm rounded-4 text-center h-100"
+                    style="background: linear-gradient(135deg, #ffeaea 0%, #ffffff 100%); border: 1px solid #ffc6c6;">
+                    <div class="mb-3" style="font-size: 45px; color:#c44747;">
+                        <i class="fa fa-church"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2" style="color:#c44747;">Tempat Ibadah</h5>
+                    <p class="text-muted small">
+                        Fasilitas keagamaan untuk menunjang kegiatan spiritual warga dari berbagai golongan.
+                    </p>
+                </div>
+            </div>
+
+            <!-- LAPANGAN -->
+            <div class="col-md-6 col-lg-4">
+                <div class="p-4 shadow-sm rounded-4 text-center h-100"
+                    style="background: linear-gradient(135deg, #eafff4 0%, #ffffff 100%); border: 1px solid #b3e6ce;">
+                    <div class="mb-3" style="font-size: 45px; color:#215d50;">
+                        <i class="fa fa-futbol"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2" style="color:#215d50;">Lapangan Warga</h5>
+                    <p class="text-muted small">
+                        Area serbaguna untuk kegiatan olahraga, lomba 17-an, dan aktivitas pemuda desa.
+                    </p>
+                </div>
+            </div>
+
+            <!-- TPS -->
+            <div class="col-md-6 col-lg-4">
+                <div class="p-4 shadow-sm rounded-4 text-center h-100"
+                    style="background: linear-gradient(135deg, #f4ffe7 0%, #ffffff 100%); border: 1px solid #d8e7b6;">
+                    <div class="mb-3" style="font-size: 45px; color:#215d50;">
+                        <i class="fa fa-trash-alt"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2" style="color:#215d50;">TPS / Tempat Sampah</h5>
+                    <p class="text-muted small">
+                        Tempat pengumpulan sampah sementara sebelum diangkut oleh petugas kebersihan.
+                    </p>
+                </div>
+            </div>
+
         </div>
     </div>
-    <!-- Team End -->
 @endsection

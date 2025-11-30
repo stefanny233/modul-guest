@@ -1,23 +1,33 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Rw;
-use App\Models\Warga;
+use Illuminate\Http\Request;
 
 class RwController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // ambil data RW, eager-load ketua (relasi)
-        $rws = Rw::with('ketua')->paginate(15);
+        $q       = $request->input('q');
+        $perPage = (int) $request->input('per_page', 15);
+        $allowed = [6, 9, 12, 15, 24];
+        if (! in_array($perPage, $allowed)) {
+            $perPage = 15;
+        }
 
-        // compact harus sesuai nama variabel ($rws)
-        return view('rw.index', compact('rws'));
+        $query = Rw::query();
+
+        if ($q) {
+            $query->where('nomor_rw', 'like', "%{$q}%")
+                ->orWhere('keterangan', 'like', "%{$q}%");
+        }
+
+        $rws = $query->orderBy('rw_id', 'asc')->paginate($perPage)->withQueryString();
+
+        return view('pages.rw.index', compact('rws'));
     }
 
     /**
@@ -25,8 +35,7 @@ class RwController extends Controller
      */
     public function create()
     {
-        $wargas = Warga::select('id', 'nama')->get();
-        return view('rw.create', compact('wargas'));
+        return view('pages.rw.create');
     }
 
     /**
@@ -34,13 +43,13 @@ class RwController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nomor_rw'          => 'required|unique:rw,nomor_rw',
+        $data = $request->validate([
+            'nomor_rw'          => 'nullable|string|max:50',
             'ketua_rw_warga_id' => 'nullable|exists:warga,id',
+            'keterangan'        => 'nullable|string',
         ]);
 
-        Rw::create($request->only('nomor_rw', 'ketua_rw_warga_id', 'keterangan'));
-
+        Rw::create($data);
         return redirect()->route('rw.index')->with('success', 'RW berhasil ditambahkan.');
     }
 
@@ -49,8 +58,7 @@ class RwController extends Controller
      */
     public function show(Rw $rw)
     {
-        // jika butuh tampilan detail RW
-        return view('rw.show', compact('rw'));
+        //
     }
 
     /**
@@ -58,8 +66,7 @@ class RwController extends Controller
      */
     public function edit(Rw $rw)
     {
-        $wargas = Warga::select('id', 'nama')->get();
-        return view('rw.edit', compact('rw', 'wargas'));
+        return view('rw.edit', compact('rw'));
     }
 
     /**
@@ -67,14 +74,13 @@ class RwController extends Controller
      */
     public function update(Request $request, Rw $rw)
     {
-        $request->validate([
-            // unique: table, column, exceptId, idColumn
-            'nomor_rw'          => 'required|unique:rw,nomor_rw,' . $rw->rw_id . ',rw_id',
+        $data = $request->validate([
+            'nomor_rw'          => 'nullable|string|max:50',
             'ketua_rw_warga_id' => 'nullable|exists:warga,id',
+            'keterangan'        => 'nullable|string',
         ]);
 
-        $rw->update($request->only('nomor_rw', 'ketua_rw_warga_id', 'keterangan'));
-
+        $rw->update($data);
         return redirect()->route('rw.index')->with('success', 'RW berhasil diubah.');
     }
 

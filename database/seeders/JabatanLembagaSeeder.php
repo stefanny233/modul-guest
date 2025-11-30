@@ -15,12 +15,9 @@ class JabatanLembagaSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
 
-        // ambil semua id lembaga yang tersedia di DB
         $lembagaIds = LembagaDesa::pluck('lembaga_id')->toArray();
 
-        // kalau kosong, buat beberapa lembaga default dulu (atau exit)
         if (empty($lembagaIds)) {
-            // pilihan: jalankan seeder lembaga atau buat default minimal
             LembagaDesa::insert([
                 ['nama_lembaga' => 'Karang Taruna', 'deskripsi' => '...', 'kontak' => null],
                 ['nama_lembaga' => 'PKK Desa', 'deskripsi' => '...', 'kontak' => null],
@@ -39,12 +36,11 @@ class JabatanLembagaSeeder extends Seeder
                 'Penasehat', 'Staf Administrasi'
             ]);
 
-            // pilih lembaga id dari yang benar-benar ada
             $lembagaId = $faker->randomElement($lembagaIds);
 
             $row = [
                 'lembaga_id'   => $lembagaId,
-                'nama_jabatan' => $namaJabatan . ' ' . $i, // tambahkan i supaya unik jika mau insert tanpa update
+                'nama_jabatan' => $namaJabatan . ' ' . $i,
                 'level'        => (string) $faker->numberBetween(1, 5),
                 'keterangan'   => $faker->sentence(8),
             ];
@@ -53,10 +49,8 @@ class JabatanLembagaSeeder extends Seeder
                 $row['slug'] = Str::slug($namaJabatan . '-' . $lembagaId . '-' . $i);
             }
 
-            // jaga hanya kolom yang ada
             $row = array_intersect_key($row, array_flip($columns));
 
-            // gunakan insert langsung (unique dijamin karena nama_jabatan diberi suffix i)
             DB::table('jabatan_lembaga')->insert($row);
         }
     }
