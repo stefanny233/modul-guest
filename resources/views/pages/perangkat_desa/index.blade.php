@@ -1,4 +1,5 @@
 @extends('layouts.dashboard.app')
+
 @section('content')
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
@@ -23,7 +24,7 @@
             </a>
         </div>
 
-        <!-- SEARCH & FILTER -->
+        {{-- SEARCH & FILTER --}}
         <div class="row mb-4">
             <div class="col-lg-8">
                 <form method="GET" action="{{ route('perangkat_desa.index') }}" class="row g-2">
@@ -64,7 +65,6 @@
 
             <div class="col-lg-4">
                 <form method="GET" action="{{ route('perangkat_desa.index') }}" class="d-flex justify-content-end">
-                    {{-- preserve filters when changing per_page --}}
                     <input type="hidden" name="q" value="{{ request('q') }}">
                     <input type="hidden" name="jabatan" value="{{ request('jabatan') }}">
 
@@ -105,6 +105,7 @@
                         @endif
                     </small>
                 </div>
+
                 <div>
                     <small class="text-muted">Halaman <strong>{{ $perangkat->currentPage() }}</strong> dari
                         <strong>{{ $perangkat->lastPage() }}</strong></small>
@@ -115,63 +116,63 @@
                 @foreach ($perangkat as $p)
                     <div class="col-md-6 col-lg-4">
                         <div class="card border-0 h-100"
-                            style="border-radius: 15px; background: #ffffff; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);">
-
+                            style="border-radius: 15px; background:#ffffff; box-shadow:0 4px 10px rgba(0,0,0,0.08);">
                             <div class="card-body text-dark p-4 text-center">
 
-                                <!-- FOTO / ICON -->
-                                <div class="mb-3">
-                                    @php
-                                        $jabatanSlug = \Illuminate\Support\Str::slug($p->jabatan ?? 'default');
-                                        $logoPath = 'storage/logos/' . $jabatanSlug . '.png';
-                                        $icons = [
-                                            'kepala-desa' => 'fa-user-tie',
-                                            'sekretaris-desa' => 'fa-user-edit',
-                                            'kaur-keuangan' => 'fa-wallet',
-                                            'kaur-umum' => 'fa-clipboard',
-                                            'kasi-pemerintahan' => 'fa-landmark',
-                                            'kasi-pelayanan' => 'fa-handshake',
-                                        ];
-                                        $icon = $icons[$jabatanSlug] ?? 'fa-user';
-                                    @endphp
+                                {{-- FOTO (ambil dari media atau fallback logo/icon) --}}
+                                @php
+                                    $photo = null;
+                                    if ($p->media && $p->media->isNotEmpty()) {
+                                        $m = $p->media->where('mime_type', 'like', 'image%')->first();
+                                        if (!$m) {
+                                            $m = $p->media->first();
+                                        }
+                                        if ($m && !empty($m->file_name)) {
+                                            $photo = ltrim($m->file_name, '/'); // contoh: "media/perangkat_desa/xxx.jpg"
+                                        }
+                                    }
+                                    $jabatanSlug = \Illuminate\Support\Str::slug($p->jabatan ?? 'default');
+                                    $logoPath = 'storage/logos/' . $jabatanSlug . '.png';
+                                @endphp
 
-                                    @if (!empty($p->foto) && file_exists(public_path('storage/' . $p->foto)))
-                                        <img src="{{ asset('storage/' . $p->foto) }}"
-                                            alt="Foto {{ $p->nama ?? $p->jabatan }}" class="rounded-circle shadow-sm"
-                                            width="100" height="100" style="object-fit: cover;">
-                                    @elseif (file_exists(public_path($logoPath)))
-                                        <img src="{{ asset($logoPath) }}" alt="Logo {{ $p->jabatan }}"
-                                            class="rounded-circle shadow-sm" width="100" height="100"
-                                            style="object-fit: cover;">
+                                <div class="mb-3">
+                                    @if ($photo)
+                                        <img src="{{ asset('storage/' . $photo) }}" alt="Foto {{ $p->jabatan }}"
+                                            class="rounded-circle shadow-sm"
+                                            style="width:120px; height:120px; object-fit:cover; display:block; margin:0 auto;">
+                                    @elseif(file_exists(public_path($logoPath)))
+                                        <img src="{{ asset($logoPath) }}" alt="{{ $p->jabatan }}"
+                                            class="rounded-circle shadow-sm"
+                                            style="width:120px; height:120px; object-fit:cover; display:block; margin:0 auto;">
                                     @else
                                         <div class="rounded-circle shadow-sm d-flex justify-content-center align-items-center bg-success text-white"
-                                            style="width:100px;height:100px;margin:auto;font-size:40px;">
-                                            <i class="fa {{ $icon }}"></i>
+                                            style="width:120px; height:120px; margin:0 auto; font-size:45px;">
+                                            <i class="fa fa-user"></i>
                                         </div>
                                     @endif
                                 </div>
 
                                 <h5 class="fw-bold text-success mb-2">{{ $p->jabatan }}</h5>
 
-                                <div class="small text-start">
+                                <div class="small text-start" style="max-width:85%; margin: 0 auto;">
                                     <p class="mb-1"><strong>NIP:</strong> {{ $p->nip ?? '-' }}</p>
                                     <p class="mb-1"><strong>Kontak:</strong> {{ $p->kontak ?? '-' }}</p>
                                     <p class="mb-0"><strong>Periode:</strong>
                                         {{ $p->periode_mulai ?? '-' }} - {{ $p->periode_selesai ?? 'Sekarang' }}
                                     </p>
                                 </div>
+
                             </div>
 
+                            {{-- CARD FOOTER: tombol edit + delete --}}
                             <div class="card-footer bg-transparent border-0 text-center pb-4">
-                                @if (isset($p) && (isset($p->id) || isset($p['id'])))
-                                    {{-- EDIT --}}
-                                    <a href="{{ route('perangkat_desa.edit', $p) }}"
+                                @if (isset($p) && isset($p->perangkat_id))
+                                    <a href="{{ route('perangkat_desa.edit', $p->perangkat_id) }}"
                                         class="btn btn-sm btn-outline-success me-2" title="Edit Data">
                                         <i class="fa fa-edit"></i>
                                     </a>
 
-                                    {{-- DELETE --}}
-                                    <form action="{{ route('perangkat_desa.destroy', $p) }}" method="POST"
+                                    <form action="{{ route('perangkat_desa.destroy', $p->perangkat_id) }}" method="POST"
                                         class="d-inline" onsubmit="return confirm('Yakin ingin hapus data ini?')">
                                         @csrf
                                         @method('DELETE')
@@ -186,7 +187,6 @@
                                     </button>
                                 @endif
                             </div>
-
                         </div>
                     </div>
                 @endforeach
@@ -203,71 +203,61 @@
         <!-- Team Start -->
         <div class="container-fluid py-5">
             <div class="container">
-                <div class="text-center mx-auto wow fadeIn" data-wow-delay="0.1s" style="max-width: 600px;">
+                <div class="text-center mx-auto wow fadeIn" data-wow-delay="0.1s" style="max-width:600px;">
                     <p class="section-title bg-white text-center text-success px-3">TIM KAMI</p>
-                    <h1 class="display-6 mb-4 fw-bold text-dark">
-                        Kenali Sosok di Balik Program Bina Desa
-                    </h1>
+                    <h1 class="display-6 mb-4 fw-bold text-dark">Kenali Sosok di Balik Program Bina Desa</h1>
                 </div>
+            </div>
+
+            <div class="row g-4 justify-content-center">
+                <!-- contoh team card (tetap seperti sebelumnya) -->
+                <div class="col-md-6 col-lg-5 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="team-item text-center rounded-4 shadow-sm p-4 h-100"
+                        style="background: linear-gradient(135deg,#e8f9f0 0%,#fffbe6 100%); border:2px solid #198754;">
+                        <div class="d-flex justify-content-center align-items-center mb-3"
+                            style="width:120px;height:120px;border-radius:50%;background-color:#198754;color:white;font-size:48px;margin:0 auto;">
+                            <i class="fa fa-user"></i>
+                        </div>
+                        <h3 class="text-success mb-1">Stefanny Huang</h3>
+                        <span class="text-muted mb-3 d-block">Koordinator Program Pemberdayaan</span>
+                        <p class="text-secondary small">Memimpin inisiatif pemberdayaan masyarakat melalui pelatihan
+                            kewirausahaan dan pendidikan keterampilan warga desa.</p>
+                        <div class="d-flex justify-content-center mt-3">
+                            <a class="btn btn-square btn-outline-success mx-1" href="#"><i
+                                    class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-outline-success mx-1" href="#"><i
+                                    class="fab fa-instagram"></i></a>
+                            <a class="btn btn-square btn-outline-success mx-1" href="#"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
                 </div>
 
+                <!-- team kedua -->
+                <div class="col-md-6 col-lg-5 wow fadeIn" data-wow-delay="0.3s">
+                    <div class="team-item text-center rounded-4 shadow-sm p-4 h-100"
+                        style="background: linear-gradient(135deg,#fffbe6 0%,#e8f9f0 100%); border:2px solid #ffc107;">
+                        <div class="d-flex justify-content-center align-items-center mb-3"
+                            style="width:120px;height:120px;border-radius:50%;background-color:#ffc107;color:white;font-size:48px;margin:0 auto;">
+                            <i class="fa fa-user-tie"></i>
+                        </div>
+                        <h3 class="text-success mb-1">Febby Fahrezy</h3>
+                        <span class="text-muted mb-3 d-block">Kepala Bidang Infrastruktur Desa</span>
+                        <p class="text-secondary small">Mengawasi proyek pembangunan desa dan memastikan fasilitas publik
+                            berjalan sesuai visi Desa Sejahtera yang berkelanjutan.</p>
+                        <div class="d-flex justify-content-center mt-3">
+                            <a class="btn btn-square btn-outline-warning mx-1" href="#"><i
+                                    class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-outline-warning mx-1" href="#"><i
+                                    class="fab fa-instagram"></i></a>
+                            <a class="btn btn-square btn-outline-warning mx-1" href="#"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
         <!-- Team End -->
-                <div class="row g-4 justify-content-center">
-
-        <!-- Stefanny Huang -->
-        <div class="col-md-6 col-lg-5 wow fadeIn" data-wow-delay="0.1s">
-            <div class="team-item text-center rounded-4 shadow-sm p-4 h-100"
-                style="background: linear-gradient(135deg, #e8f9f0 0%, #fffbe6 100%); border: 2px solid #198754;">
-                <div class="d-flex justify-content-center align-items-center mb-3"
-                    style="width: 120px; height: 120px; border-radius: 50%; background-color: #198754; color: white; font-size: 48px; margin: 0 auto;">
-                    <i class="fa fa-user"></i>
-                </div>
-                <h3 class="text-success mb-1">Stefanny Huang</h3>
-                <span class="text-muted mb-3 d-block">Koordinator Program Pemberdayaan</span>
-                <p class="text-secondary small">
-                    Memimpin inisiatif pemberdayaan masyarakat melalui pelatihan kewirausahaan dan
-                    pendidikan
-                    keterampilan warga desa.
-                </p>
-                <div class="d-flex justify-content-center mt-3">
-                    <a class="btn btn-square btn-outline-success mx-1" href="https://www.facebook.com/"><i
-                            class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-square btn-outline-success mx-1" href="https://www.instagram.com/"><i
-                            class="fab fa-instagram"></i></a>
-                    <a class="btn btn-square btn-outline-success mx-1" href="https://www.linkedin.com/"><i
-                            class="fab fa-linkedin-in"></i></a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Febby Fahrezy -->
-        <div class="col-md-6 col-lg-5 wow fadeIn" data-wow-delay="0.3s">
-            <div class="team-item text-center rounded-4 shadow-sm p-4 h-100"
-                style="background: linear-gradient(135deg, #fffbe6 0%, #e8f9f0 100%); border: 2px solid #ffc107;">
-                <div class="d-flex justify-content-center align-items-center mb-3"
-                    style="width: 120px; height: 120px; border-radius: 50%; background-color: #ffc107; color: white; font-size: 48px; margin: 0 auto;">
-                    <i class="fa fa-user-tie"></i>
-                </div>
-                <h3 class="text-success mb-1">Febby Fahrezy</h3>
-                <span class="text-muted mb-3 d-block">Kepala Bidang Infrastruktur Desa</span>
-                <p class="text-secondary small">
-                    Mengawasi proyek pembangunan desa dan memastikan fasilitas publik berjalan sesuai visi
-                    Desa
-                    Sejahtera yang berkelanjutan.
-                </p>
-                <div class="d-flex justify-content-center mt-3">
-                    <a class="btn btn-square btn-outline-warning mx-1" href="https://www.facebook.com/"><i
-                            class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-square btn-outline-warning mx-1" href="https://www.instagram.com/"><i
-                            class="fab fa-instagram"></i></a>
-                    <a class="btn btn-square btn-outline-warning mx-1" href="https://www.linkedin.com/"><i
-                            class="fab fa-linkedin-in"></i></a>
-                </div>
-            </div>
-        </div>
-
     </div>
-    </div>
-    </div>
-    <!-- Team End -->
 @endsection

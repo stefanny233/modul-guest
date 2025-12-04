@@ -16,42 +16,80 @@
     </div>
     <!-- Page Header End -->
 
-    <div class="container py-5">
-        <h3 class="mb-4">Tambah Jabatan</h3>
+    <!-- Main content -->
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
 
-        {{-- tampilkan error validasi --}}
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $err)
-                        <li>{{ $err }}</li>
-                    @endforeach
-                </ul>
+                <h3 class="mb-4">Tambah Data Jabatan</h3>
+
+                {{-- validasi global --}}
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $err)
+                                <li>{{ $err }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <form action="{{ route('jabatan.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="nama_jabatan" class="form-label">Nama Jabatan</label>
+                                    <input id="nama_jabatan" type="text" name="nama_jabatan"
+                                        class="form-control @error('nama_jabatan') is-invalid @enderror"
+                                        value="{{ old('nama_jabatan') }}" required>
+                                    @error('nama_jabatan')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="level" class="form-label">Level Jabatan</label>
+                                    <select id="level" name="level"
+                                        class="form-select @error('level') is-invalid @enderror" required>
+                                        <option value="">-- Pilih Level --</option>
+                                        <option value="1" {{ old('level') == '1' ? 'selected' : '' }}>Level 1 -
+                                            Pimpinan</option>
+                                        <option value="2" {{ old('level') == '2' ? 'selected' : '' }}>Level 2 - Kepala
+                                            Bidang</option>
+                                        <option value="3" {{ old('level') == '3' ? 'selected' : '' }}>Level 3 - Staff
+                                        </option>
+                                    </select>
+
+                                    @error('level')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+
+                                <div class="mt-3">
+                                    <label for="keterangan" class="form-label">Keterangan</label>
+                                    <textarea id="keterangan" name="keterangan" class="form-control @error('keterangan') is-invalid @enderror"
+                                        rows="4">{{ old('keterangan') }}</textarea>
+                                    @error('keterangan')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="d-flex justify-content-end gap-2 mt-4">
+                                    <a href="{{ route('jabatan.index') }}" class="btn btn-secondary">Batal</a>
+                                    <button type="submit" class="btn btn-success">Simpan</button>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+
             </div>
-        @endif
-
-        <form action="{{ route('jabatan.store') }}" method="POST">
-            @csrf
-
-            <div class="mb-3">
-                <label class="form-label">Nama Jabatan</label>
-                <input type="text" name="nama_jabatan" class="form-control" value="{{ old('nama_jabatan') }}" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Level</label>
-                <input type="text" name="level" class="form-control" value="{{ old('level') }}">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Keterangan</label>
-                <textarea name="keterangan" class="form-control" rows="4">{{ old('keterangan') }}</textarea>
-            </div>
-
-            <button class="btn btn-primary">Simpan</button>
-            <a href="{{ route('jabatan.index') }}" class="btn btn-secondary">Kembali</a>
-        </form>
+        </div>
     </div>
+
 
     <!-- Team Start -->
     <div class="container-fluid py-5">

@@ -1,43 +1,51 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function showLogin()
+    // Menampilkan halaman login
+    public function index()
     {
-        return view('auth.login');
+        if (Auth::check()) {
+            return redirect()->route('dashboard.index');
+        }
+        return view('layouts.auth.login');
     }
 
-    public function loginProcess(Request $request)
+    public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
+            'email'    => 'required|email',
+            'password' => 'required',
         ]);
 
         $user = User::where('email', $request->email)->first();
 
-        if(!$user){
-            return back()->withErrors(['email' => 'Email tidak terdaftar!'])->withInput();
+        if ($user && Hash::check($request->password, $user->password)) {
+
+            Auth::login($user);
+
+            return redirect()->route('dashboard.index');
         }
 
-        if(!Hash::check($request->password, $user->password)){
-            return back()->withErrors(['password' => 'Password salah!'])->withInput();
-        }
-
-        Auth::login($user);
-        return redirect()->route('guest.dashboard')->with('success', 'Login berhasil!');
+        return back()->withErrors(['email' => 'Email atau password salah.'])->withInput();
     }
 
-    public function logout()
+    public function store(Request $request)
     {
-        Auth::logout();
-        return redirect()->route('guest.login');
+        return $this->login($request);
+    }
+    public function logout(Request $request)
+    {
+        Auth::logout();                         // keluarkan user dari auth
+        $request->session()->invalidate();      // hapus semua session
+        $request->session()->regenerateToken(); // regenerasi CSRF token
+
+        return redirect()->route('login.form'); // arahkan ke halaman login
     }
 }

@@ -3,42 +3,34 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RtController;
 use App\Http\Controllers\RwController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LembagaDesaController;
 use App\Http\Controllers\PerangkatDesaController;
 use App\Http\Controllers\JabatanLembagaController;
 
-// use App\Http\Controllers\AuthController; // (bisa diaktifkan kalau dibutuhkan)
-
 Route::get('/', function () {
-    return view('pages.auth.auth');
+    return view('layouts.auth.login');
 });
 
 Route::resource('users', UserController::class);
 
-Route::resource('login', LoginController::class);
+Route::get('login', [AuthController::class, 'index'])->name('login.form');
+Route::post('login', [AuthController::class, 'login'])->name('login');
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-// dashboard diarahkan ke view/admin/dashboard.blade.php
-// Route::get('/dashboard', function () {
-//     return view('pages.guest.index');
-// })->name('guest.dashboard');
 
 Route::resource('dashboard', DashboardController::class);
 
-// ROUTE DATA warga (Tanpa Middleware Auth)
 Route::resource('warga', App\Http\Controllers\WargaController::class);
 Route::resource('rt', RtController::class);
 Route::resource('rw', RwController::class);
+
 Route::resource('perangkat_desa', PerangkatDesaController::class);
 
 
 Route::resource('lembaga', LembagaDesaController::class);
 Route::resource('jabatan', JabatanLembagaController::class);
 
-//Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
-//Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 
-// Route::get('/auth', [AuthController::class, 'index'])->name('auth.index');
-// Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login');

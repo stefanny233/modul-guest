@@ -18,52 +18,80 @@
 
     <!-- Event Start -->
     <div class="container py-5">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
-                <h4>Silahkan Melalukan Pendaftaran</h4>
-            </div>
-            <div class="card-body">
-                <form action="{{ route('users.store') }}" method="POST">
-                    @csrf
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
 
-                    <div class="mb-3">
-                        <label class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
-                        @error('name')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Silahkan Melakukan Pendaftaran</h4>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
-                        @error('email')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
+                    <div class="card-body">
 
-                    <div class="mb-3">
-                        <label class="form-label">Password</label>
-                        <input type="password" name="password" class="form-control" required>
-                        @error('password')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
+                        <form action="{{ route('users.store') }}" method="POST">
+                            @csrf
 
-                    <div class="mb-4">
-                        <label class="form-label">Confirm Password</label>
-                        <input type="password" name="password_confirmation" class="form-control" required>
-                    </div>
+                            <div class="mb-3">
+                                <label class="form-label">Name</label>
+                                <input type="text" name="name" class="form-control" value="{{ old('name') }}"
+                                    required>
+                                @error('name')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
 
-                    <div class="text-end">
-                        <button type="submit" class="btn btn-success px-4">Simpan</button>
-                        <a href="{{ route('users.index') }}" class="btn btn-secondary px-4">Batal</a>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" name="email" class="form-control" value="{{ old('email') }}"
+                                    required>
+                                @error('email')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Role</label>
+                                <select name="role" class="form-control" required>
+                                    <option value="">-- Pilih Role --</option>
+                                    <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
+                                    <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                                </select>
+
+                                @error('role')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" name="password" class="form-control" required>
+                                    @error('password')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Confirm Password</label>
+                                    <input type="password" name="password_confirmation" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end gap-2 mt-3">
+                                <a href="{{ route('users.index') }}" class="btn btn-secondary px-4">Batal</a>
+                                <button type="submit" class="btn btn-success px-4">Simpan</button>
+                            </div>
+
+                        </form>
+
                     </div>
-                </form>
+                </div>
+
             </div>
         </div>
     </div>
     <!-- Event End -->
+
 
 
     <!-- Team Start -->

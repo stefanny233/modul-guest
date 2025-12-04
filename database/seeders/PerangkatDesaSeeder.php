@@ -13,17 +13,17 @@ class PerangkatDesaSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
 
-        // pastikan ada warga
+        // Pastikan ada data warga
         if (Warga::count() == 0) {
             for ($i = 1; $i <= 100; $i++) {
                 Warga::create([
-                    'no_ktp' => $faker->unique()->numerify('################'),
-                    'nama' => $faker->name(),
+                    'no_ktp'        => $faker->unique()->numerify('################'),
+                    'nama'          => $faker->name(),
                     'jenis_kelamin' => $faker->randomElement(['Laki-laki', 'Perempuan']),
-                    'agama' => $faker->randomElement(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Budha']),
-                    'pekerjaan' => $faker->jobTitle(),
-                    'telp' => $faker->phoneNumber(),
-                    'email' => $faker->unique()->safeEmail(),
+                    'agama'         => $faker->randomElement(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Budha']),
+                    'pekerjaan'     => $faker->jobTitle(),
+                    'telp'          => $faker->phoneNumber(),
+                    'email'         => $faker->unique()->safeEmail(),
                 ]);
             }
         }
@@ -42,7 +42,6 @@ class PerangkatDesaSeeder extends Seeder
                 'kontak'          => $faker->phoneNumber(),
                 'periode_mulai'   => $faker->date(),
                 'periode_selesai' => $faker->optional()->date(),
-                'foto'            => null,
             ]);
         }
     }

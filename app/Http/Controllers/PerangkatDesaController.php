@@ -1,9 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Media;
 use App\Models\PerangkatDesa;
 use App\Models\Warga;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class PerangkatDesaController extends Controller
@@ -19,7 +21,7 @@ class PerangkatDesaController extends Controller
             $perPage = 9;
         }
 
-        $query = PerangkatDesa::query()->with('warga');
+        $query = PerangkatDesa::query()->with(['warga', 'media']);
 
         if ($q) {
             $query->where(function ($qb) use ($q) {
@@ -38,7 +40,7 @@ class PerangkatDesaController extends Controller
             $query->where('jabatan', $jabatan);
         }
 
-        $query->orderBy('created_at', 'desc');
+        $query->orderBy('perangkat_id', 'desc');
 
         $perangkat = $query->paginate($perPage)->withQueryString();
 
@@ -61,13 +63,13 @@ class PerangkatDesaController extends Controller
 
         $warga = Warga::all();
 
-        // FIX: tambah $warga ke compact
         return view('pages.perangkat_desa.create', compact('daftarJabatan', 'warga'));
     }
 
-    public function show()
+    public function show($id)
     {
-        //
+        $perangkat = PerangkatDesa::with('media', 'warga')->findOrFail($id);
+        return view('pages.perangkat_desa.show', compact('perangkat'));
     }
 
     public function store(Request $request)
@@ -78,7 +80,8 @@ class PerangkatDesaController extends Controller
             'kontak'          => 'required|string|max:20',
             'periode_mulai'   => 'required|date',
             'periode_selesai' => 'nullable|date',
-            'foto'            => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'files.*'         => 'nullable|file|max:5120|mimes:jpg,jpeg,png,webp,pdf,doc,docx,xlsx',
+            'warga_id'        => 'nullable|integer',
         ]);
 
         $data = $request->only([
@@ -87,22 +90,38 @@ class PerangkatDesaController extends Controller
             'kontak',
             'periode_mulai',
             'periode_selesai',
+            'warga_id',
         ]);
 
-        $data['warga_id'] = 1;
+        $data['warga_id'] = $data['warga_id'] ?? 1;
 
-        if ($request->hasFile('foto')) {
-            $data['foto'] = $request->file('foto')->store('perangkat_desa', 'public');
-        }
+        DB::transaction(function () use ($data, $request, &$perangkat) {
+            $perangkat = PerangkatDesa::create($data);
 
-        PerangkatDesa::create($data);
+            if ($request->hasFile('files')) {
+                foreach ($request->file('files') as $file) {
+                    if (! $file->isValid()) {
+                        continue;
+                    }
+                    $storedPath = $file->store('media/perangkat_desa', 'public');
+                    Media::create([
+                        'ref_table'  => 'perangkat_desa',
+                        'ref_id'     => $perangkat->perangkat_id,
+                        'file_name'  => $storedPath,
+                        'mime_type'  => $file->getClientMimeType(),
+                        'caption'    => null,
+                        'sort_order' => 0,
+                    ]);
+                }
+            }
+        });
 
         return redirect()->route('perangkat_desa.index')->with('success', 'Data berhasil ditambahkan!');
     }
 
     public function edit($id)
     {
-        $perangkat = PerangkatDesa::findOrFail($id);
+        $perangkat = PerangkatDesa::with('media')->findOrFail($id);
         $warga     = Warga::all();
 
         return view('pages.perangkat_desa.edit', compact('perangkat', 'warga'));
@@ -116,8 +135,10 @@ class PerangkatDesaController extends Controller
             'kontak'          => 'required|string|max:20',
             'periode_mulai'   => 'required|date',
             'periode_selesai' => 'nullable|date',
-            'foto'            => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'warga_id'        => 'required',
+            'files.*'         => 'nullable|file|max:5120|mimes:jpg,jpeg,png,webp,pdf,doc,docx,xlsx',
+            'warga_id'        => 'required|integer',
+            'delete_media'    => 'nullable|array',
+            'delete_media.*'  => 'integer',
         ]);
 
         $perangkat = PerangkatDesa::findOrFail($id);
@@ -131,17 +152,41 @@ class PerangkatDesaController extends Controller
             'warga_id',
         ]);
 
-        // handle foto
-        if ($request->hasFile('foto')) {
-            // Hapus foto lama jika ada (disk public)
-            if ($perangkat->foto && Storage::disk('public')->exists($perangkat->foto)) {
-                Storage::disk('public')->delete($perangkat->foto);
-            }
-            // simpan foto baru
-            $data['foto'] = $request->file('foto')->store('perangkat_desa', 'public');
-        }
+        DB::transaction(function () use ($request, $perangkat, $data) {
+            $perangkat->update($data);
 
-        $perangkat->update($data);
+            $deleteIds = $request->input('delete_media', []);
+            if (! empty($deleteIds)) {
+                $medias = Media::whereIn('media_id', $deleteIds)
+                    ->where('ref_table', 'perangkat_desa')
+                    ->where('ref_id', $perangkat->perangkat_id)
+                    ->get();
+
+                foreach ($medias as $m) {
+                    if ($m->file_name && Storage::disk('public')->exists($m->file_name)) {
+                        Storage::disk('public')->delete($m->file_name);
+                    }
+                    $m->delete();
+                }
+            }
+
+            if ($request->hasFile('files')) {
+                foreach ($request->file('files') as $file) {
+                    if (! $file->isValid()) {
+                        continue;
+                    }
+                    $storedPath = $file->store('media/perangkat_desa', 'public');
+                    Media::create([
+                        'ref_table'  => 'perangkat_desa',
+                        'ref_id'     => $perangkat->perangkat_id,
+                        'file_name'  => $storedPath,
+                        'mime_type'  => $file->getClientMimeType(),
+                        'caption'    => null,
+                        'sort_order' => 0,
+                    ]);
+                }
+            }
+        });
 
         return redirect()->route('perangkat_desa.index')->with('success', 'Data berhasil diupdate!');
     }
@@ -150,15 +195,21 @@ class PerangkatDesaController extends Controller
     {
         $perangkat = PerangkatDesa::findOrFail($id);
 
-        // Hapus foto lama kalau ada (pakai disk public)
-        if ($perangkat->foto && Storage::disk('public')->exists($perangkat->foto)) {
-            Storage::disk('public')->delete($perangkat->foto);
-        }
+        DB::transaction(function () use ($perangkat) {
+            $medias = Media::where('ref_table', 'perangkat_desa')
+                ->where('ref_id', $perangkat->perangkat_id)
+                ->get();
 
-        // Hapus datanya
-        $perangkat->delete();
+            foreach ($medias as $m) {
+                if ($m->file_name && Storage::disk('public')->exists($m->file_name)) {
+                    Storage::disk('public')->delete($m->file_name);
+                }
+                $m->delete();
+            }
+
+            $perangkat->delete();
+        });
 
         return redirect()->route('perangkat_desa.index')->with('success', 'Data berhasil dihapus');
     }
-
 }

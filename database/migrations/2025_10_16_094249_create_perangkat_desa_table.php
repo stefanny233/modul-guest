@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('kontak', 20);
             $table->date('periode_mulai');
             $table->date('periode_selesai')->nullable();
-            $table->string('foto')->nullable();
             $table->timestamps();
+
+            $table->index('warga_id');
         });
     }
 
