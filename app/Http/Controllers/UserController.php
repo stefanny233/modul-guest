@@ -15,7 +15,6 @@ class UserController extends Controller
         $to      = $request->input('to');
         $perPage = (int) $request->input('per_page', 12);
 
-        // pastikan perPage memiliki nilai wajar
         $allowed = [6, 12, 24, 48];
         if (! in_array($perPage, $allowed)) {
             $perPage = 12;
@@ -46,12 +45,12 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('pages.users.create'); // pastikan file view ini ada
+        return view('pages.users.create');
     }
 
     public function show()
     {
-//
+        //
     }
 
     public function store(Request $request)
@@ -66,47 +65,48 @@ class UserController extends Controller
             'name'     => $request->name,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
+            'role'     => 'user', 'admin',
         ]);
 
-        // BALIK KE INDEX DENGAN PESAN SUKSES
         return redirect()
             ->route('users.index')
             ->with('success', 'User berhasil ditambahkan.');
     }
 
-    // TAMPILKAN FORM EDIT
     public function edit(User $user)
     {
         return view('pages.users.edit', compact('user'));
     }
 
-    // PERBARUI DATA → KEMBALI KE INDEX
     public function update(Request $request, User $user)
     {
-        $request->validate([
+        $rules = [
             'name'  => 'required|string|max:255',
             'email' => "required|email|unique:users,email,{$user->id}",
-            'password' => 'nullable|min:6|confirmed',
-        ]);
-
-        $data = [
-            'name'  => $request->name,
-            'email' => $request->email,
+            'password' => 'nullable|confirmed|min:6',
         ];
 
-        if ($request->filled('password')) {
-            $data['password'] = Hash::make($request->password);
+        if (auth()->check() && auth()->user()->role === 'admin') {
+            $rules['role'] = 'required|in:admin,user';
+        }
+
+        $data = $request->validate($rules);
+
+        if (! empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        } else {
+            unset($data['password']);
+        }
+
+        if (! (auth()->check() && auth()->user()->role === 'admin')) {
+            unset($data['role']);
         }
 
         $user->update($data);
 
-        // BALIK KE INDEX DENGAN PESAN SUKSES
-        return redirect()
-            ->route('users.index')
-            ->with('success', 'Data user berhasil diperbarui.');
+        return redirect()->route('users.index')->with('success', 'Data user berhasil diperbarui.');
     }
 
-    // HAPUS DATA → TETAP DI INDEX
     public function destroy(User $user)
     {
         $user->delete();

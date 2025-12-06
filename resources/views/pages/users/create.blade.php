@@ -52,7 +52,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Role</label>
                                 <select name="role" class="form-control" required>
-                                    <option value="">-- Pilih Role --</option>
+                                    <option value=""> Pilih Role </option>
                                     <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
                                     <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                                 </select>

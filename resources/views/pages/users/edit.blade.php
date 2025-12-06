@@ -45,6 +45,21 @@
                         @enderror
                     </div>
 
+                    @if (auth()->check() && auth()->user()->role === 'admin')
+                        <div class="mb-3">
+                            <label class="form-label">Role</label>
+                            <select name="role" class="form-control" required>
+                                <option value="user" {{ old('role', $user->role) == 'user' ? 'selected' : '' }}>User
+                                </option>
+                                <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin
+                                </option>
+                            </select>
+                            @error('role')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    @endif
+
                     <div class="mb-3">
                         <label class="form-label">Password</label>
                         <input type="password" name="password" class="form-control"

@@ -131,14 +131,20 @@
             <p>Masuk untuk mengelola data Desa Sejahtera</p>
         </div>
 
-        <form action="{{route('login')}}" method="POST">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                {{ $errors->first() }}
+            </div>
+        @endif
+
+        <form action="{{ route('login') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="email" class="form-label fw-semibold">Email</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fa fa-envelope"></i></span>
-                    <input type="email" name="email" class="form-control" id="email" placeholder="Masukkan email Anda"
-                        required>
+                    <input type="email" name="email" class="form-control" id="email"
+                        placeholder="Masukkan email Anda" required>
                 </div>
             </div>
 
@@ -146,7 +152,8 @@
                 <label for="password" class="form-label fw-semibold">Password</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fa fa-lock"></i></span>
-                    <input type="password" name="password" class="form-control" id="password" placeholder="Masukkan password" required>
+                    <input type="password" name="password" class="form-control" id="password"
+                        placeholder="Masukkan password" required>
                 </div>
             </div>
 

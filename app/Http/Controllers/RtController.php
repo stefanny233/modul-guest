@@ -20,7 +20,8 @@ class RtController extends Controller
             $perPage = 15;
         }
 
-        $query = \App\Models\Rt::with(['rw', 'ketua']);
+
+        $query = Rt::with(['rw', 'ketua']);
 
         if ($q) {
             $query->where(function ($qb) use ($q) {

@@ -2,60 +2,64 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class DashboardController extends Controller
 {
 
     public function index()
     {
-    //     $totalPerangkat = PerangkatDesa::count();
-    //     return view('pages.guest.index', compact('totalWarga'));
-    return view('pages.guest.index');
-}
+        // if (! Auth::check()) {
+        //     return redirect()->route('login')->withErrors('silahkan login!');
+        // }
 
-public function create()
-{
-    return view('guest.create');
-}
+        return view('pages.guest.index');
+    }
 
-public function store(Request $request)
-{
-    $request->validate([
-        'nama'  => 'required|string|max:255',
-        'email' => 'required|email|unique:warga,email',
-    ]);
+    public function create()
+    {
+        return view('guest.create');
+    }
 
-    Warga::create($request->all());
-    return redirect()->route('dashboard.index')->with('success', 'Data berhasil ditambahkan!');
-}
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama'  => 'required|string|max:255',
+            'email' => 'required|email|unique:warga,email',
+        ]);
 
-public function show(string $id)
-{
-    //
-}
+        Warga::create($request->all());
+        return redirect()->route('dashboard.index')->with('success', 'Data berhasil ditambahkan!');
+    }
 
-public function edit($id)
-{
-    $warga = Warga::findOrFail($id);
-    return view('guest.edit', compact('warga'));
-}
+    public function show(string $id)
+    {
+        //
+    }
 
-public function update(Request $request, $id)
-{
-    $warga = Warga::findOrFail($id);
+    public function edit($id)
+    {
+        $warga = Warga::findOrFail($id);
+        return view('guest.edit', compact('warga'));
+    }
 
-    $request->validate([
-        'nama'  => 'required|string|max:255',
-        'email' => 'required|email|unique:warga,email,' . $warga->id,
-    ]);
+    public function update(Request $request, $id)
+    {
+        $warga = Warga::findOrFail($id);
 
-    $warga->update($request->all());
-    return redirect()->route('dashboard.index')->with('success', 'Data berhasil diperbarui!');
-}
+        $request->validate([
+            'nama'  => 'required|string|max:255',
+            'email' => 'required|email|unique:warga,email,' . $warga->id,
+        ]);
 
-public function destroy($id)
-{
-    Warga::destroy($id);
-    return redirect()->route('dashboard.index')->with('success', 'Data berhasil dihapus!');
-}
+        $warga->update($request->all());
+        return redirect()->route('dashboard.index')->with('success', 'Data berhasil diperbarui!');
+    }
+
+    public function destroy($id)
+    {
+        Warga::destroy($id);
+        return redirect()->route('dashboard.index')->with('success', 'Data berhasil dihapus!');
+    }
 }
