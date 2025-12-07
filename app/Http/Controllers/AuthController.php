@@ -30,6 +30,8 @@ class AuthController extends Controller
 
             Auth::login($user);
 
+            session(['last_login' => now()]);
+
             return redirect()->route('dashboard.index');
         }
 

@@ -69,6 +69,11 @@
                                 <strong>{{ ucfirst($user->role) }}</strong>
                             </li>
 
+                            <li class="px-3 py-2 text-muted" style="font-size:13px;">
+                                Last login:
+                                <strong>{{ session('last_login') ?? '-' }}</strong>
+                            </li>
+
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
