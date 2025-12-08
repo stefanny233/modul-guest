@@ -14,7 +14,7 @@ class AuthController extends Controller
         if (Auth::check()) {
             return redirect()->route('dashboard.index');
         }
-        return view('layouts.auth.login');
+        return view('pages.auth.login');
     }
 
     public function login(Request $request)

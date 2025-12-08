@@ -20,7 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'tanggal_lahir',
+        'birth_date',
         'role',
     ];
 

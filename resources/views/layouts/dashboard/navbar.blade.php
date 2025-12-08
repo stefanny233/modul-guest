@@ -7,7 +7,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav me-auto">
-                    @if (Auth::check() && auth()->user()->role === 'admin')
                         <a href="{{ route('dashboard.index') }}" class="nav-item nav-link">Home</a>
                         <a href="{{ route('users.index') }}" class="nav-item nav-link">Data User</a>
 
@@ -26,7 +25,6 @@
                         <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
                         <a href="{{ route('lembaga.index') }}" class="nav-item nav-link">Lembaga Desa</a>
                         <a href="{{ route('jabatan.index') }}" class="nav-item nav-link">Jabatan Desa</a>
-                    @endif
                 </div>
 
 
@@ -66,7 +64,7 @@
 
                             <li class="px-3 py-2 text-muted" style="font-size:13px;">
                                 Logged in as:
-                                <strong>{{ ucfirst($user->role) }}</strong>
+                                <strong>{{ Auth::user()->role }}</strong>
                             </li>
 
                             <li class="px-3 py-2 text-muted" style="font-size:13px;">
