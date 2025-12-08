@@ -1,5 +1,4 @@
 @extends('layouts.dashboard.app')
-
 @section('content')
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
@@ -164,14 +163,22 @@
 
                             </div>
 
-                            {{-- CARD FOOTER: tombol edit + delete --}}
+                            {{-- CARD FOOTER: tombol detail + edit + delete --}}
                             <div class="card-footer bg-transparent border-0 text-center pb-4">
                                 @if (isset($p) && isset($p->perangkat_id))
+                                    {{-- Tombol Detail --}}
+                                    <a href="{{ route('perangkat_desa.show', $p->perangkat_id) }}"
+                                        class="btn btn-sm btn-outline-info me-1" title="Lihat Detail">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+
+                                    {{-- Tombol Edit --}}
                                     <a href="{{ route('perangkat_desa.edit', $p->perangkat_id) }}"
-                                        class="btn btn-sm btn-outline-success me-2" title="Edit Data">
+                                        class="btn btn-sm btn-outline-success me-1" title="Edit Data">
                                         <i class="fa fa-edit"></i>
                                     </a>
 
+                                    {{-- Tombol Delete --}}
                                     <form action="{{ route('perangkat_desa.destroy', $p->perangkat_id) }}" method="POST"
                                         class="d-inline" onsubmit="return confirm('Yakin ingin hapus data ini?')">
                                         @csrf
@@ -181,7 +188,11 @@
                                         </button>
                                     </form>
                                 @else
-                                    <button class="btn btn-sm btn-outline-secondary me-2" disabled
+                                    <button class="btn btn-sm btn-outline-secondary me-1" disabled
+                                        title="Data tidak tersedia">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-secondary me-1" disabled
                                         title="Data tidak tersedia">
                                         <i class="fa fa-edit"></i>
                                     </button>
@@ -214,21 +225,29 @@
                 <div class="col-md-6 col-lg-5 wow fadeIn" data-wow-delay="0.1s">
                     <div class="team-item text-center rounded-4 shadow-sm p-4 h-100"
                         style="background: linear-gradient(135deg,#e8f9f0 0%,#fffbe6 100%); border:2px solid #198754;">
-                        <div class="d-flex justify-content-center align-items-center mb-3"
-                            style="width:120px;height:120px;border-radius:50%;background-color:#198754;color:white;font-size:48px;margin:0 auto;">
-                            <i class="fa fa-user"></i>
+                        <div class="mb-3 text-center">
+                            <div
+                                style="width:120px;height:120px;display:inline-block;overflow:hidden;border-radius:50%;border:3px solid #198754;">
+                                <img src="{{ asset('assets-guest/img/pani3.jpg') }}" alt="Foto Pani3" class="img-fluid"
+                                    style="width:100%;height:100%;object-fit:cover;">
+                            </div>
                         </div>
                         <h3 class="text-success mb-1">Stefanny Huang</h3>
-                        <span class="text-muted mb-3 d-block">Koordinator Program Pemberdayaan</span>
-                        <p class="text-secondary small">Memimpin inisiatif pemberdayaan masyarakat melalui pelatihan
-                            kewirausahaan dan pendidikan keterampilan warga desa.</p>
+                        <p class="text-muted mb-0">NIM: 2457301134</p>
+                        <p class="text-muted">Program Studi: Sistem Informasi</p>
                         <div class="d-flex justify-content-center mt-3">
-                            <a class="btn btn-square btn-outline-success mx-1" href="#"><i
-                                    class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-outline-success mx-1" href="#"><i
-                                    class="fab fa-instagram"></i></a>
-                            <a class="btn btn-square btn-outline-success mx-1" href="#"><i
-                                    class="fab fa-linkedin-in"></i></a>
+                            <a class="btn btn-square btn-outline-success mx-1" href="#">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a class="btn btn-square btn-outline-success mx-1"
+                                href="https://www.instagram.com/stefannyhng" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a class="btn btn-square btn-outline-success mx-1"
+                                href="https://www.linkedin.com/in/stefanny-huang-b70458399/" target="_blank"
+                                rel="noopener noreferrer">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
                         </div>
                     </div>
                 </div>

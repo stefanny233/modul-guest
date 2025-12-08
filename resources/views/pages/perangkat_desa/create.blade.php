@@ -89,22 +89,22 @@
                         </div>
 
                         <div class="col-md-6">
+                            <label for="periode_selesai" class="form-label">Periode Selesai</label>
+                            <input id="periode_selesai" type="date" name="periode_selesai"
+                                class="form-control @error('periode_selesai') is-invalid @enderror"
+                                value="{{ old('periode_selesai') }}">
+                            @error('periode_selesai')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6">
                             <label for="periode_mulai" class="form-label">Periode Mulai <span
                                     class="text-danger">*</span></label>
                             <input id="periode_mulai" type="date" name="periode_mulai"
                                 class="form-control @error('periode_mulai') is-invalid @enderror"
                                 value="{{ old('periode_mulai') }}" required>
                             @error('periode_mulai')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="periode_selesai" class="form-label">Periode Selesai</label>
-                            <input id="periode_selesai" type="date" name="periode_selesai"
-                                class="form-control @error('periode_selesai') is-invalid @enderror"
-                                value="{{ old('periode_selesai') }}">
-                            @error('periode_selesai')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

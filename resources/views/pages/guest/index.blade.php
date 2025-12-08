@@ -10,15 +10,22 @@
                             <h1 class="display-1 text-uppercase mb-3">Bersama Membangun Desa yang Mandiri</h1>
                             <p class="fs-5 mb-5">Melalui semangat gotong royong dan inovasi, kita wujudkan desa yang
                                 maju, sejahtera, dan berkelanjutan.</p>
-                            <div class="d-flex">
-                                <a class="btn btn-primary py-3 px-4 me-3" href="#!">Mulai Berkontribusi</a>
-                                <a class="btn btn-secondary py-3 px-4" href="#!">Lihat Program</a>
+                            <div class="d-flex justify-content-center justify-content-lg-start">
+                                <a class="btn-about-village" href="{{ route('tentang') }}">
+                                    <div class="btn-content">
+                                        <i class="fas fa-village me-2"></i>
+                                        <span>Tentang Desa</span>
+                                    </div>
+                                    <div class="btn-hover-effect">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="carousel-img">
-                            <img class="w-100" src="{{ asset('assets-guest/img/carousel-2.jpg') }}" alt="Image">
+                            <img class="w-100" src="{{ asset('assets-guest/img/carousel-3.jpg') }}" alt="Image">
                         </div>
                     </div>
                 </div>

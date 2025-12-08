@@ -23,6 +23,9 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 // });
 
 Route::resource('dashboard', DashboardController::class);
+Route::get('/tentang', function () {
+    return view('pages.guest.tentang');
+})->name('tentang');
 
 // Route::middleware('checkislogin')->group(function () {
 
