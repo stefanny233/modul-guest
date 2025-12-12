@@ -18,7 +18,7 @@
 
     {{-- Tambah Perangkat Desa --}}
     <div class="container py-5">
-        <h1 class="mb-4">Tambah Data Perangkat Desa</h1>
+        <h1 class="mb-4">Tambah Perangkat Desa</h1>
 
         @if ($errors->any())
             <div class="alert alert-danger">

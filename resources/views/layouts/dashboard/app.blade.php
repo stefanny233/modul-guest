@@ -23,6 +23,7 @@
 </head>
 
 <body>
+    
     <!-- Spinner Start -->
     @include('layouts.dashboard.spiner')
     <!-- Spinner End -->

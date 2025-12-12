@@ -157,30 +157,42 @@
     <div class="container my-5">
         <div class="row justify-content-center g-4">
 
-            <!-- TOTAL USER -->
-            <div class="col-md-3 col-sm-6">
-                <div class="p-4 text-center rounded-4 shadow-sm"
-                    style="background: linear-gradient(135deg, #d8f3dc 0%, #b7e4c7 100%); color:#22577A;">
-                    <h6 class="fw-bold mb-1">Total User</h6>
-                    <p class="fs-3 fw-bold">{{ $users->total() }}</p>
-                </div>
-            </div>
-
-            <!-- ACTIVE (7 DAYS) -->
-            <div class="col-md-3 col-sm-6">
-                <div class="p-4 text-center rounded-4 shadow-sm"
-                    style="background: linear-gradient(135deg, #fde2e4 0%, #fad2e1 100%); color:#8a3a47;">
-                    <h6 class="fw-bold mb-1">Active (7 Hari)</h6>
-                    <p class="fs-3 fw-bold">{{ $activeLast7Days ?? 12 }}</p>
+            <!-- REGULAR USER COUNT -->
+            <div class="col-md-4 col-sm-6">
+                <div class="p-4 text-center rounded-4 shadow-lg border-0 position-relative overflow-hidden"
+                    style="background: linear-gradient(135deg, #fff9db 0%, #ffec99 100%); color:#5c3c00;">
+                    <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10"
+                        style="background: radial-gradient(circle at 30% 30%, #ffd43b 0%, transparent 50%);"></div>
+                    <i class="bi bi-people-fill fs-1 mb-3"></i>
+                    <h6 class="fw-bold mb-1">Regular User</h6>
+                    <p class="fs-2 fw-bold mb-0">{{ $userCount }}</p>
+                    <div class="mt-3 small">Pengguna dengan akses terbatas</div>
                 </div>
             </div>
 
             <!-- ADMIN COUNT -->
-            <div class="col-md-3 col-sm-6">
-                <div class="p-4 text-center rounded-4 shadow-sm"
-                    style="background: linear-gradient(135deg, #e2eafc 0%, #cfdef3 100%); color:#394867;">
+            <div class="col-md-4 col-sm-6">
+                <div class="p-4 text-center rounded-4 shadow-lg border-0 position-relative overflow-hidden"
+                    style="background: linear-gradient(135deg, #dbe4ff 0%, #a5b4fc 100%); color:#1e3a8a;">
+                    <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10"
+                        style="background: radial-gradient(circle at 30% 30%, #3b82f6 0%, transparent 50%);"></div>
+                    <i class="bi bi-shield-check fs-1 mb-3"></i>
                     <h6 class="fw-bold mb-1">Admin</h6>
-                    <p class="fs-3 fw-bold">{{ $adminCount ?? 3 }}</p>
+                    <p class="fs-2 fw-bold mb-0">{{ $adminCount }}</p>
+                    <div class="mt-3 small">Pengguna dengan hak akses penuh</div>
+                </div>
+            </div>
+
+            <!-- TOTAL USER -->
+            <div class="col-md-4 col-sm-6">
+                <div class="p-4 text-center rounded-4 shadow-lg border-0 position-relative overflow-hidden"
+                    style="background: linear-gradient(135deg, #d3f9d8 0%, #69db7c 100%); color:#0c6b1f;">
+                    <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10"
+                        style="background: radial-gradient(circle at 30% 30%, #2b8a3e 0%, transparent 50%);"></div>
+                    <i class="bi bi-person-badge fs-1 mb-3"></i>
+                    <h6 class="fw-bold mb-1">Total User</h6>
+                    <p class="fs-2 fw-bold mb-0">{{ $totalUsers }}</p>
+                    <div class="mt-3 small">Semua pengguna terdaftar</div>
                 </div>
             </div>
 

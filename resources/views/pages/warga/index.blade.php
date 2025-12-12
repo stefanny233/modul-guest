@@ -7,10 +7,9 @@
             <h1 class="display-3 animated slideInDown">Data Warga</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="#!">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Data User</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Data Penduduk</li>
-                    <li class="breadcrumb-item"><a href="#!">Perangkat Desa</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Warga</li>
+                    <li class="breadcrumb-item"><a href="#!">RT</a></li>
+                    <li class="breadcrumb-item"><a href="#!">RW</a></li>
                 </ol>
             </nav>
         </div>

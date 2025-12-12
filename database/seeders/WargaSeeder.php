@@ -1,15 +1,12 @@
 <?php
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Warga;
 use Faker\Factory as Faker;
+use Illuminate\Database\Seeder;
 
-class WargaSeeder extends Seeder
+class WargaSeeder extends Seeder  // <-- INI YANG BENAR
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $faker = Faker::create('id_ID');

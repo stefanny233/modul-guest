@@ -17,13 +17,9 @@
     <!-- Page Header End -->
 
     <!-- Main content -->
-    <div class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
+    <div class="container py-5">
+        <h1 class="mb-4">Tambah Data Jabatan</h1>
 
-                <h3 class="mb-4">Tambah Data Jabatan</h3>
-
-                {{-- validasi global --}}
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul class="mb-0">

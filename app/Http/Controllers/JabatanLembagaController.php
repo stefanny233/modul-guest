@@ -16,7 +16,7 @@ class JabatanLembagaController extends Controller
         $lembagaId = $request->input('lembaga_id');
         $perPage   = (int) $request->input('per_page', 12);
 
-        $allowed = [6, 12, 24, 48];
+        $allowed = [6, 12, 24, 48]; 
         if (! in_array($perPage, $allowed)) {
             $perPage = 12;
         }

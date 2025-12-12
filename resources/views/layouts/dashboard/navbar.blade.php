@@ -24,6 +24,7 @@
 
                         <a href="{{ route('perangkat_desa.index') }}" class="nav-item nav-link">Perangkat Desa</a>
                         <a href="{{ route('lembaga.index') }}" class="nav-item nav-link">Lembaga Desa</a>
+                        <a href="{{ route('anggota-lembaga.index') }}" class="nav-item nav-link">Anggota Lembaga</a>
                         <a href="{{ route('jabatan.index') }}" class="nav-item nav-link">Jabatan Desa</a>
                 </div>
 

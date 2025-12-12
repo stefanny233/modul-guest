@@ -10,12 +10,11 @@ class JabatanLembagaSeeder extends Seeder
     {
         // Jika sudah ada data, jangan insert lagi
         if (DB::table('jabatan_lembaga')->exists()) {
-            return; // <-- Anti duplicate, auto stop
+            return;
         }
 
         $faker = \Faker\Factory::create('id_ID');
 
-        // Ambil lembaga yang tersedia
         $lembagaIds = DB::table('lembaga_desa')->pluck('lembaga_id')->toArray();
 
         foreach (range(1, 100) as $i) {

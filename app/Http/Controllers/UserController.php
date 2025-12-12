@@ -40,7 +40,15 @@ class UserController extends Controller
 
         $users = $query->paginate($perPage)->withQueryString();
 
-        return view('pages.users.index', compact('users'));
+        $totalUsers = User::count();
+        $adminCount = User::where('role', 'admin')->count();
+        $userCount  = User::where('role', 'user')->count();
+
+        return view('pages.users.index', compact('users',
+            'totalUsers',
+            'adminCount',
+            'userCount',
+        ));
     }
 
     public function create()
@@ -65,7 +73,7 @@ class UserController extends Controller
             'name'     => $request->name,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
-            'role'     => $request->role
+            'role'     => $request->role,
         ]);
 
         return redirect()

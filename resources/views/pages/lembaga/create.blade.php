@@ -17,11 +17,8 @@
     </div>
 
     <!-- Main content -->
-    <div class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-
-                <h3 class="mb-4">Tambah Lembaga Desa</h3>
+    <div class="container py-5">
+        <h1 class="mb-4">Tambah Lembaga Desa</h1>
 
                 <div class="card shadow-sm mb-4">
                     <div class="card-body">

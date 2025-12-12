@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnggotaLembagaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JabatanLembagaController;
@@ -39,12 +40,15 @@ Route::get('/tentang', function () {
 //     Route::resource('lembaga', LembagaDesaController::class);
 //     Route::resource('jabatan', JabatanLembagaController::class);
 // });
+
+Route::resource('anggota-lembaga', AnggotaLembagaController::class);
+
 Route::resource('users', UserController::class);
 
-    Route::resource('warga', WargaController::class);
-    Route::resource('rt', RtController::class);
-    Route::resource('rw', RwController::class);
+Route::resource('warga', WargaController::class);
+Route::resource('rt', RtController::class);
+Route::resource('rw', RwController::class);
 
-    Route::resource('perangkat_desa', PerangkatDesaController::class);
-    Route::resource('lembaga', LembagaDesaController::class);
-    Route::resource('jabatan', JabatanLembagaController::class);
+Route::resource('perangkat_desa', PerangkatDesaController::class);
+Route::resource('lembaga', LembagaDesaController::class);
+Route::resource('jabatan', JabatanLembagaController::class);
