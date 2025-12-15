@@ -242,3 +242,191 @@
     transform: translateX(0);
 }
 </style>
+
+<style>
+/* ========== BUBBLE NAVBAR STYLE ========== */
+
+.bubble-nav {
+    display: flex;
+    gap: 10px;
+    padding: 15px 0;
+    align-items: center;
+}
+
+/* Bubble Container */
+.nav-bubble {
+    position: relative;
+    background: linear-gradient(145deg, #ffc107, #ffb300);
+    border-radius: 50px 20px 50px 20px;
+    padding: 8px 20px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow:
+        inset 0 2px 4px rgba(255, 255, 255, 0.3),
+        0 4px 15px rgba(255, 193, 7, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Efek lengkungan khusus */
+.nav-bubble::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(145deg, #ffc107, #ffb300);
+    border-radius: 55px 25px 55px 25px;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+    filter: blur(5px);
+}
+
+.nav-bubble:hover::before {
+    opacity: 0.3;
+}
+
+/* Hover Effects */
+.nav-bubble:hover {
+    transform: translateY(-5px) scale(1.05);
+    border-radius: 20px 50px 20px 50px;
+    background: linear-gradient(145deg, #ffb300, #ffc107);
+    box-shadow:
+        0 8px 25px rgba(255, 193, 7, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.5);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Active State */
+.nav-bubble.active {
+    background: linear-gradient(145deg, #ffa000, #ff8c00);
+    border-radius: 30px 30px 30px 30px;
+    transform: translateY(-2px);
+    box-shadow:
+        0 5px 20px rgba(255, 160, 0, 0.5),
+        inset 0 2px 4px rgba(255, 255, 255, 0.4);
+}
+
+/* Link styling */
+.nav-bubble .nav-link {
+    color: #000 !important;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0;
+    text-decoration: none !important;
+    position: relative;
+    z-index: 2;
+}
+
+.nav-bubble .nav-link i {
+    font-size: 1.1em;
+    transition: transform 0.3s ease;
+}
+
+.nav-bubble:hover .nav-link i {
+    transform: scale(1.2) rotate(5deg);
+}
+
+/* Dropdown Bubble */
+.bubble-dropdown {
+    border-radius: 20px !important;
+    border: none;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 10px;
+    margin-top: 15px !important;
+    min-width: 180px;
+}
+
+.bubble-dropdown-item {
+    margin: 5px 0;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.bubble-dropdown-item:hover {
+    transform: translateX(5px);
+}
+
+.bubble-dropdown-item .dropdown-item {
+    border-radius: 15px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    color: #333;
+}
+
+.bubble-dropdown-item:hover .dropdown-item {
+    background: linear-gradient(145deg, #ffc107, #ffb300);
+    color: #000;
+    font-weight: 500;
+}
+
+/* Animation */
+@keyframes bubbleFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.nav-bubble:hover {
+    animation: bubbleFloat 2s ease-in-out infinite;
+}
+
+/* ========== VERSI 2: SOFTER BUBBLES ========== */
+/* Jika mau yang lebih soft/lengkungan halus */
+
+.nav-bubble.soft {
+    border-radius: 30px;
+    background: linear-gradient(145deg, rgba(255, 193, 7, 0.9), rgba(255, 179, 0, 0.9));
+    backdrop-filter: blur(10px);
+}
+
+.nav-bubble.soft:hover {
+    border-radius: 30px;
+    transform: translateY(-3px) scale(1.03);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 992px) {
+    .bubble-nav {
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px 0;
+    }
+
+    .nav-bubble {
+        width: 100%;
+        justify-content: flex-start;
+        padding-left: 25px;
+        border-radius: 15px !important;
+    }
+
+    .nav-bubble:hover {
+        transform: translateY(-3px);
+        border-radius: 15px !important;
+    }
+
+    .bubble-dropdown {
+        position: static !important;
+        transform: none !important;
+        width: 100%;
+        margin-top: 8px !important;
+        box-shadow: none;
+        background: rgba(0, 0, 0, 0.05);
+    }
+}
+</style>

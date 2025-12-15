@@ -1,17 +1,16 @@
 @extends('layouts.dashboard.app')
 @section('content')
-
-    {{-- local image (chat upload reference): /mnt/data/45836255-1aa6-47aa-a5e5-4de9c129a39f.png --}}
-
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-4">
             <h1 class="display-3 animated slideInDown">Jabatan Lembaga</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="#!">Data</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Data Penduduk</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Perangkat Desa</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('warga.index') }}">Data Penduduk</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('perangkat_desa.index') }}">Perangkat Desa</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('lembaga.index') }}">Lembaga Desa</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('anggota-lembaga.index') }}">Anggota Lembaga</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Jabatan Lembaga</li>
                 </ol>
             </nav>

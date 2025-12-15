@@ -28,7 +28,7 @@
                         </div>
                         <div class="ms-2">
                             <h6 class="text-primary mb-0">Email</h6>
-                            <span class="text-white">DesaSejahtera@domain.com</span>
+                            <span class="text-white">desa.kotobaru@pemdes.go.id</span>
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                         </div>
                         <div class="ms-2">
                             <h6 class="text-primary mb-0">Alamat</h6>
-                            <span class="text-white">Dusun II RT 04 RW 02</span>
+                            <span class="text-white">Desa Koto Baru III Jorong</span>
                         </div>
                     </div>
                 </div>

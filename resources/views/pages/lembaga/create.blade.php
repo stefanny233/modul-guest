@@ -4,13 +4,15 @@
     <!-- Page Header -->
     <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s" style="background-position:center;">
         <div class="container text-center py-4">
-            <h1 class="display-3 animated slideInDown">Lembaga Desa</h1>
+            <h1 class="display-3 animated slideInDown">Tambah Lembaga Desa</h1>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="#!">Data</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Data Penduduk</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Perangkat Desa</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('warga.index') }}">Data Penduduk</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('perangkat_desa.index') }}">Perangkat Desa</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Lembaga Desa</li>
+                    <li class="breadcrumb-item"><a href="{{ route('anggota-lembaga.index') }}">Anggota Lmebaga</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('jabatan.index') }}">Jabatan Desa</a></li>
                 </ol>
             </nav>
         </div>

@@ -6,11 +6,12 @@
             <h1 class="display-3 animated slideInDown">Anggota Lembaga Desa</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="#!">Data</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Data Penduduk</a></li>
-                    <li class="breadcrumb-item"><a href="#!">Perangkat Desa</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('warga.index') }}">Data Penduduk</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('perangkat_desa.index') }}">Perangkat Desa</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('lembaga.index') }}">Lembaga Desa</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Anggota Lembaga Desa</li>
+                    <li class="breadcrumb-item active" aria-current="page">Anggota Lembaga</li>
+                    <li class="breadcrumb-item"><a href="{{ route('jabatan.index') }}">Jabatan Lembaga</a></li>
                 </ol>
             </nav>
         </div>
