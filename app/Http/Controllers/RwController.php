@@ -35,7 +35,7 @@ class RwController extends Controller
      */
     public function create()
     {
-        return view('pages.rw.create');
+        return view('pages.Rw.create');
     }
 
     /**
