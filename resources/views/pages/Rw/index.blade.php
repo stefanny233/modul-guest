@@ -71,16 +71,16 @@
         <div class="row g-4">
             @forelse ($rws as $rw)
                 <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 border-0 shadow-sm" style="border-radius:12px;">
+                    <div class="card h-100 shadow-sm border border-success-subtle" style="border-radius:14px;">
                         <div class="card-body text-center p-4">
                             {{-- ICON CIRCLE --}}
                             <div class="rounded-circle shadow-sm d-flex justify-content-center align-items-center mb-3"
-                                style="width:110px;height:110px;margin:0 auto;background:#1e3a8a;color:#fff;font-size:42px;">
+                                style="width:110px;height:110px;margin:0 auto;background:#2f7d57;color:#fff;font-size:42px;">
                                 <i class="fa fa-building"></i>
                             </div>
 
                             {{-- TITLE --}}
-                            <h5 class="fw-bold text-primary mb-2">RW {{ $rw->nomor_rw }}</h5>
+                            <h5 class="fw-bold text-success mb-2">RW {{ $rw->nomor_rw }}</h5>
                             <p class="text-muted small mb-0">ID: {{ $rw->rw_id }}</p>
 
                             {{-- DETAILS --}}
@@ -91,15 +91,15 @@
 
                             {{-- ACTION --}}
                             <div class="mt-3 d-flex justify-content-center gap-2">
-                                <a href="{{ route('rw.edit', $rw) }}" class="btn btn-sm btn-outline-primary"
+                                <a href="{{ route('rw.edit', $rw) }}" class="btn btn-sm btn-outline-success"
                                     title="Edit">
-                                    <i class="fa fa-edit"></i> Edit
+                                    <i class="fa fa-edit"></i>
                                 </a>
                                 <form action="{{ route('rw.destroy', $rw) }}" method="POST"
                                     onsubmit="return confirm('Hapus RW ini?')">
                                     @csrf @method('DELETE')
                                     <button class="btn btn-sm btn-outline-danger" title="Hapus">
-                                        <i class="fa fa-trash"></i> Hapus
+                                        <i class="fa fa-trash"></i> 
                                     </button>
                                 </form>
                             </div>
@@ -118,5 +118,5 @@
             {{ $rws->appends(request()->query())->links('pagination::bootstrap-5') }}
         </div>
     </div>
-        @include('layouts.dashboard.facilities')
-    @endsection
+    @include('layouts.dashboard.facilities')
+@endsection

@@ -2,7 +2,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\LembagaDesa;
+use App\Models\Media;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class LembagaDesaController extends Controller
 {
@@ -20,7 +23,8 @@ class LembagaDesaController extends Controller
             $perPage = 9;
         }
 
-        $query = LembagaDesa::query();
+        // PASTIKAN with('media') TAPI HAPUS 'warga' karena lembaga gak punya relasi ke warga
+        $query = LembagaDesa::query()->with(['media', 'anggota']);
 
         if ($q) {
             $query->where(function ($qb) use ($q) {
@@ -34,11 +38,7 @@ class LembagaDesaController extends Controller
             $query->where('nama_lembaga', $nama);
         }
 
-        if (array_key_exists('created_at', LembagaDesa::firstOrNew()->getAttributes())) {
-            $query->orderBy('created_at', 'desc');
-        } else {
-            $query->orderBy('lembaga_id', 'desc');
-        }
+        $query->orderBy('lembaga_id', 'desc');
 
         $lembaga = $query->paginate($perPage)->withQueryString();
 
@@ -68,30 +68,47 @@ class LembagaDesaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_lembaga' => 'required|string|max:150',
-            'deskripsi'    => 'nullable|string',
-            'kontak'       => 'nullable|string|max:50',
-            'logo'         => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'nama_lembaga' => 'required|string|max:255',
+            'deskripsi'    => 'required|string',
+            'kontak'       => 'nullable|string|max:100',
+            'logo'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $data = $request->all();
+        DB::transaction(function () use ($request) {
+            $lembaga = LembagaDesa::create([
+                'nama_lembaga' => $request->nama_lembaga,
+                'deskripsi'    => $request->deskripsi,
+                'kontak'       => $request->kontak,
+            ]);
 
-        if ($request->hasFile('logo')) {
-            $data['logo'] = $request->file('logo')->store('lembaga_desa', 'public');
-        }
+            if ($request->hasFile('logo')) {
+                $file       = $request->file('logo');
+                $storedPath = $file->store('media/lembaga_desa', 'public');
 
-        LembagaDesa::create($data);
+                Media::create([
+                    'ref_table'  => 'lembaga_desa',
+                    'ref_id'     => $lembaga->lembaga_id,
+                    'file_name'  => $storedPath,
+                    'file_url'   => $storedPath,
+                    'mime_type'  => $file->getClientMimeType(),
+                    'caption'    => 'Logo ' . $lembaga->nama_lembaga,
+                    'sort_order' => 1,
+                ]);
+            }
+        });
 
         return redirect()->route('lembaga.index')
-            ->with('success', 'Data lembaga berhasil disimpan!');
+            ->with('success', 'Lembaga berhasil ditambahkan.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $lembaga = LembagaDesa::with(['media', 'anggota.warga', 'anggota.jabatan', 'jabatan'])
+            ->findOrFail($id);
+        return view('pages.lembaga.show', compact('lembaga'));
     }
 
     /**
@@ -99,7 +116,8 @@ class LembagaDesaController extends Controller
      */
     public function edit($id)
     {
-        $lembaga = LembagaDesa::where('lembaga_id', $id)->firstOrFail(); // <--- FIX
+        // PASTIKAN with('media')
+        $lembaga = LembagaDesa::with('media')->findOrFail($id);
         return view('pages.lembaga.edit', compact('lembaga'));
     }
 
@@ -108,11 +126,54 @@ class LembagaDesaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $lembaga = LembagaDesa::where('lembaga_id', $id)->firstOrFail(); // <--- FIX
-        $lembaga->update($request->all());
+        $request->validate([
+            'nama_lembaga' => 'required|string|max:255',
+            'deskripsi'    => 'required|string',
+            'kontak'       => 'nullable|string|max:100',
+            'logo'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'delete_logo'  => 'nullable|boolean',
+        ]);
+
+        $lembaga = LembagaDesa::findOrFail($id);
+
+        DB::transaction(function () use ($request, $lembaga) {
+            $lembaga->update([
+                'nama_lembaga' => $request->nama_lembaga,
+                'deskripsi'    => $request->deskripsi,
+                'kontak'       => $request->kontak,
+            ]);
+
+            if ($request->has('delete_logo')) {
+                $mediaLogo = $lembaga->media()->where('mime_type', 'like', 'image%')->first();
+                if ($mediaLogo) {
+                    if ($mediaLogo->file_name && Storage::disk('public')->exists($mediaLogo->file_name)) {
+                        Storage::disk('public')->delete($mediaLogo->file_name);
+                    }
+                    $mediaLogo->delete();
+                }
+            }
+
+            if ($request->hasFile('logo')) {
+                $lembaga->media()->where('mime_type', 'like', 'image%')->delete();
+
+                // Upload file baru
+                $file       = $request->file('logo');
+                $storedPath = $file->store('media/lembaga_desa', 'public');
+
+                Media::create([
+                    'ref_table'  => 'lembaga_desa',
+                    'ref_id'     => $lembaga->lembaga_id,
+                    'file_name'  => $storedPath,
+                    'file_url'   => $storedPath,
+                    'mime_type'  => $file->getClientMimeType(),
+                    'caption'    => 'Logo ' . $lembaga->nama_lembaga,
+                    'sort_order' => 1,
+                ]);
+            }
+        });
 
         return redirect()->route('lembaga.index')
-            ->with('success', 'Data lembaga berhasil diperbarui!');
+            ->with('success', 'Lembaga berhasil diperbarui.');
     }
 
     /**
@@ -120,10 +181,24 @@ class LembagaDesaController extends Controller
      */
     public function destroy($id)
     {
-        $lembaga = LembagaDesa::where('lembaga_id', $id)->firstOrFail(); // <--- FIX
-        $lembaga->delete();
+        $lembaga = LembagaDesa::findOrFail($id);
+
+        DB::transaction(function () use ($lembaga) {
+            $medias = Media::where('ref_table', 'lembaga_desa')
+                ->where('ref_id', $lembaga->lembaga_id)
+                ->get();
+
+            foreach ($medias as $media) {
+                if ($media->file_name && Storage::disk('public')->exists($media->file_name)) {
+                    Storage::disk('public')->delete($media->file_name);
+                }
+                $media->delete();
+            }
+
+            $lembaga->delete();
+        });
 
         return redirect()->route('lembaga.index')
-            ->with('success', 'Data lembaga berhasil dihapus!');
+            ->with('success', 'Lembaga berhasil dihapus.');
     }
 }

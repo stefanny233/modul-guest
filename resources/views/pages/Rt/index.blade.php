@@ -8,8 +8,8 @@
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item"><a href="#!">Warga</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">RT</li>
-                    <li class="breadcrumb-item"><a href="#!">RW</a></li>
+                    <li class="breadcrumb-item"><a href="#!">RT</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">RW</li>
                 </ol>
             </nav>
         </div>

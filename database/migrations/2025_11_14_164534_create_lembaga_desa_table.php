@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('nama_lembaga');
             $table->text('deskripsi')->nullable();
             $table->string('kontak')->nullable();
-            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }

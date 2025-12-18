@@ -88,7 +88,7 @@ class RtController extends Controller
     {
         $rws    = Rw::select('rw_id', 'nomor_rw')->get();
         $wargas = \App\Models\Warga::select('id', 'nama')->get();
-        return view('rt.edit', compact('rt', 'rws', 'wargas'));
+        return view('pages.rt.edit', compact('rt', 'rws', 'wargas'));
     }
 
     /**

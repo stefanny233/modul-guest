@@ -29,7 +29,6 @@ class LembagaDesaSeeder extends Seeder
                 'nama_lembaga' => $faker->randomElement($daftarLembaga),
                 'deskripsi'    => $faker->sentence(10),
                 'kontak'       => $faker->phoneNumber(),
-                'logo'         => null, // biarkan null, aman
             ]);
         }
     }

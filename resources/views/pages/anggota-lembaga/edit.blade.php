@@ -94,9 +94,15 @@
                                 </div>
                             </div>
 
-                            <div class="d-flex gap-2 mt-4">
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Upload File / Foto Baru</label>
+                                <input type="file" name="files[]" id="filesInput" class="form-control" multiple>
+                                <div id="previewList" class="d-flex flex-wrap gap-2 mt-3"></div>
+                            </div>
+
+                            <div class="d-flex justify-content-end gap-2">
+                                <a href="{{ route('anggota-lembaga.index') }}" class="btn btn-secondary">Batal</a>
                                 <button type="submit" class="btn btn-success">Update</button>
-                                <a href="{{ route('anggota-lembaga.index') }}" class="btn btn-secondary">Kembali</a>
                             </div>
                         </form>
                     </div>

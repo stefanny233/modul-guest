@@ -23,7 +23,7 @@ class AnggotaLembagaController extends Controller
         if ($request->filled('q')) {
             $search = $request->q;
             $query->whereHas('warga', function ($q) use ($search) {
-                $q->where('nama_lengkap', 'like', "%{$search}%")
+                $q->where('nama', 'like', "%{$search}%")
                     ->orWhere('nik', 'like', "%{$search}%");
             });
         }
@@ -111,10 +111,10 @@ class AnggotaLembagaController extends Controller
     {
         $anggota     = $anggotaLembaga;
         $lembagaList = LembagaDesa::orderBy('nama_lembaga')->get();
-        $wargaList   = Warga::orderBy('nama_lengkap')->get();
+        $wargaList   = Warga::orderBy('nama')->get();
         $jabatanList = JabatanLembaga::orderBy('nama_jabatan')->get();
 
-        return view('anggota-lembaga.edit', compact('anggota', 'lembagaList', 'wargaList', 'jabatanList'));
+        return view('pages.anggota-lembaga.edit', compact('anggota', 'lembagaList', 'wargaList', 'jabatanList'));
     }
 
     /**
