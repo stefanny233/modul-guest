@@ -27,7 +27,7 @@ class RwController extends Controller
 
         $rws = $query->orderBy('rw_id', 'asc')->paginate($perPage)->withQueryString();
 
-        return view('pages.rw.index', compact('rws'));
+        return view('pages.Rw.index', compact('rws'));
     }
 
     /**
