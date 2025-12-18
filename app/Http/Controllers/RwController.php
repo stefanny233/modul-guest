@@ -66,7 +66,7 @@ class RwController extends Controller
      */
     public function edit(Rw $rw)
     {
-        return view('pages.rw.edit', compact('rw'));
+        return view('pages.Rw.edit', compact('rw'));
     }
 
     /**
