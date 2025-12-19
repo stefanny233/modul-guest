@@ -53,7 +53,7 @@ class RtController extends Controller
     {
         $rws    = Rw::select('rw_id', 'nomor_rw')->get();
         $wargas = \App\Models\Warga::select('id', 'nama')->get();
-        return view('pages.rt.create', compact('rws', 'wargas'));
+        return view('pages.Rt.create', compact('rws', 'wargas'));
     }
 
     /**
@@ -88,7 +88,7 @@ class RtController extends Controller
     {
         $rws    = Rw::select('rw_id', 'nomor_rw')->get();
         $wargas = \App\Models\Warga::select('id', 'nama')->get();
-        return view('pages.rt.edit', compact('rt', 'rws', 'wargas'));
+        return view('pages.Rt.edit', compact('rt', 'rws', 'wargas'));
     }
 
     /**
