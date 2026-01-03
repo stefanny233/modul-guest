@@ -10,10 +10,6 @@ class DashboardController extends Controller
 
     public function index()
     {
-        // if (! Auth::check()) {
-        //     return redirect()->route('login')->withErrors('silahkan login!');
-        // }
-
         return view('pages.guest.index');
     }
 

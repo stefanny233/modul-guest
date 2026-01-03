@@ -69,9 +69,9 @@
                         </div>
                     </div>
 
-                    <div class="d-flex justify-content-end mt-4">
-                        <a href="{{ route('warga.index') }}" class="btn btn-secondary me-2">Batal</a>
-                        <button type="submit" class="btn btn-success">Update</button>
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a href="{{ route('warga.index') }}" class="btn btn-secondary px-4">Batal</a>
+                        <a href="{{ route('warga.index') }}" class="btn btn-success px-4">Update</a>
                     </div>
 
                 </form>

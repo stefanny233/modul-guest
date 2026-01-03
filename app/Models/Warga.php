@@ -9,7 +9,7 @@ class Warga extends Model
 {
     use HasFactory;
 
-    protected $table = 'warga';
+    protected $table = 'wargas';
     protected $primaryKey = 'id';
 
     protected $fillable = [

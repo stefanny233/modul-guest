@@ -13,7 +13,6 @@
                 <div class="card">
                     <div class="card-body text-center">
                         @php
-                            // PAKAI CARA YANG SAMA SEPERTI DI INDEX
                             $photo = null;
                             if ($perangkat->media && $perangkat->media->isNotEmpty()) {
                                 $m = $perangkat->media->where('mime_type', 'like', 'image%')->first();
@@ -21,7 +20,7 @@
                                     $m = $perangkat->media->first();
                                 }
                                 if ($m && !empty($m->file_name)) {
-                                    $photo = ltrim($m->file_name, '/'); // contoh: "media/perangkat_desa/xxx.jpg"
+                                    $photo = ltrim($m->file_name, '/');
                                 }
                             }
                             $jabatanSlug = \Illuminate\Support\Str::slug($perangkat->jabatan ?? 'default');
